@@ -25,6 +25,7 @@ namespace PlayerComponents
         private void FixedUpdate()
         {
             _rigidbody.AddForce(_moveDirection * (speed * acceleration), ForceMode.Force);
+            SpeedControl();
         }
 
         private void PlayerRotation()
@@ -32,6 +33,12 @@ namespace PlayerComponents
             var aimDirection = new Vector3(InputReader.Instance.Aim.x, 0f, InputReader.Instance.Aim.y);
             transform.forward =
                 Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * rotationSpeed);
+        }
+
+        private void SpeedControl()
+        {
+            if (_rigidbody.velocity.magnitude > speed)
+                _rigidbody.velocity = _rigidbody.velocity.normalized * speed;
         }
     }
 }
