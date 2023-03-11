@@ -1,4 +1,5 @@
 using System;
+using CustomUtils;
 using StateMachineComponents;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace PlayerComponents
         private static readonly int Forward = Animator.StringToHash("Forward");
         private static readonly int Right = Animator.StringToHash("Right");
 
+        [SerializeField] private GameObject slash;
+
         private PlayerStateMachine _playerStateMachine;
 
         private Animator _animator;
@@ -16,6 +19,7 @@ namespace PlayerComponents
 
         private IState _state;
         private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Shield = Animator.StringToHash("Shield");
 
         private void Awake()
         {
@@ -30,10 +34,12 @@ namespace PlayerComponents
         {
             _state = state;
 
+            _animator.SetBool(Attack, _state is PlayerAttack);
+            _animator.SetBool(Shield, _state is PlayerShield);
             switch (_state)
             {
                 case PlayerAttack playerAttack:
-                    _animator.SetTrigger(Attack);
+                    // Instantiate(slash, transform.position.With(y: 1), Quaternion.LookRotation(transform.forward));
                     break;
             }
         }

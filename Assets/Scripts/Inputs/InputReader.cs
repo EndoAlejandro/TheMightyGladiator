@@ -11,8 +11,9 @@ namespace Inputs
 
         public Vector2 Aim => _input != null ? Aiming() : Vector2.zero;
 
-        public bool Attack => _input != null && _input.Main.Attack.WasPerformedThisFrame();
-        
+        public bool Attack => _input != null && _input.Main.Attack.IsPressed();
+        public bool Shield => _input != null && _input.Main.Defend.IsPressed();
+
         private PlayerControls _input;
 
         private void Awake()

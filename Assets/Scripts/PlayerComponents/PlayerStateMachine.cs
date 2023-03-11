@@ -28,10 +28,14 @@ namespace PlayerComponents
 
             var idle = new PlayerIdle(_player, _rigidbody);
             var attack = new PlayerAttack(_player);
+            var shield = new PlayerShield(_player);
 
             _stateMachine.SetState(idle);
             _stateMachine.AddTransition(idle, attack, () => _player.CanAttack && InputReader.Instance.Attack);
             _stateMachine.AddTransition(attack, idle, () => attack.Ended);
+
+            _stateMachine.AddTransition(idle, shield, () => InputReader.Instance.Shield);
+            _stateMachine.AddTransition(shield, idle, () => !InputReader.Instance.Shield);
         }
 
         private void References()
@@ -65,6 +69,10 @@ namespace PlayerComponents
 
     public class PlayerShield : IState
     {
+        private readonly Player _player;
+
+        public PlayerShield(Player player) => _player = player;
+
         public void Tick()
         {
         }
