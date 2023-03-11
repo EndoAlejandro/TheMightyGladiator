@@ -15,7 +15,6 @@ namespace PlayerComponents
 
         #endregion
 
-
         private Player _player;
         private Rigidbody _rigidbody;
 

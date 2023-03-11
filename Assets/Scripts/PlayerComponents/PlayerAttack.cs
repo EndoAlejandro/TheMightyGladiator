@@ -13,7 +13,7 @@ namespace PlayerComponents
 
         private readonly float _hitBoxSize;
         private readonly Vector3 _offset;
-        
+
         public bool Ended => _timer <= 0f;
 
         public PlayerAttack(Player player)
@@ -49,6 +49,7 @@ namespace PlayerComponents
                 if (!result.TryGetComponent(out Rigidbody rb)) continue;
                 var direction = Utils.NormalizedFlatDirection(result.transform.position, _player.transform.position);
                 rb.AddForce(direction * _player.Force, ForceMode.Impulse);
+                CamShake.Instance.Shake();
             }
         }
 

@@ -43,7 +43,6 @@ namespace PlayerComponents
                 _animator.SetInteger(AttackIndex, (_animator.GetInteger(AttackIndex) + 1) % 2);
             }
 
-            // _animator.SetBool(Attack, _state is PlayerAttack);
             _animator.SetBool(Shield, _state is PlayerShield);
             _animator.SetBool(Dodge, _state is PlayerDodge);
         }
