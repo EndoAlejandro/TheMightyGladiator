@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace PlayerComponents
 {
@@ -22,6 +23,15 @@ namespace PlayerComponents
         public float Speed => speed;
         public float Acceleration => acceleration;
         public float RotationSpeed => rotationSpeed;
+        public float Height { get; private set; }
+
+        private Collider _collider;
+
+        private void Awake()
+        {
+            _collider = GetComponent<Collider>();
+            Height = _collider.bounds.center.y;
+        }
 
         private void Update()
         {
@@ -29,5 +39,10 @@ namespace PlayerComponents
         }
 
         public void Attack() => _attackTimer = attackRate;
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireCube(transform.position + transform.forward + (Vector3.up * Height), Vector3.one);
+        }
     }
 }

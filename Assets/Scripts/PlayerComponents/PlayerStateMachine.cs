@@ -89,27 +89,4 @@ namespace PlayerComponents
         {
         }
     }
-
-    public class PlayerAttack : IState
-    {
-        private const float AttackAnimDuration = 0.40f;
-        private readonly Player _player;
-        private float _timer;
-        public bool Ended => _timer <= 0f;
-        public PlayerAttack(Player player) => _player = player;
-
-        public void Tick() => _timer -= Time.deltaTime;
-
-        public void FixedTick()
-        {
-        }
-
-        public void OnEnter() => _timer = AttackAnimDuration;
-
-        public void OnExit()
-        {
-            _player.Attack();
-            _timer = 0f;
-        }
-    }
 }
