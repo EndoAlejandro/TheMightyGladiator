@@ -10,7 +10,7 @@ namespace PlayerComponents
         #region State Machine
 
         public event Action<IState> OnEntityStateChanged;
-        public Type CurrentStateType => _stateMachine.CurrentState.GetType();
+        public IState CurrentStateType => _stateMachine.CurrentState;
         private StateMachine _stateMachine;
 
         #endregion
@@ -29,13 +29,18 @@ namespace PlayerComponents
             var idle = new PlayerIdle(_player, _rigidbody);
             var attack = new PlayerAttack(_player);
             var shield = new PlayerShield(_player);
+            var dodge = new PlayerDodge(_player, _rigidbody);
 
             _stateMachine.SetState(idle);
-            _stateMachine.AddTransition(idle, attack, () => _player.CanAttack && InputReader.Instance.Attack);
+            _stateMachine.AddTransition(idle, attack, () => InputReader.Instance.Attack && _player.CanAttack);
             _stateMachine.AddTransition(attack, idle, () => attack.Ended);
 
             _stateMachine.AddTransition(idle, shield, () => InputReader.Instance.Shield);
             _stateMachine.AddTransition(shield, idle, () => !InputReader.Instance.Shield);
+
+            _stateMachine.AddTransition(idle, dodge, () => InputReader.Instance.Dodge && _player.CanDodge);
+            _stateMachine.AddTransition(shield, dodge, () => InputReader.Instance.Dodge && _player.CanDodge);
+            _stateMachine.AddTransition(dodge, idle, () => dodge.Ended);
         }
 
         private void References()
@@ -46,25 +51,6 @@ namespace PlayerComponents
 
         private void Update() => _stateMachine.Tick();
         private void FixedUpdate() => _stateMachine.FixedTick();
-    }
-
-    public class PlayerDodge : IState
-    {
-        public void Tick()
-        {
-        }
-
-        public void FixedTick()
-        {
-        }
-
-        public void OnEnter()
-        {
-        }
-
-        public void OnExit()
-        {
-        }
     }
 
     public class PlayerShield : IState

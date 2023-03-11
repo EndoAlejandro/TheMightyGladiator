@@ -7,6 +7,15 @@ namespace CustomUtils
 {
     public static class Utils
     {
+        public static Vector3 FlatDirection(Vector3 to, Vector3 from)
+        {
+            to.y = 0f;
+            from.y = 0f;
+            return to - from;
+        }
+
+        public static Vector3 NormalizedFlatDirection(Vector3 to, Vector3 from) => FlatDirection(to, from).normalized;
+
         public static IEnumerator DieSequence(float animationSpeed, float bulletTime, Action callback = null)
         {
             Time.timeScale = 0.2f;

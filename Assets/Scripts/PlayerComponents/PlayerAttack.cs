@@ -1,24 +1,26 @@
-﻿using StateMachineComponents;
+﻿using CustomUtils;
+using StateMachineComponents;
 using UnityEngine;
 
 namespace PlayerComponents
 {
     public class PlayerAttack : IState
     {
-        private const float AttackAnimDuration = 0.40f;
+        private const float AttackAnimDuration = 0.55f;
         private readonly Player _player;
         private float _timer;
         private bool _triggered;
 
-        private float _hitBoxSize;
-        private Vector3 _offset;
+        private readonly float _hitBoxSize;
+        private readonly Vector3 _offset;
+        
         public bool Ended => _timer <= 0f;
 
         public PlayerAttack(Player player)
         {
             _player = player;
 
-            _hitBoxSize = 1f;
+            _hitBoxSize = 1.5f;
             _offset = Vector3.up * _hitBoxSize;
         }
 
@@ -44,7 +46,9 @@ namespace PlayerComponents
                 Quaternion.LookRotation(_player.transform.forward, _player.transform.up));
             foreach (var result in results)
             {
-                Debug.Log(result.name);
+                if (!result.TryGetComponent(out Rigidbody rb)) continue;
+                var direction = Utils.NormalizedFlatDirection(result.transform.position, _player.transform.position);
+                rb.AddForce(direction * _player.Force, ForceMode.Impulse);
             }
         }
 

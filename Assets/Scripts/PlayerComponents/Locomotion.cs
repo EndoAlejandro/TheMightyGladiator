@@ -1,4 +1,3 @@
-using System;
 using Inputs;
 using UnityEngine;
 
@@ -6,25 +5,32 @@ namespace PlayerComponents
 {
     public class Locomotion : MonoBehaviour
     {
-        [SerializeField] private float speed = 5f;
-        [SerializeField] private float acceleration = 10f;
-        [SerializeField] private float rotationSpeed = 100f;
-
         private Vector3 _moveDirection;
 
+        private Player _player;
+        private PlayerStateMachine _playerStateMachine;
         private Rigidbody _rigidbody;
 
-        private void Awake() => _rigidbody = GetComponent<Rigidbody>();
+        private void Awake()
+        {
+            _player = GetComponent<Player>();
+            _playerStateMachine = GetComponent<PlayerStateMachine>();
+            _rigidbody = GetComponent<Rigidbody>();
+        }
 
         private void Update()
         {
+            if(_playerStateMachine.CurrentStateType is PlayerDodge) return;
+            
             PlayerRotation();
             _moveDirection = new Vector3(InputReader.Instance.Movement.x, 0f, InputReader.Instance.Movement.y).normalized;
         }
 
         private void FixedUpdate()
         {
-            _rigidbody.AddForce(_moveDirection * (speed * acceleration), ForceMode.Force);
+            if(_playerStateMachine.CurrentStateType is PlayerDodge) return;
+
+            _rigidbody.AddForce(_moveDirection * (_player.Speed * _player.Acceleration), ForceMode.Force);
             SpeedControl();
         }
 
@@ -32,13 +38,13 @@ namespace PlayerComponents
         {
             var aimDirection = new Vector3(InputReader.Instance.Aim.x, 0f, InputReader.Instance.Aim.y);
             transform.forward =
-                Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * rotationSpeed);
+                Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * _player.RotationSpeed);
         }
 
         private void SpeedControl()
         {
-            if (_rigidbody.velocity.magnitude > speed)
-                _rigidbody.velocity = _rigidbody.velocity.normalized * speed;
+            if (_rigidbody.velocity.magnitude > _player.Speed)
+                _rigidbody.velocity = _rigidbody.velocity.normalized * _player.Speed;
         }
     }
 }
