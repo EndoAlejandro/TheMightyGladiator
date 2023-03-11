@@ -15,10 +15,8 @@ namespace PlayerComponents
 
         #endregion
 
-        [SerializeField] private float speed = 5f;
-        [SerializeField] private float acceleration = 10f;
-        [SerializeField] private float rotationSpeed = 100f;
 
+        private Player _player;
         private Rigidbody _rigidbody;
 
         private void Awake()
@@ -28,15 +26,19 @@ namespace PlayerComponents
             _stateMachine = new StateMachine();
             _stateMachine.OnStateChanged += state => OnEntityStateChanged?.Invoke(state);
 
-            var idle = new PlayerIdle(transform, _rigidbody, speed, acceleration, rotationSpeed);
-            var attack = new PlayerAttack();
+            var idle = new PlayerIdle(_player, _rigidbody);
+            var attack = new PlayerAttack(_player);
 
             _stateMachine.SetState(idle);
-            _stateMachine.AddTransition(idle, attack, () => InputReader.Instance.Attack);
+            _stateMachine.AddTransition(idle, attack, () => _player.CanAttack && InputReader.Instance.Attack);
             _stateMachine.AddTransition(attack, idle, () => attack.Ended);
         }
 
-        private void References() => _rigidbody = GetComponent<Rigidbody>();
+        private void References()
+        {
+            _player = GetComponent<Player>();
+            _rigidbody = GetComponent<Rigidbody>();
+        }
 
         private void Update() => _stateMachine.Tick();
         private void FixedUpdate() => _stateMachine.FixedTick();
@@ -82,17 +84,24 @@ namespace PlayerComponents
 
     public class PlayerAttack : IState
     {
-        public bool Ended { get; private set; }
+        private const float AttackAnimDuration = 0.40f;
+        private readonly Player _player;
+        private float _timer;
+        public bool Ended => _timer <= 0f;
+        public PlayerAttack(Player player) => _player = player;
 
-        public void Tick()
-        {
-        }
+        public void Tick() => _timer -= Time.deltaTime;
 
         public void FixedTick()
         {
         }
 
-        public void OnEnter() => Ended = true;
-        public void OnExit() => Ended = false;
+        public void OnEnter() => _timer = AttackAnimDuration;
+
+        public void OnExit()
+        {
+            _player.Attack();
+            _timer = 0f;
+        }
     }
 }

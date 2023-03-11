@@ -6,40 +6,32 @@ namespace PlayerComponents
 {
     public class PlayerIdle : IState
     {
-        private readonly Transform _transform;
+        private readonly Player _player;
         private readonly Rigidbody _rigidbody;
-        private readonly float _speed;
-        private readonly float _acceleration;
-        private readonly float _rotationSpeed;
-
         private Vector3 _moveDirection;
 
-        public PlayerIdle(Transform transform, Rigidbody rigidbody, float speed, float acceleration,
-            float rotationSpeed)
+        public PlayerIdle(Player player, Rigidbody rigidbody)
         {
-            _transform = transform;
+            _player = player;
             _rigidbody = rigidbody;
-            _speed = speed;
-            _acceleration = acceleration;
-            _rotationSpeed = rotationSpeed;
         }
 
         public void Tick()
         {
-            var aimDirection = new Vector3(InputReader.Instance.Aim.x, 0f, InputReader.Instance.Aim.y);
-            _transform.forward =
-                Vector3.Lerp(_transform.forward, aimDirection, Time.deltaTime * _rotationSpeed);
+            /*var aimDirection = new Vector3(InputReader.Instance.Aim.x, 0f, InputReader.Instance.Aim.y);
+            _player.transform.forward =
+                Vector3.Lerp(_player.transform.forward, aimDirection, Time.deltaTime * _player.RotationSpeed);
 
             _moveDirection = new Vector3(InputReader.Instance.Movement.x, 0f, InputReader.Instance.Movement.y)
-                .normalized;
+                .normalized;*/
         }
 
         public void FixedTick()
         {
-            _rigidbody.AddForce(_moveDirection * (_speed * _acceleration), ForceMode.Force);
+            /*_rigidbody.AddForce(_moveDirection * (_player.Speed * _player.Acceleration), ForceMode.Force);
 
-            if (_rigidbody.velocity.magnitude > _speed)
-                _rigidbody.velocity = _rigidbody.velocity.normalized * _speed;
+            if (_rigidbody.velocity.magnitude > _player.Speed)
+                _rigidbody.velocity = _rigidbody.velocity.normalized * _player.Speed;*/
         }
 
         public void OnEnter()
