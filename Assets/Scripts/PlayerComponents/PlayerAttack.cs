@@ -1,4 +1,5 @@
 ﻿using CustomUtils;
+using Enemies.BatComponents;
 using StateMachineComponents;
 using UnityEngine;
 
@@ -6,7 +7,8 @@ namespace PlayerComponents
 {
     public class PlayerAttack : IState
     {
-        private const float AttackAnimDuration = 0.55f;
+        private const float AttackAnimDuration = 0.5f;
+        
         private readonly Player _player;
         private float _timer;
         private bool _triggered;
@@ -14,16 +16,19 @@ namespace PlayerComponents
         private readonly float _hitBoxSize;
         private readonly Vector3 _offset;
 
+        private readonly Collider[] _results;
+
         public bool Ended => _timer <= 0f;
 
         public PlayerAttack(Player player)
         {
             _player = player;
 
-            _hitBoxSize = 1.5f;
-            _offset = Vector3.up * _hitBoxSize;
-        }
+            _hitBoxSize = _player.HitBoxSize;
+            _offset = Vector3.up * _player.Height;
 
+            _results = new Collider[20];
+        }
 
         public void Tick()
         {
@@ -39,16 +44,21 @@ namespace PlayerComponents
 
         private void AttackDamage()
         {
-            var position = _player.transform.position;
-            var forward = _player.transform.forward * _hitBoxSize;
+            var size = Physics.OverlapSphereNonAlloc(_player.transform.position + _offset,
+                _hitBoxSize,
+                _results,
+                _player.AttackLayerMask);
 
-            var results = Physics.OverlapBox(position + forward + _offset, Vector3.one * (_hitBoxSize / 2f),
-                Quaternion.LookRotation(_player.transform.forward, _player.transform.up));
-            foreach (var result in results)
+            for (int i = 0; i < size; i++)
             {
-                if (!result.TryGetComponent(out Rigidbody rb)) continue;
+                var result = _results[i];
+
+                if (!result.TryGetComponent(out Bat bat)) continue;
                 var direction = Utils.NormalizedFlatDirection(result.transform.position, _player.transform.position);
-                rb.AddForce(direction * _player.Force, ForceMode.Impulse);
+                var angle = Vector3.Angle(direction, _player.transform.forward);
+                if (angle > _player.AttackAngle) continue;
+
+                bat.GetHit(_player);
                 CamShake.Instance.Shake();
             }
         }

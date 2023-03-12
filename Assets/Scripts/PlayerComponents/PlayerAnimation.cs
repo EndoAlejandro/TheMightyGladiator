@@ -1,3 +1,4 @@
+using System.Collections;
 using StateMachineComponents;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -12,6 +13,9 @@ namespace PlayerComponents
         private static readonly int AttackIndex = Animator.StringToHash("AttackIndex");
         private static readonly int Shield = Animator.StringToHash("Shield");
         private static readonly int Dodge = Animator.StringToHash("Dodge");
+        private static readonly int Hit = Animator.StringToHash("Hit");
+        private static readonly int ShieldHit = Animator.StringToHash("ShieldHit");
+        private static readonly int Parry = Animator.StringToHash("Parry");
 
         [SerializeField] private GameObject slash;
 
@@ -27,6 +31,7 @@ namespace PlayerComponents
 
         private Vector3 _shieldTargetScale;
 
+        private Player _player;
         private PlayerStateMachine _playerStateMachine;
 
         private Animator _animator;
@@ -36,6 +41,7 @@ namespace PlayerComponents
 
         private void Awake()
         {
+            _player = GetComponentInParent<Player>();
             _playerStateMachine = GetComponentInParent<PlayerStateMachine>();
             _animator = GetComponent<Animator>();
             _rigidbody = GetComponentInParent<Rigidbody>();
@@ -44,8 +50,36 @@ namespace PlayerComponents
         private void Start()
         {
             _shieldTargetScale = Vector3.one * shieldIdleScale;
+            
+            _player.OnHit += PlayerOnHit;
+            _player.OnParry += PlayerOnParry;
+            _player.OnShieldHit += PlayerOnShieldHit;
             _playerStateMachine.OnEntityStateChanged += PlayerStateMachineOnEntityStateChanged;
         }
+
+        private void PlayerOnShieldHit()
+        {
+            _animator.SetTrigger(ShieldHit);
+            if(_state is PlayerShield)
+                shieldTransform.localScale = Vector3.one * 2;
+        }
+
+        private void OnParryEvent() => StartCoroutine(SlowTime());
+
+        private IEnumerator SlowTime()
+        {
+            Time.timeScale = 0.1f;
+            yield return new WaitForSecondsRealtime(0.05f);
+            while (Time.timeScale < 0.95f)
+            {
+                Time.timeScale += Time.unscaledDeltaTime * 1f;
+                yield return null;
+            }
+            Time.timeScale = 1f;
+        }
+
+        private void PlayerOnParry() => _animator.SetTrigger(Parry);
+        private void PlayerOnHit() => _animator.SetTrigger(Hit);
 
         private void PlayerStateMachineOnEntityStateChanged(IState state)
         {
@@ -95,7 +129,6 @@ namespace PlayerComponents
             _animator.SetIKRotationWeight(goal, 1f);
 
             _animator.SetIKPosition(goal, transform.position + (transform.forward * shieldDistanceIk) + Vector3.up);
-            // _animator.SetIKRotation(goal, Quaternion.identity);
         }
     }
 }
