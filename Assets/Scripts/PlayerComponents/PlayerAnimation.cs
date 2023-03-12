@@ -1,8 +1,6 @@
-using System;
-using CustomUtils;
 using StateMachineComponents;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using UnityEngine.Serialization;
 
 namespace PlayerComponents
 {
@@ -16,6 +14,18 @@ namespace PlayerComponents
         private static readonly int Dodge = Animator.StringToHash("Dodge");
 
         [SerializeField] private GameObject slash;
+
+        [Header("Shield")]
+        [Range(0.01f, 1f)]
+        [SerializeField] private float shieldDistanceIk = 0.5f;
+
+        [SerializeField] private Transform shieldTransform;
+        [SerializeField] private float shieldSizeAnimationSpeed = 10f;
+
+        [SerializeField] private float shieldIdleScale = 1f;
+        [SerializeField] private float shieldActiveScale = 1.5f;
+
+        private Vector3 _shieldTargetScale;
 
         private PlayerStateMachine _playerStateMachine;
 
@@ -31,18 +41,25 @@ namespace PlayerComponents
             _rigidbody = GetComponentInParent<Rigidbody>();
         }
 
-        private void Start() => _playerStateMachine.OnEntityStateChanged += PlayerStateMachineOnEntityStateChanged;
+        private void Start()
+        {
+            _shieldTargetScale = Vector3.one * shieldIdleScale;
+            _playerStateMachine.OnEntityStateChanged += PlayerStateMachineOnEntityStateChanged;
+        }
 
         private void PlayerStateMachineOnEntityStateChanged(IState state)
         {
             _state = state;
 
-            if (state is PlayerAttack)
+            switch (_state)
             {
-                _animator.SetTrigger(Attack);
-                _animator.SetInteger(AttackIndex, (_animator.GetInteger(AttackIndex) + 1) % 2);
+                case PlayerAttack playerAttack:
+                    _animator.SetTrigger(Attack);
+                    _animator.SetInteger(AttackIndex, (_animator.GetInteger(AttackIndex) + 1) % 2);
+                    break;
             }
 
+            _shieldTargetScale = Vector3.one * (_state is PlayerShield ? shieldActiveScale : shieldIdleScale);
             _animator.SetBool(Shield, _state is PlayerShield);
             _animator.SetBool(Dodge, _state is PlayerDodge);
         }
@@ -50,11 +67,14 @@ namespace PlayerComponents
         private void Update()
         {
             Walking();
-            switch (_state)
-            {
-                case PlayerIdle playerIdle:
-                    break;
-            }
+            ManageShieldScale();
+        }
+
+        private void ManageShieldScale()
+        {
+            if (Vector3.Distance(shieldTransform.localScale, _shieldTargetScale) > 0.1f)
+                shieldTransform.localScale = Vector3.Lerp(shieldTransform.localScale, _shieldTargetScale,
+                    Time.deltaTime * shieldSizeAnimationSpeed);
         }
 
         private void Walking()
@@ -74,7 +94,7 @@ namespace PlayerComponents
             _animator.SetIKPositionWeight(goal, 1f);
             _animator.SetIKRotationWeight(goal, 1f);
 
-            _animator.SetIKPosition(goal, transform.position + transform.forward + Vector3.up);
+            _animator.SetIKPosition(goal, transform.position + (transform.forward * shieldDistanceIk) + Vector3.up);
             // _animator.SetIKRotation(goal, Quaternion.identity);
         }
     }

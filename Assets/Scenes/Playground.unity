@@ -4738,6 +4738,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slash: {fileID: 3153472991145048103, guid: 25c6e2a0ead278a4886e3fce7ed8a6da, type: 3}
+  distanceShield: 0.5
+  shieldTransform: {fileID: 8642781968796101464}
 --- !u!4 &7577134134430790165
 Transform:
   m_ObjectHideFlags: 0
