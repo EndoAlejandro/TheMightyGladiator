@@ -20,18 +20,19 @@ namespace PlayerComponents
 
         private void Update()
         {
-            if(_playerStateMachine.CurrentStateType is PlayerDodge) return;
-            
+            if (_playerStateMachine.CurrentStateType is PlayerDodge) return;
+
             PlayerRotation();
-            _moveDirection = new Vector3(InputReader.Instance.Movement.x, 0f, InputReader.Instance.Movement.y).normalized;
+            _moveDirection = new Vector3(InputReader.Instance.Movement.x, 0f, InputReader.Instance.Movement.y)
+                .normalized;
         }
 
         private void FixedUpdate()
         {
-            if(_playerStateMachine.CurrentStateType is PlayerDodge) return;
+            if (_playerStateMachine.CurrentStateType is PlayerDodge) return;
 
             _rigidbody.AddForce(_moveDirection * (_player.Speed * _player.Acceleration), ForceMode.Force);
-            SpeedControl();
+            if (!_player.IsImmune) SpeedControl();
         }
 
         private void PlayerRotation()

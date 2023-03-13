@@ -1,4 +1,5 @@
 using System.Collections;
+using Pooling;
 using StateMachineComponents;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,6 +17,9 @@ namespace PlayerComponents
         private static readonly int Hit = Animator.StringToHash("Hit");
         private static readonly int ShieldHit = Animator.StringToHash("ShieldHit");
         private static readonly int Parry = Animator.StringToHash("Parry");
+
+        [Header("Fx")]
+        [SerializeField] private PoolAfterSeconds hitFx;
 
         [SerializeField] private GameObject slash;
 
@@ -50,17 +54,20 @@ namespace PlayerComponents
         private void Start()
         {
             _shieldTargetScale = Vector3.one * shieldIdleScale;
-            
+
             _player.OnHit += PlayerOnHit;
+            _player.OnDealDamage += PlayerOnDealDamage;
             _player.OnParry += PlayerOnParry;
             _player.OnShieldHit += PlayerOnShieldHit;
             _playerStateMachine.OnEntityStateChanged += PlayerStateMachineOnEntityStateChanged;
         }
 
+        private void PlayerOnDealDamage(Vector3 hitPoint) => hitFx.Get<PoolAfterSeconds>(hitPoint, Quaternion.identity);
+
         private void PlayerOnShieldHit()
         {
             _animator.SetTrigger(ShieldHit);
-            if(_state is PlayerShield)
+            if (_state is PlayerShield)
                 shieldTransform.localScale = Vector3.one * 2;
         }
 
@@ -75,6 +82,7 @@ namespace PlayerComponents
                 Time.timeScale += Time.unscaledDeltaTime * 1f;
                 yield return null;
             }
+
             Time.timeScale = 1f;
         }
 

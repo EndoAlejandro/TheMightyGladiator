@@ -8,6 +8,7 @@ namespace PlayerComponents
 {
     public class Player : MonoBehaviour
     {
+        public event Action<Vector3> OnDealDamage;
         public event Action OnHit;
         public event Action OnParry;
         public event Action OnShieldHit;
@@ -43,6 +44,7 @@ namespace PlayerComponents
         public bool CanAttack => _attackTimer <= 0f;
         public bool CanDodge => _dodgeTimer <= 0f;
         public bool CanDefend => _defendTimer <= 0f;
+        public bool IsImmune => _immunityTimer > 0f;
 
         public float Speed => speed;
         public float Acceleration => acceleration;
@@ -75,6 +77,7 @@ namespace PlayerComponents
         }
 
         public void Attack() => _attackTimer = attackRate;
+
         public void Dodge() => _dodgeTimer = dodgeCd;
 
         public void Parry()
@@ -90,10 +93,12 @@ namespace PlayerComponents
         public void GetHit(Bat bat)
         {
             var direction = Utils.NormalizedFlatDirection(transform.position, bat.transform.position);
-            _rigidbody.AddForce(direction * 10f, ForceMode.Impulse);
+            _rigidbody.AddForce(direction * 50f, ForceMode.Impulse);
             Hit();
         }
 
+        public void DealDamage(Vector3 hitPoint) => OnDealDamage?.Invoke(hitPoint + Vector3.up * Height);
+        
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.cyan;

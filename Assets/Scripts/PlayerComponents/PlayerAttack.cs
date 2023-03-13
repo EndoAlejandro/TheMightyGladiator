@@ -8,7 +8,7 @@ namespace PlayerComponents
     public class PlayerAttack : IState
     {
         private const float AttackAnimDuration = 0.5f;
-        
+
         private readonly Player _player;
         private float _timer;
         private bool _triggered;
@@ -54,11 +54,13 @@ namespace PlayerComponents
                 var result = _results[i];
 
                 if (!result.TryGetComponent(out Bat bat)) continue;
+                if (!bat.IsAlive) return;
                 var direction = Utils.NormalizedFlatDirection(result.transform.position, _player.transform.position);
                 var angle = Vector3.Angle(direction, _player.transform.forward);
                 if (angle > _player.AttackAngle) continue;
 
                 bat.GetHit(_player);
+                _player.DealDamage(result.ClosestPoint(_player.transform.position));
                 CamShake.Instance.Shake();
             }
         }

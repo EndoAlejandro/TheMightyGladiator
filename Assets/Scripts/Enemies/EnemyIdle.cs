@@ -11,6 +11,7 @@ namespace Enemies
         private readonly Bat _bat;
         private readonly Rigidbody _rigidbody;
         private readonly Player _player;
+        private readonly NavigationSteering _navigationSteering;
 
         private Vector3 _direction;
 
@@ -19,18 +20,19 @@ namespace Enemies
         public bool PlayerOnRange { get; private set; }
         public bool Ended => _timer <= 0f;
 
-        public EnemyIdle(Bat bat, Rigidbody rigidbody, Player player)
+        public EnemyIdle(Bat bat, Rigidbody rigidbody, Player player, NavigationSteering navigationSteering)
         {
             _bat = bat;
             _rigidbody = rigidbody;
             _player = player;
+            _navigationSteering = navigationSteering;
         }
 
         public void Tick()
         {
             _timer -= Time.deltaTime;
-            
-            _direction = Utils.NormalizedFlatDirection(_player.transform.position, _bat.transform.position);
+
+            _direction = _navigationSteering.BestDirection.direction; //Utils.NormalizedFlatDirection(_player.transform.position, _bat.transform.position);
             _bat.transform.forward =
                 Vector3.Lerp(_bat.transform.forward, _direction, _bat.RotationSpeed * Time.deltaTime);
         }

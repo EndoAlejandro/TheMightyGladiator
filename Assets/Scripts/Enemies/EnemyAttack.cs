@@ -76,7 +76,10 @@ namespace Enemies
             _lastDistance = GetDistance();
         }
 
-        public void OnExit() => _bat.SetIsAttacking(false);
-        
+        public void OnExit()
+        {
+            _bat.SetIsAttacking(false);
+            _rigidbody.velocity = Vector3.zero;
+        }
     }
 }

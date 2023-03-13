@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using CustomUtils;
 using PlayerComponents;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace Enemies.BatComponents
         public event Action<Player> OnParry;
 
         [Header("Health")]
+        [SerializeField] private Transform sphere;
         [SerializeField] private float maxHealth;
 
         [Header("Movement")]
@@ -25,6 +27,7 @@ namespace Enemies.BatComponents
         [SerializeField] private float prepareToAttackTime = 1f;
 
         [SerializeField] private float stunTime = 1f;
+        [SerializeField] private float deathTime = 1f;
         [SerializeField] private float attackSpeed = 10f;
 
         public bool IsAttacking { get; private set; }
@@ -36,12 +39,24 @@ namespace Enemies.BatComponents
         public float StunTime => stunTime;
         public float PrepareToAttackTime => prepareToAttackTime;
         public float AttackSpeed => attackSpeed;
+        public float DeathTime => deathTime;
+        public bool IsAlive => _health > 0f;
 
         private Rigidbody _rigidbody;
+        private float _health;
 
-        private void Awake() => _rigidbody = GetComponent<Rigidbody>();
 
-        public void GetHit(Player player) => OnHit?.Invoke(player);
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+            _health = maxHealth;
+        }
+
+        public void GetHit(Player player)
+        {
+            OnHit?.Invoke(player);
+            _health--;
+        }
 
         public void KnockBack(Player player) => OnKnockBack?.Invoke(player);
 
@@ -54,5 +69,11 @@ namespace Enemies.BatComponents
 
         public void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetOnKnockBack(bool isOnKnockBack) => IsOnKnockBack = isOnKnockBack;
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawLine(sphere.position, sphere.position + transform.forward);
+        }
     }
 }

@@ -3,6 +3,7 @@ using CustomUtils;
 using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemies.BatComponents
 {
@@ -13,6 +14,7 @@ namespace Enemies.BatComponents
         private Player _player;
         private EnemyKnockBack _knockBack;
         private EnemyDamage _damage;
+        private NavigationSteering _navigationSteering;
 
         private float _distance;
 
@@ -21,20 +23,28 @@ namespace Enemies.BatComponents
             References();
             base.Awake();
 
-            var idle = new EnemyIdle(_bat, _rigidbody, _player);
+            var idle = new EnemyIdle(_bat, _rigidbody, _player, _navigationSteering);
             var prepareAttack = new EnemyPrepareAttack(_bat, _player);
             var attack = new EnemyAttack(_bat, _rigidbody, _player);
+            var death = new EnemyDeath(_bat);
             _damage = new EnemyDamage(_bat, _rigidbody, _player);
             _knockBack = new EnemyKnockBack(_bat, _rigidbody, _player);
 
             stateMachine.SetState(idle);
 
+            /*
+            // Attack Sequence.
             stateMachine.AddTransition(idle, prepareAttack, () => idle.PlayerOnRange && idle.Ended);
             stateMachine.AddTransition(prepareAttack, attack, () => prepareAttack.Ended);
             stateMachine.AddTransition(attack, idle, () => attack.Ended);
 
-            // stateMachine.AddTransition(_damage, _knockBack, () => true);
+            // Get Hit
+            stateMachine.AddTransition(_damage, _knockBack, () => true);
             stateMachine.AddTransition(_knockBack, idle, () => _knockBack.Ended);
+
+            // Death
+            stateMachine.AddAnyTransition(death, () => !_bat.IsAlive);
+            */
         }
 
         private void Start()
@@ -43,15 +53,48 @@ namespace Enemies.BatComponents
             _bat.OnKnockBack += BatOnKnockBack;
         }
 
-        private void BatOnKnockBack(Player player) => stateMachine.SetState(_knockBack);
-        private void BatOnHit(Player player) => stateMachine.SetState(_knockBack);
+        private void BatOnKnockBack(Player player)
+        {
+            var direction = Utils.NormalizedFlatDirection(transform.position, _player.transform.position);
+            _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);
+            stateMachine.SetState(_damage);
+        }
+
+        private void BatOnHit(Player player)
+        {
+            var direction = Utils.NormalizedFlatDirection(transform.position, _player.transform.position);
+            _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);
+            stateMachine.SetState(_damage);
+        }
 
         private void References()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _bat = GetComponent<Bat>();
             _player = FindObjectOfType<Player>();
+            _navigationSteering = GetComponent<NavigationSteering>();
         }
+    }
+
+    public class EnemyDeath : IState
+    {
+        private readonly Bat _bat;
+        private float _timer;
+        public bool Ended => _timer <= 0f;
+        public EnemyDeath(Bat bat) => _bat = bat;
+
+        public void Tick()
+        {
+            _timer -= Time.deltaTime;
+            if (Ended) GameObject.Destroy(_bat.gameObject);
+        }
+
+        public void FixedTick()
+        {
+        }
+
+        public void OnEnter() => _timer = _bat.DeathTime;
+        public void OnExit() => GameObject.Destroy(_bat.gameObject);
     }
 
     internal class EnemyDamage : IState
