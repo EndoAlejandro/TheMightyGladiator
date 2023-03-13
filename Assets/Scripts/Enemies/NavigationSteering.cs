@@ -28,42 +28,47 @@ namespace Enemies
         public DirectionWeight BestDirection { get; private set; }
 
         private void Awake() => _playerTransform = FindObjectOfType<Player>().transform;
-
         private void Start() => StartCoroutine(FindPath());
 
         private IEnumerator FindPath()
         {
-            while (true)
+            _playerDirection = Utils.NormalizedFlatDirection(_playerTransform.position, transform.position);
+            _directions = GetDetectionPositions();
+            _sample = new DirectionWeight[_directions.Length];
+            var w = 0f;
+            for (int i = 0; i < _directions.Length; i++)
             {
-                _playerDirection = Utils.NormalizedFlatDirection(_playerTransform.position, transform.position);
-                _directions = GetDetectionPositions();
-                _sample = new DirectionWeight[_directions.Length];
-                var w = 0f;
-                for (int i = 0; i < _directions.Length; i++)
+                var result = Physics.Raycast(transform.position.Plus(y: yOffset), _directions[i],
+                    out RaycastHit hit,
+                    detectionRange,
+                    obstacleLayerMask);
+
+                if (result)
                 {
-                    var result = Physics.Raycast(transform.position.Plus(y: yOffset), _directions[i],
-                        out RaycastHit hit,
-                        detectionRange,
-                        obstacleLayerMask);
-
-                    if (result && hit.transform.TryGetComponent(out Player player))
-                        w = 2.1f;
-                    else if (!result)
-                        w = Vector3.Dot(_directions[i], _playerDirection) +
-                            Vector3.Dot(_directions[i], transform.forward);
-
-                    _sample[i] = new DirectionWeight(_directions[i], w);
+                    if (hit.transform.TryGetComponent(out Player player))
+                        w = 10;
+                    else if (hit.transform.TryGetComponent(out Enemy enemy))
+                        w = -1f;
+                }
+                else
+                {
+                    w = Utils.NormalizedDotProduct(_directions[i], _playerDirection) +
+                        Utils.NormalizedDotProduct(_directions[i], transform.forward);
                 }
 
-                BestDirection = new DirectionWeight(_directions[0], 0f);
-                foreach (var direction in _sample)
-                {
-                    if (direction.weight > BestDirection.weight)
-                        BestDirection = direction;
-                }
-
-                yield return new WaitForSeconds(0.25f);
+                _sample[i] = new DirectionWeight(_directions[i], w);
             }
+
+
+            BestDirection = new DirectionWeight(_directions[0], 0f);
+            foreach (var direction in _sample)
+            {
+                if (direction.weight > BestDirection.weight)
+                    BestDirection = direction;
+            }
+
+            yield return new WaitForSeconds(0.25f);
+            StartCoroutine(FindPath());
         }
 
         private Vector3[] GetDetectionPositions()

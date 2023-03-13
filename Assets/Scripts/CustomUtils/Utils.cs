@@ -13,6 +13,12 @@ namespace CustomUtils
             from.y = 0f;
             return to - from;
         }
+        
+        public static float NormalizedDotProduct(Vector3 a, Vector3 b)
+        {
+            var dot = Vector3.Dot(a, b);
+            return (dot + 1) / 2f;
+        }
 
         public static Vector3 NormalizedFlatDirection(Vector3 to, Vector3 from) => FlatDirection(to, from).normalized;
 

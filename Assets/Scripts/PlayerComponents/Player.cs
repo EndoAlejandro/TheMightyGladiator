@@ -1,5 +1,6 @@
 ﻿using System;
 using CustomUtils;
+using Enemies;
 using Enemies.BatComponents;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -41,11 +42,12 @@ namespace PlayerComponents
         private float _defendTimer;
         private float _immunityTimer;
 
+        private bool _shieldActive;
+
         public bool CanAttack => _attackTimer <= 0f;
         public bool CanDodge => _dodgeTimer <= 0f;
         public bool CanDefend => _defendTimer <= 0f;
         public bool IsImmune => _immunityTimer > 0f;
-
         public float Speed => speed;
         public float Acceleration => acceleration;
         public float RotationSpeed => rotationSpeed;
@@ -83,6 +85,8 @@ namespace PlayerComponents
         public void Parry()
         {
             _defendTimer = defendRate;
+            _immunityTimer = immunityTime;
+            Debug.Log("Parry!");
             OnParry?.Invoke();
         }
 
@@ -90,15 +94,28 @@ namespace PlayerComponents
 
         public void ShieldHit() => OnShieldHit?.Invoke();
 
-        public void GetHit(Bat bat)
+        public void TakeDamage(Enemy enemy)
         {
-            var direction = Utils.NormalizedFlatDirection(transform.position, bat.transform.position);
-            _rigidbody.AddForce(direction * 50f, ForceMode.Impulse);
+            _immunityTimer = immunityTime;
+            var direction = Utils.NormalizedFlatDirection(transform.position, enemy.transform.position);
+            _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);
             Hit();
         }
 
         public void DealDamage(Vector3 hitPoint) => OnDealDamage?.Invoke(hitPoint + Vector3.up * Height);
-        
+
+        public void SetShieldActive(bool value) => _shieldActive = value;
+
+        public bool TryToDealDamage(Vector3 enemyPosition)
+        {
+            if (IsImmune) return false;
+            if (!_shieldActive) return true;
+
+            var direction = Utils.NormalizedFlatDirection(enemyPosition, transform.position);
+            var angle = Vector3.Angle(direction, transform.forward);
+            return angle > DefendAngle;
+        }
+
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.cyan;

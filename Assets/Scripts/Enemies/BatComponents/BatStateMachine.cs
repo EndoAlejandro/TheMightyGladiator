@@ -23,18 +23,17 @@ namespace Enemies.BatComponents
             References();
             base.Awake();
 
-            var idle = new EnemyIdle(_bat, _rigidbody, _player, _navigationSteering);
-            var prepareAttack = new EnemyPrepareAttack(_bat, _player);
-            var attack = new EnemyAttack(_bat, _rigidbody, _player);
+            var idle = new BatIdle(_bat, _rigidbody, _player, _navigationSteering);
+            var prepareAttack = new EnemyPrepareAttack(_bat);
+            var attack = new BatAttack(_bat, _rigidbody, _player);
             var death = new EnemyDeath(_bat);
             _damage = new EnemyDamage(_bat, _rigidbody, _player);
             _knockBack = new EnemyKnockBack(_bat, _rigidbody, _player);
 
             stateMachine.SetState(idle);
 
-            /*
             // Attack Sequence.
-            stateMachine.AddTransition(idle, prepareAttack, () => idle.PlayerOnRange && idle.Ended);
+            stateMachine.AddTransition(idle, prepareAttack, () => idle.PlayerOnRange && idle.Ended && idle.CanSeePlayer);
             stateMachine.AddTransition(prepareAttack, attack, () => prepareAttack.Ended);
             stateMachine.AddTransition(attack, idle, () => attack.Ended);
 
@@ -44,14 +43,16 @@ namespace Enemies.BatComponents
 
             // Death
             stateMachine.AddAnyTransition(death, () => !_bat.IsAlive);
-            */
         }
 
         private void Start()
         {
             _bat.OnHit += BatOnHit;
             _bat.OnKnockBack += BatOnKnockBack;
+            _bat.OnParry += BatOnParry;
         }
+
+        private void BatOnParry(Player player) => BatOnKnockBack(player);
 
         private void BatOnKnockBack(Player player)
         {

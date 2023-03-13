@@ -1,4 +1,5 @@
 ﻿using CustomUtils;
+using Enemies;
 using Enemies.BatComponents;
 using StateMachineComponents;
 using UnityEngine;
@@ -36,26 +37,39 @@ namespace PlayerComponents
 
             for (int i = 0; i < size; i++)
             {
+                // Legacy(i);
                 var result = _results[i];
-
-                if (!result.TryGetComponent(out Bat bat)) continue;
-                if (bat.IsOnKnockBack) continue;
-                var direction = Utils.NormalizedFlatDirection(bat.transform.position, _player.transform.position);
-                var angle = Vector3.Angle(direction, _player.transform.forward);
-                if (angle > _player.DefendAngle) continue;
-
-                if (bat.IsAttacking && _parryTime > 0)
-                {
-                    _player.Parry();
-                    Ended = true;
-                    bat.Parry(_player);
-                }
-                else
-                    _player.ShieldHit();
-
-                bat.KnockBack(_player);
-                CamShake.Instance.Shake();
+                if (!result.TryGetComponent(out Enemy enemy)) continue;
+                if (!enemy.IsAttacking || _parryTime < 0) continue;
+                
+                _player.Parry();
+                enemy.Parry(_player);
+                _parryTime = -1;
+                // Ended = true;
             }
+        }
+
+        private void Legacy(int i)
+        {
+            var result = _results[i];
+
+            if (!result.TryGetComponent(out Bat bat)) return;
+            if (bat.IsOnKnockBack) return;
+            var direction = Utils.NormalizedFlatDirection(bat.transform.position, _player.transform.position);
+            var angle = Vector3.Angle(direction, _player.transform.forward);
+            if (angle > _player.DefendAngle) return;
+
+            if (bat.IsAttacking && _parryTime > 0)
+            {
+                _player.Parry();
+                Ended = true;
+                bat.Parry(_player);
+            }
+            else
+                _player.ShieldHit();
+
+            bat.KnockBack(_player);
+            CamShake.Instance.Shake();
         }
 
         public void FixedTick()
@@ -64,12 +78,11 @@ namespace PlayerComponents
 
         public void OnEnter()
         {
+            _player.SetShieldActive(true);
             _parryTime = _player.ParryTime;
             Ended = false;
         }
 
-        public void OnExit()
-        {
-        }
+        public void OnExit() => _player.SetShieldActive(false);
     }
 }

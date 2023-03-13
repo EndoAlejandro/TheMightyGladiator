@@ -1,4 +1,5 @@
 ﻿using CustomUtils;
+using Enemies;
 using Enemies.BatComponents;
 using StateMachineComponents;
 using UnityEngine;
@@ -53,13 +54,13 @@ namespace PlayerComponents
             {
                 var result = _results[i];
 
-                if (!result.TryGetComponent(out Bat bat)) continue;
-                if (!bat.IsAlive) return;
+                if (!result.TryGetComponent(out Enemy enemy)) continue;
+                if (!enemy.IsAlive) return;
                 var direction = Utils.NormalizedFlatDirection(result.transform.position, _player.transform.position);
                 var angle = Vector3.Angle(direction, _player.transform.forward);
                 if (angle > _player.AttackAngle) continue;
 
-                bat.GetHit(_player);
+                enemy.TakeDamage(_player);
                 _player.DealDamage(result.ClosestPoint(_player.transform.position));
                 CamShake.Instance.Shake();
             }

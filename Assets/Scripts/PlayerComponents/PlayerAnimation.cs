@@ -32,6 +32,7 @@ namespace PlayerComponents
 
         [SerializeField] private float shieldIdleScale = 1f;
         [SerializeField] private float shieldActiveScale = 1.5f;
+        [SerializeField] private float shieldPlacementOffset = 0.1f; 
 
         private Vector3 _shieldTargetScale;
 
@@ -136,7 +137,11 @@ namespace PlayerComponents
             _animator.SetIKPositionWeight(goal, 1f);
             _animator.SetIKRotationWeight(goal, 1f);
 
-            _animator.SetIKPosition(goal, transform.position + (transform.forward * shieldDistanceIk) + Vector3.up);
+            if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out RaycastHit hit,
+                    shieldDistanceIk))
+                _animator.SetIKPosition(goal, hit.point + transform.forward * -shieldPlacementOffset);
+            else
+                _animator.SetIKPosition(goal, transform.position + (transform.forward * shieldDistanceIk) + Vector3.up);
         }
     }
 }

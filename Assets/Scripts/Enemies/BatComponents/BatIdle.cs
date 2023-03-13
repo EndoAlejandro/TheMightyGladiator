@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemyIdle : IState
+    public class BatIdle : IState
     {
         private readonly Bat _bat;
         private readonly Rigidbody _rigidbody;
@@ -18,9 +18,10 @@ namespace Enemies
         private float _timer;
 
         public bool PlayerOnRange { get; private set; }
+        public bool CanSeePlayer { get; private set; }
         public bool Ended => _timer <= 0f;
 
-        public EnemyIdle(Bat bat, Rigidbody rigidbody, Player player, NavigationSteering navigationSteering)
+        public BatIdle(Bat bat, Rigidbody rigidbody, Player player, NavigationSteering navigationSteering)
         {
             _bat = bat;
             _rigidbody = rigidbody;
@@ -32,7 +33,7 @@ namespace Enemies
         {
             _timer -= Time.deltaTime;
 
-            _direction = _navigationSteering.BestDirection.direction; //Utils.NormalizedFlatDirection(_player.transform.position, _bat.transform.position);
+            _direction = _navigationSteering.BestDirection.direction;
             _bat.transform.forward =
                 Vector3.Lerp(_bat.transform.forward, _direction, _bat.RotationSpeed * Time.deltaTime);
         }
@@ -40,15 +41,20 @@ namespace Enemies
         public void FixedTick()
         {
             var distance = Vector3.Distance(_bat.transform.position, _player.transform.position);
+            CanSeePlayer = !Physics.Linecast(_bat.transform.position, _player.transform.position);
             PlayerOnRange = distance <= _bat.StoppingDistance;
 
             if (!PlayerOnRange)
                 _rigidbody.AddForce(_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Force);
+            
+            if(!Ended)
+                _rigidbody.AddForce(-_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Force);
         }
 
         public void OnEnter()
         {
             _timer = _bat.StunTime;
+            CanSeePlayer = false;
             PlayerOnRange = false;
         }
 
