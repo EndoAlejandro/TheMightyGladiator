@@ -7,32 +7,18 @@ namespace Enemies.BatComponents
 {
     public class Bat : Enemy
     {
-        public event Action<Player> OnHit;
+        public event Action<Vector3> OnHit;
         public event Action<Player> OnKnockBack;
         public event Action<Player> OnParry;
 
         [Header("Health")]
         [SerializeField] private Transform sphere;
-        [SerializeField] private float maxHealth;
-
-        [Header("Movement")]
-        [SerializeField] private float speed = 2f;
-
-        [SerializeField] private float acceleration = 10f;
-        [SerializeField] private float stoppingDistance = 1f;
-        [SerializeField] private float rotationSpeed = 100f;
 
         [Header("Attack and Defend")]
-
         [SerializeField] private float stunTime = 1f;
         [SerializeField] private float deathTime = 1f;
         [SerializeField] private float attackSpeed = 10f;
 
-        public bool IsOnKnockBack { get; private set; }
-        public float Speed => speed;
-        public float Acceleration => acceleration;
-        public float RotationSpeed => rotationSpeed;
-        public float StoppingDistance => stoppingDistance;
         public float StunTime => stunTime;
         public float AttackSpeed => attackSpeed;
         public float DeathTime => deathTime;
@@ -41,19 +27,17 @@ namespace Enemies.BatComponents
         private float _health;
         public override bool IsAlive => _health > 0;
 
-        private void Awake()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-            _health = maxHealth;
-        }
+        private void Awake() => _rigidbody = GetComponent<Rigidbody>();
 
-        public override void TakeDamage(Player player)
+        private void OnEnable() => _health = maxHealth;
+
+        public override void TakeDamage(Vector3 position)
         {
-            OnHit?.Invoke(player);
+            OnHit?.Invoke(position);
             _health--;
+            
+            if(_health <= 0) ReturnToPool();
         }
-
-        public void KnockBack(Player player) => OnKnockBack?.Invoke(player);
 
         public override void Parry(Player player)
         {
@@ -61,8 +45,5 @@ namespace Enemies.BatComponents
             _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);
             OnParry?.Invoke(player);
         }
-
-        
-        public void SetOnKnockBack(bool isOnKnockBack) => IsOnKnockBack = isOnKnockBack;
     }
 }

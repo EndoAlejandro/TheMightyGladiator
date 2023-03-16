@@ -25,7 +25,7 @@ namespace Enemies.BatComponents
 
         public bool Ended { get; private set; }
 
-        public BatAttack(Bat bat, Rigidbody rigidbody, Player player)
+        public BatAttack(Bat bat, Rigidbody rigidbody, Player player) : base(bat)
         {
             _bat = bat;
             _player = player;
@@ -36,6 +36,7 @@ namespace Enemies.BatComponents
 
         public override void Tick()
         {
+            base.Tick();
             var size = Physics.OverlapSphereNonAlloc(_bat.transform.position + Vector3.up * 0.75f,
                 0.75f, _results);
 
@@ -44,7 +45,7 @@ namespace Enemies.BatComponents
                 var result = _results[i];
                 if (!result.TryGetComponent(out Player player)) continue;
                 if (player.TryToDealDamage(_bat.transform.position))
-                    player.TakeDamage(_bat);
+                    player.TakeDamage(_bat.transform.position, 1);
                 Ended = true;
             }
         }
@@ -64,6 +65,7 @@ namespace Enemies.BatComponents
 
         public override void OnEnter()
         {
+            base.OnEnter();
             _bat.SetIsAttacking(true);
             Ended = false;
             _timer = ExitDodgeTime;

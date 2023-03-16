@@ -72,7 +72,10 @@ namespace PlayerComponents
                 shieldTransform.localScale = Vector3.one * 2;
         }
 
-        private void OnParryEvent() => StartCoroutine(SlowTime());
+        private void OnParryEvent()
+        {
+            // StartCoroutine(SlowTime());
+        }
 
         private IEnumerator SlowTime()
         {

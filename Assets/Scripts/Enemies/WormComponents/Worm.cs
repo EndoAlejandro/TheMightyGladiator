@@ -14,6 +14,7 @@ namespace Enemies.WormComponents
 
         private Collider _collider;
         private Rigidbody _rigidbody;
+        private float _health;
         public override bool IsAlive => true;
 
         public float IdleTime => idleTime;
@@ -27,10 +28,15 @@ namespace Enemies.WormComponents
             Height = _collider.bounds.center.y;
         }
 
+        private void OnEnable() => _health = maxHealth;
+
         private void Start() => SetIsAttacking(false);
 
-        public override void TakeDamage(Player player)
+        public override void TakeDamage(Vector3 position)
         {
+            _health--;
+
+            if (_health <= 0) ReturnToPool();
         }
 
         public void SetColliderState(bool state)

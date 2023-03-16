@@ -33,7 +33,7 @@ namespace Enemies
         private IEnumerator FindPath()
         {
             _playerDirection = Utils.NormalizedFlatDirection(_playerTransform.position, transform.position);
-            _directions = GetDetectionPositions();
+            _directions = Utils.GetFanPatternDirections(transform, segmentsAmount, visionAngle);
             _sample = new DirectionWeight[_directions.Length];
             var w = 0f;
             for (int i = 0; i < _directions.Length; i++)
@@ -69,24 +69,6 @@ namespace Enemies
 
             yield return new WaitForSeconds(0.25f);
             StartCoroutine(FindPath());
-        }
-
-        private Vector3[] GetDetectionPositions()
-        {
-            if (segmentsAmount <= 0 || visionAngle <= 0) return Array.Empty<Vector3>();
-
-            var positions = new Vector3[segmentsAmount];
-            var proportion = visionAngle / (segmentsAmount - 1);
-            int index = 0;
-            for (float i = -visionAngle / 2; i <= visionAngle / 2; i += proportion)
-            {
-                var radI = Mathf.Deg2Rad * (i - transform.localRotation.eulerAngles.y + 90f);
-                var linePos = new Vector3(Mathf.Cos(radI), 0f, Mathf.Sin(radI));
-                positions[index] = linePos.normalized;
-                index++;
-            }
-
-            return positions;
         }
 
         private void OnDrawGizmosSelected()

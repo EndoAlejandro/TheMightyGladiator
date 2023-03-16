@@ -60,7 +60,7 @@ namespace PlayerComponents
                 var angle = Vector3.Angle(direction, _player.transform.forward);
                 if (angle > _player.AttackAngle) continue;
 
-                enemy.TakeDamage(_player);
+                enemy.TakeDamage(_player.transform.position);
                 _player.DealDamage(result.ClosestPoint(_player.transform.position));
                 CamShake.Instance.Shake();
             }

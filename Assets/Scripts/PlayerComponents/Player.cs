@@ -33,6 +33,8 @@ namespace PlayerComponents
         [SerializeField] private float defendBoxSize = 1f;
         [SerializeField] private float parryTime;
         [SerializeField] private float defendRate = 0.5f;
+        [SerializeField] private float dodgeSpeed;
+        [SerializeField] private float dodgeDistance;
 
         [Header("Health")]
         [SerializeField] private float immunityTime = 1.5f;
@@ -59,6 +61,8 @@ namespace PlayerComponents
         public float ParryTime => parryTime;
         public LayerMask AttackLayerMask => attackLayerMask;
         public float Height { get; private set; }
+        public float DodgeSpeed => dodgeSpeed;
+        public float DodgeDistance => dodgeDistance;
 
         private Collider _collider;
         private Rigidbody _rigidbody;
@@ -94,11 +98,11 @@ namespace PlayerComponents
 
         public void ShieldHit() => OnShieldHit?.Invoke();
 
-        public void TakeDamage(Enemy enemy)
+        public void TakeDamage(Vector3 enemyPosition, int amount)
         {
             _immunityTimer = immunityTime;
-            var direction = Utils.NormalizedFlatDirection(transform.position, enemy.transform.position);
-            _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);
+            var direction = Utils.NormalizedFlatDirection(transform.position, enemyPosition);
+            _rigidbody.AddForce(direction * 15f, ForceMode.Impulse);
             Hit();
         }
 
@@ -112,8 +116,9 @@ namespace PlayerComponents
             if (!_shieldActive) return true;
 
             var direction = Utils.NormalizedFlatDirection(enemyPosition, transform.position);
-            var angle = Vector3.Angle(direction, transform.forward);
-            return angle > DefendAngle;
+            var result = Vector3.Angle(direction, transform.forward) > DefendAngle;
+            if (!result) ShieldHit();
+            return result;
         }
 
         private void OnDrawGizmos()

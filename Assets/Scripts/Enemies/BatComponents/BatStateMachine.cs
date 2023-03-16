@@ -61,9 +61,9 @@ namespace Enemies.BatComponents
             stateMachine.SetState(_damage);
         }
 
-        private void BatOnHit(Player player)
+        private void BatOnHit(Vector3 position)
         {
-            var direction = Utils.NormalizedFlatDirection(transform.position, _player.transform.position);
+            var direction = Utils.NormalizedFlatDirection(transform.position, position);
             _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);
             stateMachine.SetState(_damage);
         }

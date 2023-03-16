@@ -13,9 +13,8 @@ namespace Enemies.WormComponents
 
         public bool Ended => _timer <= 0f;
 
-        public WormAttack(Worm worm)
+        public WormAttack(Worm worm) : base(worm)
         {
-            enemy = worm;
             _worm = worm;
             _results = new Collider[5];
 
@@ -24,6 +23,7 @@ namespace Enemies.WormComponents
 
         public override void Tick()
         {
+            base.Tick();
             _timer -= Time.deltaTime;
 
             var size = Physics.OverlapSphereNonAlloc(enemy.transform.position + _offset, _worm.AttackRadius, _results);
@@ -32,7 +32,7 @@ namespace Enemies.WormComponents
                 var result = _results[i];
                 if (!result.TryGetComponent(out Player player)) continue;
                 if (!player.TryToDealDamage(_worm.transform.position)) continue;
-                player.TakeDamage(_worm);
+                player.TakeDamage(_worm.transform.position, 1);
             }
         }
 
