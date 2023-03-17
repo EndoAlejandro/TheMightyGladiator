@@ -1,4 +1,3 @@
-using System;
 using PlayerComponents;
 using UnityEngine;
 
@@ -8,11 +7,15 @@ namespace Enemies.BigBobComponents
     {
         [SerializeField] private BigBobBullet bullet;
         [SerializeField] private int bulletsAmount = 5;
+        [SerializeField] private float attackRange;
+        [SerializeField] private float yOffset = 0.5f;
 
         public BigBobBullet Bullet => bullet;
 
         public int BulletsAmount => bulletsAmount;
         public override bool IsAlive => true;
+        public float AttackRange => attackRange;
+        public float YOffset => yOffset;
 
         private Collider _collider;
 
@@ -33,6 +36,11 @@ namespace Enemies.BigBobComponents
         {
             base.SetIsAttacking(isAttacking);
             _collider.isTrigger = isAttacking;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(transform.position + Vector3.up * YOffset, attackRange);
         }
     }
 }

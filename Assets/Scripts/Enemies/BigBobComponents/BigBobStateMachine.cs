@@ -25,13 +25,13 @@ namespace Enemies.BigBobComponents
 
             stateMachine.SetState(idle);
 
-            // stateMachine.AddTransition(idle, attack, () => idle.Ended);
-            // stateMachine.AddTransition(attack, idle, () => attack.Ended);
-            
-            stateMachine.AddTransition(idle, initialJump, () => idle.Ended);
+            stateMachine.AddTransition(idle, initialJump, () => idle.Ended && idle.NextState == 0);
             stateMachine.AddTransition(initialJump, airJump, () => initialJump.Ended);
             stateMachine.AddTransition(airJump, endJump, () => airJump.Ended);
             stateMachine.AddTransition(endJump, idle, () => endJump.Ended);
+
+            stateMachine.AddTransition(idle, attack, () => idle.Ended && idle.NextState == 1);
+            stateMachine.AddTransition(attack, idle, () => attack.Ended);
         }
 
         private void References()

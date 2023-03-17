@@ -50,6 +50,7 @@ namespace PlayerComponents
         public bool CanDodge => _dodgeTimer <= 0f;
         public bool CanDefend => _defendTimer <= 0f;
         public bool IsImmune => _immunityTimer > 0f;
+        public bool IsDodging { get; private set; }
         public float Speed => speed;
         public float Acceleration => acceleration;
         public float RotationSpeed => rotationSpeed;
@@ -84,7 +85,11 @@ namespace PlayerComponents
 
         public void Attack() => _attackTimer = attackRate;
 
-        public void Dodge() => _dodgeTimer = dodgeCd;
+        public void SetDodgeState(bool state)
+        {
+            IsDodging = state;
+            if (!state) _dodgeTimer = dodgeCd;
+        }
 
         public void Parry()
         {
@@ -112,6 +117,7 @@ namespace PlayerComponents
 
         public bool TryToDealDamage(Vector3 enemyPosition)
         {
+            if (IsDodging) return false;
             if (IsImmune) return false;
             if (!_shieldActive) return true;
 

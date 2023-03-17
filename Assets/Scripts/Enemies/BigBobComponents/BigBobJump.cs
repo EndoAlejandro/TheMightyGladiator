@@ -83,16 +83,20 @@ namespace Enemies.BigBobComponents
 
     public class BigBobEndJump : IState
     {
+        private const float Speed = 50f;
+
         private readonly BigBob _bigBob;
         private readonly Rigidbody _rigidbody;
+        private readonly Collider[] _results;
 
         public bool Ended { get; private set; }
-        private const float Speed = 25f;
 
         public BigBobEndJump(BigBob bigBob, Rigidbody rigidbody)
         {
             _bigBob = bigBob;
             _rigidbody = rigidbody;
+
+            _results = new Collider[10];
         }
 
         public void Tick()
@@ -100,6 +104,17 @@ namespace Enemies.BigBobComponents
             if (_bigBob.transform.position.y < 0) Ended = true;
 
             _bigBob.transform.position += Vector3.down * Speed * Time.deltaTime;
+
+            var size = Physics.OverlapSphereNonAlloc(_bigBob.transform.position + Vector3.up * _bigBob.YOffset,
+                _bigBob.AttackRange, _results);
+
+            for (int i = 0; i < size; i++)
+            {
+                var result = _results[i];
+                if (!result.TryGetComponent(out Player player)) continue;
+                if (player.TryToDealDamage(_bigBob.transform.position))
+                    player.TakeDamage(_bigBob.transform.position, 1);
+            }
         }
 
         public void FixedTick()

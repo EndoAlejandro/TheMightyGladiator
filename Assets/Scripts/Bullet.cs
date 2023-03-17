@@ -22,7 +22,7 @@ public class Bullet : PooledMonoBehaviour
         _direction = direction;
         _speed = speed;
     }
-    
+
     private void FixedUpdate() => _rigidbody.velocity = _direction * _speed;
 
     public void Parry()
@@ -48,17 +48,10 @@ public class Bullet : PooledMonoBehaviour
         {
             if (other.TryGetComponent(out Enemy enemy)) return;
 
-            if (other.TryGetComponent(out Player player))
-            {
-                if (!player.TryToDealDamage(transform.position)) return;
-                
+            if (other.TryGetComponent(out Player player) && player.TryToDealDamage(transform.position))
                 player.TakeDamage(transform.position, 1);
-                ReturnToPool();
-            }
-            else
-            {
-                ReturnToPool();
-            }
+            
+            ReturnToPool();
         }
     }
 

@@ -8,6 +8,7 @@ namespace Enemies.BigBobComponents
         private readonly BigBob _bigBob;
         private float _timer;
         public bool Ended => _timer <= 0f;
+        public int NextState { get; private set; }
 
         public BigBobIdle(BigBob bigBob)
         {
@@ -20,7 +21,11 @@ namespace Enemies.BigBobComponents
         {
         }
 
-        public void OnEnter() => _timer = 5f;
+        public void OnEnter()
+        {
+            _timer = 5f;
+            NextState = Random.Range(0, 2);
+        }
 
         public void OnExit()
         {

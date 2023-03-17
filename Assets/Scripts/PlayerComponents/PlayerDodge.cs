@@ -39,15 +39,16 @@ namespace PlayerComponents
         {
             _currentDistance = GetDistance();
             if (_currentDistance > _lastDistance) Ended = true;
-            
+
             _rigidbody.AddForce(_direction * _player.DodgeSpeed * _player.Acceleration, ForceMode.Force);
             _lastDistance = GetDistance();
         }
 
         public void OnEnter()
         {
+            _player.SetDodgeState(true);
             Ended = false;
-            
+
             _timer = ExitDodgeTime;
 
             _direction = InputReader.Instance.Movement.magnitude == 0f
@@ -58,6 +59,6 @@ namespace PlayerComponents
             _lastDistance = GetDistance();
         }
 
-        public void OnExit() => _player.Dodge();
+        public void OnExit() => _player.SetDodgeState(false);
     }
 }

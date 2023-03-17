@@ -680,8 +680,10 @@ GameObject:
   - component: {fileID: 858428976}
   - component: {fileID: 858428982}
   - component: {fileID: 858428981}
+  - component: {fileID: 858428984}
   - component: {fileID: 858428979}
   - component: {fileID: 858428980}
+  - component: {fileID: 858428983}
   m_Layer: 8
   m_Name: Boss
   m_TagString: Untagged
@@ -768,6 +770,40 @@ MonoBehaviour:
   prepareToAttackTime: 1
   bullet: {fileID: 3504919690102820189, guid: 1d787f31288a4694c817cff0b618f818, type: 3}
   bulletsAmount: 5
+  attackRange: 2.5
+  yOffset: 0.62
+--- !u!95 &858428983
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858428975}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4d5bb08df96f80b498aeeb71536b55ab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &858428984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858428975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1019234e4ea8664aa12ee0bc5e565ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &894747648
 GameObject:
   m_ObjectHideFlags: 0
