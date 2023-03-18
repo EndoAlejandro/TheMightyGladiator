@@ -35,7 +35,7 @@ namespace Inputs
         private Vector2 Aiming()
         {
             var mouseScreen = _input.Main.Aim.ReadValue<Vector2>();
-            return new Vector2(mouseScreen.x / Screen.width, mouseScreen.y / Screen.height) - Vector2.one / 2;
+            return new Vector2(mouseScreen.x / Screen.width, mouseScreen.y / Screen.height); //- Vector2.one / 2;
         }
     }
 }

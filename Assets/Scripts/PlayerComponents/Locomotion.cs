@@ -37,7 +37,10 @@ namespace PlayerComponents
 
         private void PlayerRotation()
         {
-            var aimDirection = new Vector3(InputReader.Instance.Aim.x, 0f, InputReader.Instance.Aim.y);
+            Vector2 playerViewPort = Camera.main.WorldToViewportPoint(transform.position);
+            var viewportDirection = (InputReader.Instance.Aim - playerViewPort).normalized;
+            var aimDirection = new Vector3(viewportDirection.x, 0f, viewportDirection.y);
+
             transform.forward =
                 Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * _player.RotationSpeed);
         }

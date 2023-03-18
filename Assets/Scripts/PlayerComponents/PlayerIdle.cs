@@ -18,20 +18,10 @@ namespace PlayerComponents
 
         public void Tick()
         {
-            /*var aimDirection = new Vector3(InputReader.Instance.Aim.x, 0f, InputReader.Instance.Aim.y);
-            _player.transform.forward =
-                Vector3.Lerp(_player.transform.forward, aimDirection, Time.deltaTime * _player.RotationSpeed);
-
-            _moveDirection = new Vector3(InputReader.Instance.Movement.x, 0f, InputReader.Instance.Movement.y)
-                .normalized;*/
         }
 
         public void FixedTick()
         {
-            /*_rigidbody.AddForce(_moveDirection * (_player.Speed * _player.Acceleration), ForceMode.Force);
-
-            if (_rigidbody.velocity.magnitude > _player.Speed)
-                _rigidbody.velocity = _rigidbody.velocity.normalized * _player.Speed;*/
         }
 
         public void OnEnter()
