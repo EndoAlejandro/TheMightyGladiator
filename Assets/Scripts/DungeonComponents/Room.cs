@@ -17,7 +17,7 @@ namespace DungeonComponents
         private RoomData _roomData;
         private RoomSpawn _spawn;
         private RoomCleared _cleared;
-
+        
         public bool IsCleared { get; private set; }
         private RoomIdle _idle;
 
