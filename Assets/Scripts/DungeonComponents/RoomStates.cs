@@ -44,6 +44,7 @@ namespace DungeonComponents
 
         public void OnEnter()
         {
+            // Useless change.
         }
 
         public void OnExit()
