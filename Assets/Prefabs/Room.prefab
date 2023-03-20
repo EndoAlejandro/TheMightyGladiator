@@ -257,7 +257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3533630028682175881
 Transform:
   m_ObjectHideFlags: 0
@@ -470,6 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomBody: {fileID: 1311381281259443709}
   cover: {fileID: 4458572662266686440}
+  spawnTime: 0
 --- !u!54 &353319033320598592
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -888,7 +889,7 @@ PrefabInstance:
     - target: {fileID: 8050731814608628036, guid: 4003126f5b01d46449826c2672f5f66a,
         type: 3}
       propertyPath: m_Name
-      value: South_Door (1)
+      value: West_Door
       objectReference: {fileID: 0}
     - target: {fileID: 8050731814608628036, guid: 4003126f5b01d46449826c2672f5f66a,
         type: 3}
@@ -1300,6 +1301,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7144315155530889456}
     m_Modifications:
+    - target: {fileID: 1878029926501025817, guid: 6cf997ccf1a755a4dbbae28a8e34935c,
+        type: 3}
+      propertyPath: doorSide
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3567787784943081164, guid: 6cf997ccf1a755a4dbbae28a8e34935c,
         type: 3}
       propertyPath: m_Name
@@ -1374,6 +1380,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7799269612531272932}
     m_Modifications:
+    - target: {fileID: 1878029926501025817, guid: 6cf997ccf1a755a4dbbae28a8e34935c,
+        type: 3}
+      propertyPath: doorSide
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3567787784943081164, guid: 6cf997ccf1a755a4dbbae28a8e34935c,
         type: 3}
       propertyPath: m_Name
@@ -1693,6 +1704,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2720753605582536204}
     m_Modifications:
+    - target: {fileID: 1878029926501025817, guid: 6cf997ccf1a755a4dbbae28a8e34935c,
+        type: 3}
+      propertyPath: doorSide
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2384483325664502320, guid: 6cf997ccf1a755a4dbbae28a8e34935c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3567787784943081164, guid: 6cf997ccf1a755a4dbbae28a8e34935c,
         type: 3}
       propertyPath: m_Name
@@ -1929,7 +1950,7 @@ PrefabInstance:
     - target: {fileID: 8050731814608628036, guid: 4003126f5b01d46449826c2672f5f66a,
         type: 3}
       propertyPath: m_Name
-      value: South_Door (2)
+      value: East_Door
       objectReference: {fileID: 0}
     - target: {fileID: 8050731814608628036, guid: 4003126f5b01d46449826c2672f5f66a,
         type: 3}

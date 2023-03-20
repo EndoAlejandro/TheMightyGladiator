@@ -316,6 +316,7 @@ MonoBehaviour:
   shotAngle: 360
   bullet: {fileID: 6316239716474771813, guid: e700f036a0a03114088a17838d8262e3, type: 3}
   bulletSpeed: 10
+  detectionRange: 10
 --- !u!114 &7500587482687819948
 MonoBehaviour:
   m_ObjectHideFlags: 0

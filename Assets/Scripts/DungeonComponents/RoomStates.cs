@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace DungeonComponents
 {
-    public class RoomInvisible : IState
+    public class RoomIdle : IState
     {
         private readonly GameObject _roomBody;
 
-        public RoomInvisible(GameObject roomBody) => _roomBody = roomBody;
+        public RoomIdle(GameObject roomBody) => _roomBody = roomBody;
 
         public void Tick()
         {
@@ -19,24 +19,27 @@ namespace DungeonComponents
 
         public void OnEnter()
         {
-            // _roomBody.SetActive(false);
         }
 
         public void OnExit()
         {
-            // _roomBody.SetActive(true);
         }
     }
 
     public class RoomSpawn : IState
     {
         private readonly Room _room;
+        private readonly Door[] _doors;
+        private float _timer;
+        public bool Ended => _timer <= 0f;
 
-        public RoomSpawn(Room room) => _room = room;
-
-        public void Tick()
+        public RoomSpawn(Room room, Door[] doors)
         {
+            _room = room;
+            _doors = doors;
         }
+
+        public void Tick() => _timer -= Time.deltaTime;
 
         public void FixedTick()
         {
@@ -44,6 +47,9 @@ namespace DungeonComponents
 
         public void OnEnter()
         {
+            _timer = _room.SpawnTime;
+
+            foreach (var door in _doors) door.SetIsOpen(false);
         }
 
         public void OnExit()
@@ -53,6 +59,13 @@ namespace DungeonComponents
 
     public class RoomBattle : IState
     {
+        private readonly Door[] _doors;
+
+        public RoomBattle(Door[] doors)
+        {
+            _doors = doors;
+        }
+
         public void Tick()
         {
         }
