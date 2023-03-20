@@ -1,6 +1,7 @@
 using PlayerComponents;
 using ProceduralGeneration;
 using StateMachineComponents;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,7 +18,8 @@ namespace DungeonComponents
         private RoomData _roomData;
         private RoomSpawn _spawn;
         private RoomCleared _cleared;
-        
+        private NavMeshSurface _navMeshSurface;
+
         public bool IsCleared { get; private set; }
         private RoomIdle _idle;
 
@@ -35,6 +37,7 @@ namespace DungeonComponents
             if (RoomType == RoomType.Origin) IsCleared = true;
 
             _doors = GetComponentsInChildren<Door>();
+            _navMeshSurface = GetComponent<NavMeshSurface>();
 
             _idle = new RoomIdle(_doors);
             _spawn = new RoomSpawn(this, _doors);
@@ -59,7 +62,14 @@ namespace DungeonComponents
         {
             roomBody.SetActive(isVisible);
             cover.SetActive(!isVisible);
-            if (!isVisible) stateMachine.SetState(_idle);
+            if (isVisible)
+            {
+                _navMeshSurface.BuildNavMesh();
+            }
+            else
+            {
+                stateMachine.SetState(_idle);
+            }
         }
 
         private void OnTriggerEnter(Collider other)
