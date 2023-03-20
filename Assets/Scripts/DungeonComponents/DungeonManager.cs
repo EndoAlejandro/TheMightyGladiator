@@ -1,4 +1,5 @@
-﻿using PlayerComponents;
+﻿using Enemies;
+using PlayerComponents;
 using ProceduralGeneration;
 using Unity.Mathematics;
 using UnityEngine;
@@ -12,10 +13,14 @@ namespace DungeonComponents
 
         [SerializeField] private Player playerPrefab;
 
+        [SerializeField] private Enemy[] enemies;
+        public Enemy[] Enemies => enemies;
+        
         private DungeonGenerator _dungeonGenerator;
         public Room CurrentRoom { get; private set; }
-
         public Room[,] Matrix { get; private set; }
+
+        private Player _player;
 
         private void Awake()
         {
@@ -39,22 +44,23 @@ namespace DungeonComponents
                 if (room == null) continue;
                 room.SetRoomVisibility(false);
 
-                if (room.TileType == TileType.Origin)
+                if (room.RoomType == RoomType.Origin)
                 {
+                    _player = Instantiate(playerPrefab, room.transform.position, quaternion.identity);
                     SetCurrentRoom(room);
-                    Instantiate(playerPrefab, room.transform.position, quaternion.identity);
                 }
             }
         }
 
         public void SetCurrentRoom(Room room)
         {
-            if (CurrentRoom != null) 
+            if (CurrentRoom != null)
                 CurrentRoom.SetRoomVisibility(false);
-            
+
             CurrentRoom = room;
             CameraManager.Instance.SetTarget(CurrentRoom.transform);
             CurrentRoom.SetRoomVisibility(true);
+            if (!CurrentRoom.IsCleared) _player.Sleep(1.5f);
         }
     }
 }

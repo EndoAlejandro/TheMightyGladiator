@@ -8,13 +8,13 @@ namespace ProceduralGeneration
     public class Walker
     {
         public Vector2Int Position { get; private set; }
-        private readonly TileType _tileType;
+        private readonly RoomType _roomType;
         private int _remainingSteps;
 
-        public Walker(Vector2Int position, TileType tileType, int steps)
+        public Walker(Vector2Int position, RoomType roomType, int steps)
         {
             Position = position;
-            _tileType = tileType;
+            _roomType = roomType;
             _remainingSteps = steps;
         }
 
@@ -29,7 +29,7 @@ namespace ProceduralGeneration
                 var nextPosition = stepValue + Position;
 
                 if (IsOutOfBounds(nextPosition, matrix) ||
-                    matrix[nextPosition.x, nextPosition.y]?.TileType == TileType.Boss)
+                    matrix[nextPosition.x, nextPosition.y]?.RoomType == RoomType.Boss)
                     continue;
 
                 matrix[Position.x, Position.y].SetDoorValue(direction, DoorType.Normal);
@@ -39,7 +39,7 @@ namespace ProceduralGeneration
                     nextRoom = matrix[nextPosition.x, nextPosition.y];
                 else
                 {
-                    var nextTile = _remainingSteps > 0 ? TileType.Room : _tileType;
+                    var nextTile = _remainingSteps > 0 ? RoomType.Room : _roomType;
                     nextRoom = new RoomData(nextPosition, nextTile);
                     _remainingSteps--;
                 }

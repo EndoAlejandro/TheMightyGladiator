@@ -7,13 +7,13 @@ namespace ProceduralGeneration
     public class RoomData
     {
         public Vector2Int Positions { get; private set; }
-        public TileType TileType { get; private set; }
+        public RoomType RoomType { get; private set; }
         public Dictionary<DoorSide, DoorType> Doors { get; private set; }
 
-        public RoomData(Vector2Int position, TileType tileType)
+        public RoomData(Vector2Int position, RoomType roomType)
         {
             Positions = position;
-            TileType = tileType;
+            RoomType = roomType;
             InitializeDoors();
         }
 

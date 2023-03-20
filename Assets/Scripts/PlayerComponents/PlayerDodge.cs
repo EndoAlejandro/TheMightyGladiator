@@ -40,7 +40,7 @@ namespace PlayerComponents
             _currentDistance = GetDistance();
             if (_currentDistance > _lastDistance) Ended = true;
 
-            _rigidbody.AddForce(_direction * _player.DodgeSpeed * _player.Acceleration, ForceMode.Force);
+            _rigidbody.AddForce(_direction * _player.DodgeSpeed * _player.Acceleration, ForceMode.Acceleration);
             _lastDistance = GetDistance();
         }
 

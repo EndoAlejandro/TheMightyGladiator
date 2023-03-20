@@ -1,6 +1,6 @@
 namespace ProceduralGeneration
 {
-    public enum TileType
+    public enum RoomType
     {
         Empty,
         Room,

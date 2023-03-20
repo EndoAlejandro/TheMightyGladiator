@@ -31,11 +31,11 @@ namespace ProceduralGeneration
         {
             Setup();
 
-            _matrix[_origin.x, _origin.y] = new RoomData(_origin, TileType.Origin);
+            _matrix[_origin.x, _origin.y] = new RoomData(_origin, RoomType.Origin);
 
-            var bossWalker = new Walker(_origin, TileType.Boss, maxSteps);
+            var bossWalker = new Walker(_origin, RoomType.Boss, maxSteps);
             _matrix = bossWalker.Walk(_matrix);
-            var walker = new Walker(_origin, TileType.Room, maxSteps);
+            var walker = new Walker(_origin, RoomType.Room, maxSteps);
             _matrix = walker.Walk(_matrix);
 
             CreateRooms();
@@ -52,10 +52,10 @@ namespace ProceduralGeneration
 
                     var spawnPosition = CalculateTileSpawnPosition(i, j);
 
-                    Room roomToInstantiate = _matrix[i, j].TileType switch
+                    Room roomToInstantiate = _matrix[i, j].RoomType switch
                     {
-                        TileType.Origin => initialRoomPrefab,
-                        TileType.Boss => bossRoomPrefab,
+                        RoomType.Origin => initialRoomPrefab,
+                        RoomType.Boss => bossRoomPrefab,
                         _ => normalRoomsPrefabs[Random.Range(0, normalRoomsPrefabs.Length)]
                     };
 

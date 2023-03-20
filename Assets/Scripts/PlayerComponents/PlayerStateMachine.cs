@@ -1,5 +1,6 @@
 using Inputs;
 using StateMachineComponents;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PlayerComponents
@@ -30,10 +31,23 @@ namespace PlayerComponents
             stateMachine.AddTransition(shield, dodge, () => InputReader.Instance.Dodge && _player.CanDodge);
             stateMachine.AddTransition(dodge, idle, () => dodge.Ended);
         }
+
         private void References()
         {
             _player = GetComponent<Player>();
             _rigidbody = GetComponent<Rigidbody>();
+        }
+
+        protected override void Update()
+        {
+            if (!_player.CanMove) return;
+            base.Update();
+        }
+
+        protected override void FixedUpdate()
+        {
+            if (!_player.CanMove) return;
+            base.FixedUpdate();
         }
     }
 }

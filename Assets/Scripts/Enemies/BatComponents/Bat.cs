@@ -8,7 +8,6 @@ namespace Enemies.BatComponents
     public class Bat : Enemy
     {
         public event Action<Vector3> OnHit;
-        public event Action<Player> OnKnockBack;
         public event Action<Player> OnParry;
 
         [Header("Health")]

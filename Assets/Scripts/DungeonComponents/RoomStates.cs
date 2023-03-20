@@ -5,9 +5,9 @@ namespace DungeonComponents
 {
     public class RoomIdle : IState
     {
-        private readonly GameObject _roomBody;
+        private readonly Door[] _doors;
 
-        public RoomIdle(GameObject roomBody) => _roomBody = roomBody;
+        public RoomIdle(Door[] doors) => _doors = doors;
 
         public void Tick()
         {
@@ -19,6 +19,7 @@ namespace DungeonComponents
 
         public void OnEnter()
         {
+            foreach (var door in _doors) door.gameObject.SetActive(false);
         }
 
         public void OnExit()
@@ -49,7 +50,11 @@ namespace DungeonComponents
         {
             _timer = _room.SpawnTime;
 
-            foreach (var door in _doors) door.SetIsOpen(false);
+            foreach (var door in _doors)
+            {
+                door.gameObject.SetActive(true);
+                door.SetIsOpen(false);
+            }
         }
 
         public void OnExit()
@@ -59,27 +64,32 @@ namespace DungeonComponents
 
     public class RoomBattle : IState
     {
+        private readonly Room _room;
         private readonly Door[] _doors;
+        private float _timer;
+        public bool Ended => _timer <= 0f;
 
-        public RoomBattle(Door[] doors)
+        public RoomBattle(Room room, Door[] doors)
         {
+            _room = room;
             _doors = doors;
         }
 
-        public void Tick()
-        {
-        }
+        public void Tick() => _timer -= Time.deltaTime;
 
         public void FixedTick()
         {
         }
 
-        public void OnEnter()
-        {
-        }
+        public void OnEnter() => _timer = 2f;
 
         public void OnExit()
         {
+            _room.ClearRoom();
+            foreach (var door in _doors)
+            {
+                door.SetIsOpen(true);
+            }
         }
     }
 

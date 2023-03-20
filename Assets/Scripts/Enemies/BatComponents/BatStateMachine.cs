@@ -48,7 +48,6 @@ namespace Enemies.BatComponents
         private void Start()
         {
             _bat.OnHit += BatOnHit;
-            _bat.OnKnockBack += BatOnKnockBack;
             _bat.OnParry += BatOnParry;
         }
 
