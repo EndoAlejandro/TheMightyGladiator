@@ -1,9 +1,11 @@
+using System.Collections.Generic;
+using Enemies;
 using PlayerComponents;
+using Pooling;
 using ProceduralGeneration;
 using StateMachineComponents;
 using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace DungeonComponents
 {
@@ -22,12 +24,15 @@ namespace DungeonComponents
 
         public bool IsCleared { get; private set; }
         private RoomIdle _idle;
+        private int _enemyCount;
 
         public int ID { get; private set; }
         public float SpawnTime => spawnTime;
         public RoomType RoomType { get; private set; }
+        public VasePattern VasePattern { get; private set; }
+        public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
 
-        public void Setup(RoomData roomData)
+        public void Setup(RoomData roomData, VasePattern vasePattern)
         {
             ID = gameObject.GetInstanceID();
 
@@ -35,10 +40,16 @@ namespace DungeonComponents
             RoomType = _roomData.RoomType;
 
             if (RoomType == RoomType.Origin) IsCleared = true;
+            else VasePattern = Instantiate(vasePattern, transform.position, Quaternion.identity, roomBody.transform);
 
             _doors = GetComponentsInChildren<Door>();
             _navMeshSurface = GetComponent<NavMeshSurface>();
 
+            StateManagement();
+        }
+
+        private void StateManagement()
+        {
             _idle = new RoomIdle(_doors);
             _spawn = new RoomSpawn(this, _doors);
             _cleared = new RoomCleared();
@@ -48,7 +59,7 @@ namespace DungeonComponents
 
             stateMachine.AddTransition(_idle, _spawn, () => IsThisRoomActive() && !IsCleared);
             stateMachine.AddTransition(_spawn, battle, () => _spawn.Ended);
-            stateMachine.AddTransition(battle, _cleared, () => battle.Ended);
+            stateMachine.AddTransition(battle, _cleared, () => _enemyCount <= 0);
 
             stateMachine.AddTransition(_idle, _cleared, () => IsThisRoomActive() && IsCleared);
             stateMachine.AddTransition(_cleared, _idle, () => !IsThisRoomActive());
@@ -63,13 +74,9 @@ namespace DungeonComponents
             roomBody.SetActive(isVisible);
             cover.SetActive(!isVisible);
             if (isVisible)
-            {
                 _navMeshSurface.BuildNavMesh();
-            }
             else
-            {
                 stateMachine.SetState(_idle);
-            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -86,5 +93,15 @@ namespace DungeonComponents
             if (!IsThisRoomActive()) return;
             if (!IsCleared) stateMachine.SetState(_spawn);
         }
+
+        public void SetEnemies(List<Enemy> enemies)
+        {
+            Enemies = enemies;
+            _enemyCount = enemies.Count;
+            foreach (var enemy in Enemies)
+                enemy.OnDead += EnemyOnDead;
+        }
+
+        private void EnemyOnDead(Enemy enemy) => _enemyCount--;
     }
 }

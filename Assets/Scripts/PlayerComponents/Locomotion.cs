@@ -51,7 +51,8 @@ namespace PlayerComponents
             var flatVelocity = _rigidbody.velocity.With(y: 0f);
             if (flatVelocity.magnitude > _player.Speed)
                 _rigidbody.velocity =
-                    flatVelocity.normalized * _player.Speed + Vector3.up * _rigidbody.velocity.y;
+                    flatVelocity.normalized * _player.Speed +
+                    Vector3.up * (_rigidbody.velocity.y - 9.8f * Time.deltaTime);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace ProceduralGeneration
         [SerializeField] private Room initialRoomPrefab;
         [SerializeField] private Room bossRoomPrefab;
         [SerializeField] private Room[] normalRoomsPrefabs;
+        [SerializeField] private VasePattern[] vasePatterns;
 
         private RoomData[,] _matrix;
         private Room[,] _roomMatrix;
@@ -61,7 +62,8 @@ namespace ProceduralGeneration
 
                     var instancedRoom = Instantiate(roomToInstantiate, spawnPosition, Quaternion.identity);
                     instancedRoom.transform.parent = transform;
-                    instancedRoom.Setup(_matrix[i, j]);
+                    var vasePattern = vasePatterns[Random.Range(0, vasePatterns.Length)];
+                    instancedRoom.Setup(_matrix[i, j], vasePattern);
                     _roomMatrix[i, j] = instancedRoom;
                 }
             }

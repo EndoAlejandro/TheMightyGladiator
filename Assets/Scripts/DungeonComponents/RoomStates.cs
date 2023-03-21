@@ -1,4 +1,6 @@
-﻿using StateMachineComponents;
+﻿using System.Collections.Generic;
+using Enemies;
+using StateMachineComponents;
 using UnityEngine;
 
 namespace DungeonComponents
@@ -55,6 +57,19 @@ namespace DungeonComponents
                 door.gameObject.SetActive(true);
                 door.SetIsOpen(false);
             }
+
+            if (_room.Enemies.Count > 0) return;
+
+            var spawnPoints = _room.VasePattern.SpawnPoints;
+            var enemies = new List<Enemy>();
+            foreach (var spawnPoint in spawnPoints)
+            {
+                var enemy = spawnPoint.SpawnEnemy(
+                    DungeonManager.Instance.Enemies[Random.Range(0, DungeonManager.Instance.Enemies.Length)]);
+                enemies.Add(enemy);
+            }
+
+            _room.SetEnemies(enemies);
         }
 
         public void OnExit()
@@ -66,8 +81,6 @@ namespace DungeonComponents
     {
         private readonly Room _room;
         private readonly Door[] _doors;
-        private float _timer;
-        public bool Ended => _timer <= 0f;
 
         public RoomBattle(Room room, Door[] doors)
         {
@@ -75,13 +88,17 @@ namespace DungeonComponents
             _doors = doors;
         }
 
-        public void Tick() => _timer -= Time.deltaTime;
+        public void Tick()
+        {
+        }
 
         public void FixedTick()
         {
         }
 
-        public void OnEnter() => _timer = 2f;
+        public void OnEnter()
+        {
+        }
 
         public void OnExit()
         {

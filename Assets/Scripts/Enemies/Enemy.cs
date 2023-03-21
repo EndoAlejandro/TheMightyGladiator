@@ -1,4 +1,5 @@
-﻿using PlayerComponents;
+﻿using System;
+using PlayerComponents;
 using Pooling;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace Enemies
 {
     public abstract class Enemy : PooledMonoBehaviour
     {
+        public abstract event Action<Enemy> OnDead;
+        
         [Header("Base Movement")]
         [SerializeField] protected float maxHealth;
 
@@ -29,6 +32,7 @@ namespace Enemies
         public bool CanBeParried { get; private set; }
 
         public abstract bool IsAlive { get; }
+
         public abstract void TakeDamage(Vector3 position);
         public abstract void Parry(Player player);
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;

@@ -1,3 +1,4 @@
+using System;
 using CustomUtils;
 using PlayerComponents;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace Enemies.BlobComponents
 {
     public class Blob : Enemy
     {
+        public override event Action<Enemy> OnDead;
+
         [SerializeField] private LayerMask playerLayerMask;
         [SerializeField] private float moveRate = 1.5f;
 
@@ -34,7 +37,11 @@ namespace Enemies.BlobComponents
         {
             _health--;
 
-            if (_health <= 0) ReturnToPool();
+            if (_health <= 0)
+            {
+                OnDead?.Invoke(this);
+                ReturnToPool();
+            }
         }
 
         public override void Parry(Player player)

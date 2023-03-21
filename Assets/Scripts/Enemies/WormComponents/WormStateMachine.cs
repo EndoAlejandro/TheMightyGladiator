@@ -21,7 +21,7 @@ namespace Enemies.WormComponents
             var prepareAttack = new EnemyPrepareAttack(_worm);
             _stun = new WormStun(_worm);
 
-            stateMachine.SetState(idle);
+            stateMachine.SetState(attack);
 
             stateMachine.AddTransition(idle, prepareAttack, () => idle.Ended);
             stateMachine.AddTransition(prepareAttack, attack, () => prepareAttack.Ended);
@@ -30,10 +30,8 @@ namespace Enemies.WormComponents
             stateMachine.AddTransition(_stun, idle, () => _stun.Ended);
         }
 
-        private void Start()
-        {
-            _worm.OnParry += WormOnParry;
-        }
+        private void OnEnable() => _worm.OnParry += WormOnParry;
+        private void OnDisable() => _worm.OnParry -= WormOnParry;
 
         private void WormOnParry(Player player) => stateMachine.SetState(_stun);
 

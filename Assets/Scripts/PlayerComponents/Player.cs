@@ -113,7 +113,11 @@ namespace PlayerComponents
             Hit();
         }
 
-        public void DealDamage(Vector3 hitPoint) => OnDealDamage?.Invoke(hitPoint + Vector3.up * Height);
+        public void DealDamage(Vector3 hitPoint)
+        {
+            CamShake.Instance.Shake();
+            OnDealDamage?.Invoke(hitPoint + Vector3.up * Height);
+        }
 
         public void SetShieldActive(bool value) => _shieldActive = value;
 

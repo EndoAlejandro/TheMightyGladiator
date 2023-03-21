@@ -7,6 +7,7 @@ namespace Enemies.WormComponents
 {
     public class Worm : Enemy
     {
+        public override event Action<Enemy> OnDead;
         public event Action<Player> OnParry;
 
         [SerializeField] private float idleTime;
@@ -36,7 +37,11 @@ namespace Enemies.WormComponents
         {
             _health--;
 
-            if (_health <= 0) ReturnToPool();
+            if (_health <= 0)
+            {
+                OnDead?.Invoke(this);
+                ReturnToPool();
+            }
         }
 
         public void SetColliderState(bool state)
