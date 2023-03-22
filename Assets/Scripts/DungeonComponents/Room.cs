@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Enemies;
 using PlayerComponents;
-using Pooling;
 using ProceduralGeneration;
 using StateMachineComponents;
 using Unity.AI.Navigation;
@@ -39,8 +38,18 @@ namespace DungeonComponents
             _roomData = roomData;
             RoomType = _roomData.RoomType;
 
-            if (RoomType == RoomType.Origin) IsCleared = true;
-            else VasePattern = Instantiate(vasePattern, transform.position, Quaternion.identity, roomBody.transform);
+            switch (RoomType)
+            {
+                case RoomType.Origin:
+                    IsCleared = true;
+                    break;
+                case RoomType.Room:
+                    VasePattern = Instantiate(vasePattern, transform.position, Quaternion.identity, roomBody.transform);
+                    break;
+                case RoomType.Boss:
+                    VasePattern = Instantiate(vasePattern, transform.position, Quaternion.identity, roomBody.transform);
+                    break;
+            }
 
             _doors = GetComponentsInChildren<Door>();
             _navMeshSurface = GetComponent<NavMeshSurface>();
@@ -59,7 +68,7 @@ namespace DungeonComponents
 
             stateMachine.AddTransition(_idle, _spawn, () => IsThisRoomActive() && !IsCleared);
             stateMachine.AddTransition(_spawn, battle, () => _spawn.Ended);
-            stateMachine.AddTransition(battle, _cleared, () => _enemyCount <= 0);
+            stateMachine.AddTransition(battle, _cleared, () => Enemies.Count <= 0);
 
             stateMachine.AddTransition(_idle, _cleared, () => IsThisRoomActive() && IsCleared);
             stateMachine.AddTransition(_cleared, _idle, () => !IsThisRoomActive());
@@ -102,6 +111,11 @@ namespace DungeonComponents
                 enemy.OnDead += EnemyOnDead;
         }
 
-        private void EnemyOnDead(Enemy enemy) => _enemyCount--;
+        private void EnemyOnDead(Enemy enemy)
+        {
+            _enemyCount--;
+            Enemies.Remove(enemy);
+            enemy.OnDead -= EnemyOnDead;
+        }
     }
 }

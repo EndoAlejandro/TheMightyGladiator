@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Enemies;
+using ProceduralGeneration;
 using StateMachineComponents;
 using UnityEngine;
 
@@ -62,10 +63,16 @@ namespace DungeonComponents
 
             var spawnPoints = _room.VasePattern.SpawnPoints;
             var enemies = new List<Enemy>();
+            var isBoss = _room.RoomType == RoomType.Boss;
             foreach (var spawnPoint in spawnPoints)
             {
-                var enemy = spawnPoint.SpawnEnemy(
-                    DungeonManager.Instance.Enemies[Random.Range(0, DungeonManager.Instance.Enemies.Length)]);
+                var index = Random.Range(0, isBoss
+                    ? DungeonManager.Instance.Bosses.Length
+                    : DungeonManager.Instance.Enemies.Length
+                );
+                var enemy = spawnPoint.SpawnEnemy(isBoss
+                    ? DungeonManager.Instance.Bosses[index]
+                    : DungeonManager.Instance.Enemies[0]);
                 enemies.Add(enemy);
             }
 

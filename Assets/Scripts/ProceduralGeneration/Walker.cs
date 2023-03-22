@@ -39,9 +39,9 @@ namespace ProceduralGeneration
                     nextRoom = matrix[nextPosition.x, nextPosition.y];
                 else
                 {
+                    _remainingSteps--;
                     var nextTile = _remainingSteps > 0 ? RoomType.Room : _roomType;
                     nextRoom = new RoomData(nextPosition, nextTile);
-                    _remainingSteps--;
                 }
 
                 /*if (_remainingSteps <= 0)

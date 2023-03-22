@@ -43,7 +43,7 @@ namespace Enemies.BatComponents
             stateMachine.AddTransition(_knockBack, idle, () => _knockBack.Ended);
 
             // Death
-            stateMachine.AddAnyTransition(death, () => !_bat.IsAlive);
+            // stateMachine.AddAnyTransition(death, () => !_bat.IsAlive);
         }
 
         private void OnEnable()

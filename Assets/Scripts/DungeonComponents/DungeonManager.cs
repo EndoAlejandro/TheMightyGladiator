@@ -14,7 +14,9 @@ namespace DungeonComponents
         [SerializeField] private Player playerPrefab;
 
         [SerializeField] private Enemy[] enemies;
+        [SerializeField] private Enemy[] bosses;
         public Enemy[] Enemies => enemies;
+        public Enemy[] Bosses => bosses;
         
         private DungeonGenerator _dungeonGenerator;
         public Room CurrentRoom { get; private set; }

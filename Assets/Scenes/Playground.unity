@@ -476,6 +476,8 @@ MonoBehaviour:
   - {fileID: 4954962402361850672, guid: 86e9a2636d798ca4c9a6f1137d24d03d, type: 3}
   vasePatterns:
   - {fileID: 3381359007524568352, guid: e25f7d22458757a4baca467c79c3268c, type: 3}
+  bossVasePatterns:
+  - {fileID: 3381359007524568352, guid: f93f9358e65af874bb6cb83c5edad487, type: 3}
 --- !u!4 &625695867
 Transform:
   m_ObjectHideFlags: 0
@@ -509,6 +511,8 @@ MonoBehaviour:
   - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
   - {fileID: 7500587482687819955, guid: 5082e44f3469edd41bb590a09f5310c2, type: 3}
   - {fileID: 4055488643091119244, guid: 52f4f9b87c8a00341b838b4eda172853, type: 3}
+  bosses:
+  - {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
 --- !u!1 &631661442
 GameObject:
   m_ObjectHideFlags: 0
