@@ -72,7 +72,7 @@ namespace DungeonComponents
                 );
                 var enemy = spawnPoint.SpawnEnemy(isBoss
                     ? DungeonManager.Instance.Bosses[index]
-                    : DungeonManager.Instance.Enemies[0]);
+                    : DungeonManager.Instance.Enemies[index]);
                 enemies.Add(enemy);
             }
 
