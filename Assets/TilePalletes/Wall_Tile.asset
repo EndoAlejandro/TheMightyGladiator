@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wall_Tile
   m_EditorClassIdentifier: 
   m_Cells:
-  - m_GameObject: {fileID: 1405874100963962789, guid: 0d3da0d35384a224db50c6944ab0c44d,
+  - m_GameObject: {fileID: 6540093400054104524, guid: 7dc15c7456a38934088d02adef64b294,
       type: 3}
     m_Offset: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}

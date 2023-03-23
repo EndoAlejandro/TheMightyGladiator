@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using CustomUtils;
-using Enemies;
-using Enemies.BatComponents;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PlayerComponents

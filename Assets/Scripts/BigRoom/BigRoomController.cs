@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using DungeonComponents;
 using Enemies;
@@ -7,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace BigRoom
 {
-    public class BigRoomController : MonoBehaviour
+    public class BigRoomController : HadesRoom
     {
         [SerializeField] private int maxEnemies = 5;
         [SerializeField] private float spawnRate = 1f;

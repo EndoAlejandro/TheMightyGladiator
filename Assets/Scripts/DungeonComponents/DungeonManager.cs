@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using CustomUtils;
+using Enemies;
 using PlayerComponents;
 using ProceduralGeneration;
 using Unity.Mathematics;
@@ -7,33 +8,24 @@ using UnityEngine;
 namespace DungeonComponents
 {
     [RequireComponent(typeof(DungeonGenerator))]
-    public class DungeonManager : MonoBehaviour
+    public class DungeonManager : Singleton<DungeonManager>
     {
-        public static DungeonManager Instance { get; private set; }
-
         [SerializeField] private Player playerPrefab;
 
         [SerializeField] private Enemy[] enemies;
         [SerializeField] private Enemy[] bosses;
         public Enemy[] Enemies => enemies;
         public Enemy[] Bosses => bosses;
-        
+
         private DungeonGenerator _dungeonGenerator;
         public Room CurrentRoom { get; private set; }
         public Room[,] Matrix { get; private set; }
 
         private Player _player;
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-
+            base.Awake();
             _dungeonGenerator = GetComponent<DungeonGenerator>();
         }
 
