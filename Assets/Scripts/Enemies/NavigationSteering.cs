@@ -28,7 +28,8 @@ namespace Enemies
         public DirectionWeight BestDirection { get; private set; }
 
         private void Awake() => _playerTransform = FindObjectOfType<Player>().transform;
-        private void Start() => StartCoroutine(FindPath());
+        private void OnEnable() => StartCoroutine(FindPath());
+        private void OnDisable() => StopAllCoroutines();
 
         private IEnumerator FindPath()
         {
@@ -53,7 +54,7 @@ namespace Enemies
                 else
                 {
                     w = Utils.NormalizedDotProduct(_directions[i], _playerDirection) +
-                        Utils.NormalizedDotProduct(_directions[i], transform.forward);
+                        Utils.NormalizedDotProduct(_directions[i], transform.forward) + 1;
                 }
 
                 _sample[i] = new DirectionWeight(_directions[i], w);

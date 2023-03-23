@@ -111,15 +111,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4172247088674783533}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cebe84b14a44be89e3cb4678e4180b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionAngle: 316
+  visionAngle: 360
   segmentsAmount: 20
   detectionRange: 2
-  yOffset: 1
+  yOffset: 0.25
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 2147483647

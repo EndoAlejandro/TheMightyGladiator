@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15518827e5a4aca4cb047149f1f2b550, type: 3}
+  m_Name: Wall_Tile
+  m_EditorClassIdentifier: 
+  m_Cells:
+  - m_GameObject: {fileID: 1405874100963962789, guid: 0d3da0d35384a224db50c6944ab0c44d,
+      type: 3}
+    m_Offset: {x: 0, y: 0, z: 0}
+    m_Scale: {x: 1, y: 1, z: 1}
+    m_Orientation: {x: 0, y: 0, z: 0, w: 1}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Pivot: {x: 0, y: 0, z: 0}
+  m_CanChangeZPosition: 0
+  hiddenGridLayout:
+    cellSize: {x: 1, y: 1, z: 1}
+    cellGap: {x: 0, y: 0, z: 0}
+    cellLayout: 0
+    cellSwizzle: 0
+  hiddenGrid: {fileID: 0}
+  m_Anchor: {x: 0.5, y: 0.5, z: 0}

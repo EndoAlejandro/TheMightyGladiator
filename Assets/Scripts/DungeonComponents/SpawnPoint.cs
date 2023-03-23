@@ -13,5 +13,11 @@ namespace DungeonComponents
             fx.Get<PoolAfterSeconds>(transform.position, Quaternion.identity);
             return enemy.Get<Enemy>(transform.position, Quaternion.identity);
         }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.position + Vector3.up, 1f);
+        }
     }
 }
