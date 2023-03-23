@@ -7,8 +7,8 @@ namespace Enemies.BatComponents
 {
     public class Bat : Enemy
     {
+        public override event Action<Enemy> OnDead;
         public event Action<Vector3> OnHit;
-        public event Action<Player> OnKnockBack;
         public event Action<Player> OnParry;
 
         [Header("Health")]
@@ -35,8 +35,12 @@ namespace Enemies.BatComponents
         {
             OnHit?.Invoke(position);
             _health--;
-            
-            if(_health <= 0) ReturnToPool();
+
+            if (_health <= 0)
+            {
+                OnDead?.Invoke(this);
+                ReturnToPool();
+            }
         }
 
         public override void Parry(Player player)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using CustomUtils;
 using Enemies;
 using Enemies.BatComponents;
@@ -64,6 +65,7 @@ namespace PlayerComponents
         public float Height { get; private set; }
         public float DodgeSpeed => dodgeSpeed;
         public float DodgeDistance => dodgeDistance;
+        public bool CanMove { get; private set; } = true;
 
         private Collider _collider;
         private Rigidbody _rigidbody;
@@ -111,7 +113,11 @@ namespace PlayerComponents
             Hit();
         }
 
-        public void DealDamage(Vector3 hitPoint) => OnDealDamage?.Invoke(hitPoint + Vector3.up * Height);
+        public void DealDamage(Vector3 hitPoint)
+        {
+            CamShake.Instance.Shake();
+            OnDealDamage?.Invoke(hitPoint + Vector3.up * Height);
+        }
 
         public void SetShieldActive(bool value) => _shieldActive = value;
 
@@ -133,6 +139,15 @@ namespace PlayerComponents
             Gizmos.DrawWireSphere(transform.position + (Vector3.up * Height), defendBoxSize);
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position + (Vector3.up * Height), hitBoxSize);
+        }
+
+        public void Sleep(float time) => StartCoroutine(SleepUntilTimeEnded(time));
+
+        private IEnumerator SleepUntilTimeEnded(float time)
+        {
+            CanMove = false;
+            yield return new WaitForSecondsRealtime(time);
+            CanMove = true;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CustomUtils;
+using DungeonComponents;
 using Enemies;
 using Enemies.BatComponents;
 using StateMachineComponents;
@@ -50,20 +51,45 @@ namespace PlayerComponents
                 _results,
                 _player.AttackLayerMask);
 
+            Vase closestVase = null;
             for (int i = 0; i < size; i++)
             {
                 var result = _results[i];
+                if (result.TryGetComponent(out Enemy enemy)) AttackEnemy(enemy, result);
 
-                if (!result.TryGetComponent(out Enemy enemy)) continue;
-                if (!enemy.IsAlive) return;
-                var direction = Utils.NormalizedFlatDirection(result.transform.position, _player.transform.position);
-                var angle = Vector3.Angle(direction, _player.transform.forward);
-                if (angle > _player.AttackAngle) continue;
-
-                enemy.TakeDamage(_player.transform.position);
-                _player.DealDamage(result.ClosestPoint(_player.transform.position));
-                CamShake.Instance.Shake();
+                if (result.TryGetComponent(out Vase vase))
+                {
+                    if (!IsValidAngle(vase.transform) || !vase.CanBreak) continue;
+                    if (closestVase == null) closestVase = vase;
+                    else
+                    {
+                        var currentDistance = Vector3.Distance(vase.transform.position, _player.transform.position);
+                        var closestDistance =
+                            Vector3.Distance(closestVase.transform.position, _player.transform.position);
+                        if (currentDistance < closestDistance) closestVase = vase;
+                    }
+                }
             }
+
+            if (closestVase == null) return;
+            closestVase.TakeDamage(1f);
+            _player.DealDamage(closestVase.transform.position);
+        }
+
+        private void AttackEnemy(Enemy enemy, Collider result)
+        {
+            if (!enemy.IsAlive) return;
+            if (!IsValidAngle(enemy.transform)) return;
+
+            enemy.TakeDamage(_player.transform.position);
+            _player.DealDamage(result.ClosestPoint(_player.transform.position));
+        }
+
+        public bool IsValidAngle(Transform target)
+        {
+            var direction = Utils.NormalizedFlatDirection(target.position, _player.transform.position);
+            var angle = Vector3.Angle(direction, _player.transform.forward);
+            return angle <= _player.AttackAngle;
         }
 
         public void FixedTick()

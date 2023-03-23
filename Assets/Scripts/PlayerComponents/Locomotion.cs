@@ -1,3 +1,4 @@
+using CustomUtils;
 using Inputs;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace PlayerComponents
 
         private void Update()
         {
-            if (_playerStateMachine.CurrentStateType is PlayerDodge) return;
+            if (_playerStateMachine.CurrentStateType is PlayerDodge || !_player.CanMove) return;
 
             PlayerRotation();
             _moveDirection = new Vector3(InputReader.Instance.Movement.x, 0f, InputReader.Instance.Movement.y)
@@ -29,9 +30,9 @@ namespace PlayerComponents
 
         private void FixedUpdate()
         {
-            if (_playerStateMachine.CurrentStateType is PlayerDodge) return;
+            if (_playerStateMachine.CurrentStateType is PlayerDodge || !_player.CanMove) return;
 
-            _rigidbody.AddForce(_moveDirection * (_player.Speed * _player.Acceleration), ForceMode.Force);
+            _rigidbody.AddForce(_moveDirection * (_player.Speed * _player.Acceleration), ForceMode.Acceleration);
             if (!_player.IsImmune) SpeedControl();
         }
 
@@ -47,8 +48,11 @@ namespace PlayerComponents
 
         private void SpeedControl()
         {
-            if (_rigidbody.velocity.magnitude > _player.Speed)
-                _rigidbody.velocity = _rigidbody.velocity.normalized * _player.Speed;
+            var flatVelocity = _rigidbody.velocity.With(y: 0f);
+            if (flatVelocity.magnitude > _player.Speed)
+                _rigidbody.velocity =
+                    flatVelocity.normalized * _player.Speed +
+                    Vector3.up * (_rigidbody.velocity.y - 9.8f * Time.deltaTime);
         }
     }
 }

@@ -1,13 +1,16 @@
-﻿using StateMachineComponents;
+﻿using System.Collections.Generic;
+using Enemies;
+using ProceduralGeneration;
+using StateMachineComponents;
 using UnityEngine;
 
 namespace DungeonComponents
 {
-    public class RoomInvisible : IState
+    public class RoomIdle : IState
     {
-        private readonly GameObject _roomBody;
+        private readonly Door[] _doors;
 
-        public RoomInvisible(GameObject roomBody) => _roomBody = roomBody;
+        public RoomIdle(Door[] doors) => _doors = doors;
 
         public void Tick()
         {
@@ -19,24 +22,28 @@ namespace DungeonComponents
 
         public void OnEnter()
         {
-            // _roomBody.SetActive(false);
+            foreach (var door in _doors) door.gameObject.SetActive(false);
         }
 
         public void OnExit()
         {
-            // _roomBody.SetActive(true);
         }
     }
 
     public class RoomSpawn : IState
     {
         private readonly Room _room;
+        private readonly Door[] _doors;
+        private float _timer;
+        public bool Ended => _timer <= 0f;
 
-        public RoomSpawn(Room room) => _room = room;
-
-        public void Tick()
+        public RoomSpawn(Room room, Door[] doors)
         {
+            _room = room;
+            _doors = doors;
         }
+
+        public void Tick() => _timer -= Time.deltaTime;
 
         public void FixedTick()
         {
@@ -44,7 +51,32 @@ namespace DungeonComponents
 
         public void OnEnter()
         {
-            // Useless change.
+            _timer = _room.SpawnTime;
+
+            foreach (var door in _doors)
+            {
+                door.gameObject.SetActive(true);
+                door.SetIsOpen(false);
+            }
+
+            if (_room.Enemies.Count > 0) return;
+
+            var spawnPoints = _room.VasePattern.SpawnPoints;
+            var enemies = new List<Enemy>();
+            var isBoss = _room.RoomType == RoomType.Boss;
+            foreach (var spawnPoint in spawnPoints)
+            {
+                var index = Random.Range(0, isBoss
+                    ? DungeonManager.Instance.Bosses.Length
+                    : DungeonManager.Instance.Enemies.Length
+                );
+                var enemy = spawnPoint.SpawnEnemy(isBoss
+                    ? DungeonManager.Instance.Bosses[index]
+                    : DungeonManager.Instance.Enemies[index]);
+                enemies.Add(enemy);
+            }
+
+            _room.SetEnemies(enemies);
         }
 
         public void OnExit()
@@ -54,6 +86,15 @@ namespace DungeonComponents
 
     public class RoomBattle : IState
     {
+        private readonly Room _room;
+        private readonly Door[] _doors;
+
+        public RoomBattle(Room room, Door[] doors)
+        {
+            _room = room;
+            _doors = doors;
+        }
+
         public void Tick()
         {
         }
@@ -68,6 +109,11 @@ namespace DungeonComponents
 
         public void OnExit()
         {
+            _room.ClearRoom();
+            foreach (var door in _doors)
+            {
+                door.SetIsOpen(true);
+            }
         }
     }
 

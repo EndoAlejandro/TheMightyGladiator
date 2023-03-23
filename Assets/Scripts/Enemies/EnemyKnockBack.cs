@@ -33,7 +33,6 @@ namespace Enemies
         public void OnEnter()
         {
             _direction = Utils.NormalizedFlatDirection(_bat.transform.position, _player.transform.position);
-            // _bat.SetOnKnockBack(true);
             _rigidbody.velocity = Vector3.zero;
             _timer = _bat.StunTime;
             _rigidbody.AddForce(_direction * 2f, ForceMode.Impulse);
@@ -41,7 +40,6 @@ namespace Enemies
 
         public void OnExit()
         {
-            // _bat.SetOnKnockBack(false);
         }
     }
 }

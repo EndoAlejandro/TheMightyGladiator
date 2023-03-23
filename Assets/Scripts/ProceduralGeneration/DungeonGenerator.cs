@@ -12,6 +12,8 @@ namespace ProceduralGeneration
         [SerializeField] private Room initialRoomPrefab;
         [SerializeField] private Room bossRoomPrefab;
         [SerializeField] private Room[] normalRoomsPrefabs;
+        [SerializeField] private VasePattern[] vasePatterns;
+        [SerializeField] private VasePattern[] bossVasePatterns;
 
         private RoomData[,] _matrix;
         private Room[,] _roomMatrix;
@@ -31,11 +33,11 @@ namespace ProceduralGeneration
         {
             Setup();
 
-            _matrix[_origin.x, _origin.y] = new RoomData(_origin, TileType.Origin);
+            _matrix[_origin.x, _origin.y] = new RoomData(_origin, RoomType.Origin);
 
-            var bossWalker = new Walker(_origin, TileType.Boss, maxSteps);
+            var bossWalker = new Walker(_origin, RoomType.Boss, maxSteps);
             _matrix = bossWalker.Walk(_matrix);
-            var walker = new Walker(_origin, TileType.Room, maxSteps);
+            var walker = new Walker(_origin, RoomType.Room, maxSteps);
             _matrix = walker.Walk(_matrix);
 
             CreateRooms();
@@ -51,17 +53,20 @@ namespace ProceduralGeneration
                     if (_matrix[i, j] == null) continue;
 
                     var spawnPosition = CalculateTileSpawnPosition(i, j);
-
-                    Room roomToInstantiate = _matrix[i, j].TileType switch
+                    var roomType = _matrix[i, j].RoomType;
+                    Room roomToInstantiate = roomType switch
                     {
-                        TileType.Origin => initialRoomPrefab,
-                        TileType.Boss => bossRoomPrefab,
+                        RoomType.Origin => initialRoomPrefab,
+                        RoomType.Boss => bossRoomPrefab,
                         _ => normalRoomsPrefabs[Random.Range(0, normalRoomsPrefabs.Length)]
                     };
 
                     var instancedRoom = Instantiate(roomToInstantiate, spawnPosition, Quaternion.identity);
                     instancedRoom.transform.parent = transform;
-                    instancedRoom.Setup(_matrix[i, j]);
+                    var vasePattern = roomType == RoomType.Boss
+                        ? bossVasePatterns[Random.Range(0, bossVasePatterns.Length)]
+                        : vasePatterns[Random.Range(0, vasePatterns.Length)];
+                    instancedRoom.Setup(_matrix[i, j], vasePattern);
                     _roomMatrix[i, j] = instancedRoom;
                 }
             }

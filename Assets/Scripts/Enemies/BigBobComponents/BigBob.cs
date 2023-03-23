@@ -1,3 +1,4 @@
+using System;
 using PlayerComponents;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ namespace Enemies.BigBobComponents
 {
     public class BigBob : Enemy
     {
+        public override event Action<Enemy> OnDead;
+        
         [SerializeField] private BigBobBullet bullet;
         [SerializeField] private int bulletsAmount = 5;
         [SerializeField] private float attackRange;

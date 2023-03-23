@@ -38,7 +38,8 @@ namespace Enemies
             _timer -= Time.deltaTime;
 
             // _direction = _navigationSteering.BestDirection.direction;
-            NavMesh.CalculatePath(_bat.transform.position, _player.transform.position, NavMesh.AllAreas, _path);
+            if (NavMesh.SamplePosition(_player.transform.position, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+                NavMesh.CalculatePath(_bat.transform.position, hit.position, NavMesh.AllAreas, _path);
             _direction = Utils.NormalizedFlatDirection(_path.corners[1], _bat.transform.position);
 
             _bat.transform.forward =
