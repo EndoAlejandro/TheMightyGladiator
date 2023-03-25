@@ -89,6 +89,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""492a67fa-8d0e-44cc-b98d-503b46abede2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -234,6 +243,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""135f158e-68a7-4ee9-bcfe-39e3db137400"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -277,6 +297,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Main_Dodge = m_Main.FindAction("Dodge", throwIfNotFound: true);
         m_Main_Pause = m_Main.FindAction("Pause", throwIfNotFound: true);
         m_Main_Bow = m_Main.FindAction("Bow", throwIfNotFound: true);
+        m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -343,6 +364,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Dodge;
     private readonly InputAction m_Main_Pause;
     private readonly InputAction m_Main_Bow;
+    private readonly InputAction m_Main_Interact;
     public struct MainActions
     {
         private @PlayerControls m_Wrapper;
@@ -354,6 +376,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Dodge => m_Wrapper.m_Main_Dodge;
         public InputAction @Pause => m_Wrapper.m_Main_Pause;
         public InputAction @Bow => m_Wrapper.m_Main_Bow;
+        public InputAction @Interact => m_Wrapper.m_Main_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -384,6 +407,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Bow.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBow;
                 @Bow.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBow;
                 @Bow.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBow;
+                @Interact.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -409,6 +435,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Bow.started += instance.OnBow;
                 @Bow.performed += instance.OnBow;
                 @Bow.canceled += instance.OnBow;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -440,5 +469,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnBow(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

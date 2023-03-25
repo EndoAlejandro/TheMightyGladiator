@@ -10,14 +10,28 @@ namespace PlayerComponents
         private readonly Rigidbody _rigidbody;
         private Vector3 _moveDirection;
 
+        private Collider[] _results;
+
         public PlayerIdle(Player player, Rigidbody rigidbody)
         {
             _player = player;
             _rigidbody = rigidbody;
+
+            _results = new Collider[10];
         }
 
         public void Tick()
         {
+            if (!InputReader.Instance.Interact) return;
+
+            var size = Physics.OverlapSphereNonAlloc(_player.transform.position, _player.HitBoxSize, _results);
+
+            for (int i = 0; i < size; i++)
+            {
+                if (!_results[i].TryGetComponent(out IInteractable interactable)) continue;
+                interactable.Interact(_player);
+                break;
+            }
         }
 
         public void FixedTick()

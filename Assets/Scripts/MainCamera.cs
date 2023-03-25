@@ -1,12 +1,13 @@
 using Cinemachine;
 using UnityEngine;
 
-public class CamShake : MonoBehaviour
+public class MainCamera : MonoBehaviour
 {
-    public static CamShake Instance { get; private set; }
+    public static MainCamera Instance { get; private set; }
 
     private CinemachineImpulseSource _impulseSource;
-    
+    private CinemachineVirtualCamera _virtualCamera;
+
     private void Awake()
     {
         if (Instance != null)
@@ -18,10 +19,13 @@ public class CamShake : MonoBehaviour
         Instance = this;
 
         _impulseSource = GetComponent<CinemachineImpulseSource>();
+        _virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
     }
 
     public void Shake(float force = 1f)
     {
         _impulseSource.GenerateImpulse(force);
     }
+
+    public void SetTarget(Transform target) => _virtualCamera.m_Follow = target;
 }

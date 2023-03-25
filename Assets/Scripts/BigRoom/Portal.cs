@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using PlayerComponents;
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+namespace BigRoom
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Portal : MonoBehaviour, IInteractable
     {
-        
-    }
+        private CustomToolTip _toolTip;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Awake() => _toolTip = GetComponentInChildren<CustomToolTip>();
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out Player player))
+                _toolTip.SetVisibility(true);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent(out Player player))
+                _toolTip.SetVisibility(false);
+        }
+
+        public void Interact(Player player) => GameManager.Instance.NextLevel();
     }
 }

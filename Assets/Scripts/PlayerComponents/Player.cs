@@ -112,7 +112,7 @@ namespace PlayerComponents
 
         public void DealDamage(Vector3 hitPoint)
         {
-            CamShake.Instance.Shake();
+            MainCamera.Instance.Shake();
             OnDealDamage?.Invoke(hitPoint + Vector3.up * Height);
         }
 
@@ -145,6 +145,11 @@ namespace PlayerComponents
             CanMove = false;
             yield return new WaitForSecondsRealtime(time);
             CanMove = true;
+        }
+
+        public void Teleport()
+        {
+            //TODO: Teleport event and stop moving from input.
         }
     }
 }

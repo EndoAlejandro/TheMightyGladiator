@@ -13,6 +13,7 @@ namespace Inputs
         public bool Attack => _input != null && _input.Main.Attack.IsPressed();
         public bool Shield => _input != null && _input.Main.Defend.IsPressed();
         public bool Dodge => _input != null && _input.Main.Dodge.WasPressedThisFrame();
+        public bool Interact => _input != null && _input.Main.Interact.WasPressedThisFrame();
 
         private PlayerControls _input;
 
