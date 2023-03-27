@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using BigRoom;
 using CustomUtils;
-using Enemies;
 using PlayerComponents;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,7 +30,7 @@ public class GameManager : Singleton<GameManager>
         HadesRoom instancedRoom = null;
         if (_currentFloor == 0)
             instancedRoom = Instantiate(_currentLevelData.InitialRoom);
-        else if (_currentFloor < _currentLevelData.Rooms.Length)
+        else if (_currentFloor < _currentLevelData.Floors)
         {
             var index = Random.Range(0, _currentLevelData.Rooms.Length);
             instancedRoom = Instantiate(_currentLevelData.Rooms[index]);
@@ -39,47 +38,49 @@ public class GameManager : Singleton<GameManager>
         else
             instancedRoom = Instantiate(_currentLevelData.BossRoom);
 
-        instancedRoom.Setup(player);
+        instancedRoom.Setup(_currentLevelData, player);
     }
 
     public void NextLevel()
     {
         _currentFloor++;
 
-        if (_currentFloor >= _currentLevelData.Floors)
+        if (_currentFloor > _currentLevelData.Floors)
         {
             _currentFloor = 0;
             _currentBiome++;
 
-            if (_currentBiome >= levels.Length)
+            if (_currentBiome > levels.Length)
             {
-                //TODO: EndGame.
-                Debug.LogError("No more levels to display");
+                LoadMainMenu();
+                return;
             }
         }
 
-        StartCoroutine(ReloadGameScene());
+        LoadNextGameScene();
+    }
+
+    private void LoadMainMenu()
+    {
+        _currentBiome = 0;
+        _currentFloor = 0;
+        StartCoroutine(LoadSceneAsync("MainMenu"));
     }
 
     public void PortalActivated(PortalType portalType)
     {
-        if(portalType == PortalType.Normal) NextLevel();
+        if (portalType == PortalType.Normal) NextLevel();
         else if (portalType == PortalType.Starting) StartGame();
     }
 
-    public void StartGame() => StartCoroutine(ReloadGameScene());
+    private void LoadNextGameScene() => StartCoroutine(LoadSceneAsync("HadesLike", SpawnNewLevel));
+    public void StartGame() => LoadNextGameScene();
+    public void LoadLobby() => StartCoroutine(LoadSceneAsync("Lobby"));
 
-    public void LoadLobby() => StartCoroutine(LoadLobbyScene());
-
-    private IEnumerator LoadLobbyScene()
+    private IEnumerator LoadSceneAsync(string sceneName, Action callback = null)
     {
-        yield return SceneManager.LoadSceneAsync("Lobby");
-    }
-
-    private IEnumerator ReloadGameScene()
-    {
-        yield return SceneManager.LoadSceneAsync("HadesLike");
-        SpawnNewLevel();
+        yield return SceneManager.LoadSceneAsync(sceneName);
+        callback?.Invoke();
     }
 }
 
@@ -88,19 +89,4 @@ public enum Biome
     First,
     Second,
     Third,
-}
-
-[Serializable]
-public struct LevelData
-{
-    [SerializeField] private Biome biome;
-    [SerializeField] private int floors;
-    [SerializeField] private Enemy[] enemies;
-    [SerializeField] private InitialRoomController initialRoom;
-    [SerializeField] private BossRoomController bossRoom;
-    [SerializeField] private BigRoomController[] rooms;
-    public int Floors => floors;
-    public InitialRoomController InitialRoom => initialRoom;
-    public BossRoomController BossRoom => bossRoom;
-    public BigRoomController[] Rooms => rooms;
 }

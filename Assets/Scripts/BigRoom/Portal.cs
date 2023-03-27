@@ -11,12 +11,14 @@ namespace BigRoom
 
         private void OnTriggerEnter(Collider other)
         {
+            if (_toolTip == null) return;
             if (other.TryGetComponent(out Player player))
                 _toolTip.SetVisibility(true);
         }
 
         private void OnTriggerExit(Collider other)
         {
+            if (_toolTip == null) return;
             if (other.TryGetComponent(out Player player))
                 _toolTip.SetVisibility(false);
         }

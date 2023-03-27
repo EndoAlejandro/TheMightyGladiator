@@ -6,14 +6,15 @@ namespace BigRoom
     public class HadesRoom : MonoBehaviour
     {
         [SerializeField] private Transform playerSpawnPoint;
-        [SerializeField] private 
 
-        protected Player _player;
+        protected Player Player { get; private set; }
+        protected LevelData LevelData { get; private set; }
 
-        public void Setup(Player player)
+        public virtual void Setup(LevelData levelData, Player player)
         {
-            _player = Instantiate(player, playerSpawnPoint.position, Quaternion.identity);
-            MainCamera.Instance.SetTarget(_player.transform);
+            LevelData = levelData;
+            Player = Instantiate(player, playerSpawnPoint.position, Quaternion.identity);
+            MainCamera.Instance.SetTarget(Player.transform);
         }
     }
 }

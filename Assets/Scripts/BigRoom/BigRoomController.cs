@@ -2,16 +2,15 @@ using System.Collections.Generic;
 using DungeonComponents;
 using Enemies;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace BigRoom
 {
     public class BigRoomController : HadesRoom
     {
-        [SerializeField] private int maxEnemies = 5;
+        [SerializeField] private int maxEnemies = 2;
+        [SerializeField] private int waves = 2;
         [SerializeField] private float spawnRate = 1f;
-
-        [SerializeField] private Enemy[] enemies;
+        [SerializeField] private Portal portal;
 
         private List<Enemy> _spawnedEnemies;
         private SpawnPoint[] _spawnPoints;
@@ -22,24 +21,20 @@ namespace BigRoom
         {
             _spawnPoints = GetComponentsInChildren<SpawnPoint>();
             _spawnedEnemies = new List<Enemy>();
+
+            portal.gameObject.SetActive(false);
         }
 
         private void Start() => SpawnEnemy();
 
-        private void Update()
-        {
-            if (_timer > 0f) _timer -= Time.deltaTime;
-            // if (_timer <= 0f && _spawnedEnemies.Count < maxEnemies)
-        }
-
         private void SpawnEnemy()
         {
-            _timer = spawnRate;
+            waves--;
             for (int i = 0; i < maxEnemies; i++)
             {
                 int spawnIndex = Random.Range(0, _spawnPoints.Length);
-                int enemyIndex = Random.Range(0, enemies.Length);
-                var enemy = enemies[enemyIndex]
+                int enemyIndex = Random.Range(0, LevelData.Enemies.Length);
+                var enemy = LevelData.Enemies[enemyIndex]
                     .Get<Enemy>(_spawnPoints[spawnIndex].transform.position, Quaternion.identity);
                 _spawnedEnemies.Add(enemy);
 
@@ -53,7 +48,10 @@ namespace BigRoom
             enemy.OnDead -= EnemyOnDead;
 
             if (_spawnedEnemies.Count == 0)
-                SpawnEnemy();
+            {
+                if (waves > 0) SpawnEnemy();
+                else portal.gameObject.SetActive(true);
+            }
         }
     }
 }
