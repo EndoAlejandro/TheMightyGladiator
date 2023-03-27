@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UIComponents
@@ -7,15 +6,7 @@ namespace UIComponents
     public class UIMainMenu : MonoBehaviour
     {
         [SerializeField] private Button startGameButton;
-
-        private void Awake()
-        {
-            startGameButton.onClick.AddListener(OnStartGameButtonPressed);
-        }
-
-        private void OnStartGameButtonPressed()
-        {
-            GameManager.Instance.StartGame();
-        }
+        private void Awake() => startGameButton.onClick.AddListener(OnStartGameButtonPressed);
+        private void OnStartGameButtonPressed() => GameManager.Instance.LoadLobby();
     }
 }

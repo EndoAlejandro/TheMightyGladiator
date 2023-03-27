@@ -61,7 +61,20 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(ReloadGameScene());
     }
 
+    public void PortalActivated(PortalType portalType)
+    {
+        if(portalType == PortalType.Normal) NextLevel();
+        else if (portalType == PortalType.Starting) StartGame();
+    }
+
     public void StartGame() => StartCoroutine(ReloadGameScene());
+
+    public void LoadLobby() => StartCoroutine(LoadLobbyScene());
+
+    private IEnumerator LoadLobbyScene()
+    {
+        yield return SceneManager.LoadSceneAsync("Lobby");
+    }
 
     private IEnumerator ReloadGameScene()
     {
