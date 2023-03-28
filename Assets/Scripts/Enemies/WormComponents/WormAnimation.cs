@@ -1,4 +1,5 @@
 ﻿using System;
+using Enemies.BatComponents;
 using Pooling;
 using StateMachineComponents;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace Enemies.WormComponents
                 case WormAttack wormAttack:
                     _animator.SetBool(Show, true);
                     break;
-                case EnemyPrepareAttack prepareAttack:
+                case EnemyTelegraph prepareAttack:
                     rocksVfx.Get<PoolAfterSeconds>(transform.position, Quaternion.identity);
                     break;
             }

@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 4172247088674783534}
   - component: {fileID: 4172247088674783530}
   - component: {fileID: 4172247088674783528}
+  - component: {fileID: -8896318584299551998}
+  - component: {fileID: 4172247088674783531}
+  - component: {fileID: 3712559832740606679}
   - component: {fileID: 4172247088674783535}
   - component: {fileID: 4172247088674783529}
-  - component: {fileID: 4172247088674783531}
   m_Layer: 7
   m_Name: Bat
   m_TagString: Untagged
@@ -56,10 +58,14 @@ MonoBehaviour:
   acceleration: 10
   stoppingDistance: 3
   rotationSpeed: 10
-  parryTimeWindow: 5
-  prepareToAttackTime: 1
+  telegraphFx: {fileID: 589803450516090148, guid: 01fe7029af7f9ed4d916e8a5a18a41b9,
+    type: 3}
+  parryTimeWindow: 10
+  telegraphTime: 1
+  recoverTime: 1
+  stunTime: 5
+  getHitTime: 2
   sphere: {fileID: 4172247090026839953}
-  stunTime: 1
   deathTime: 2
   attackSpeed: 10
 --- !u!114 &4172247088674783528
@@ -74,6 +80,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67639242a13aa624fa2710c7f2867768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8896318584299551998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4172247088674783533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b883120e57ec457d8cc1c3298795bfc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  telegraphVfx: {fileID: 589803450516090148, guid: 01fe7029af7f9ed4d916e8a5a18a41b9,
+    type: 3}
+  telegraphOffset: {x: 0, y: 1, z: 0}
+--- !u!114 &4172247088674783531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4172247088674783533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cebe84b14a44be89e3cb4678e4180b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionAngle: 360
+  segmentsAmount: 20
+  detectionRange: 2
+  yOffset: 0.25
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+--- !u!95 &3712559832740606679
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4172247088674783533}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 9462e4007615758489178b6c9ba3600d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!54 &4172247088674783535
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -104,25 +164,6 @@ CapsuleCollider:
   m_Height: 1.25
   m_Direction: 1
   m_Center: {x: 0, y: 0.625, z: 0}
---- !u!114 &4172247088674783531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4172247088674783533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cebe84b14a44be89e3cb4678e4180b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visionAngle: 360
-  segmentsAmount: 20
-  detectionRange: 2
-  yOffset: 0.25
-  obstacleLayerMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
 --- !u!1 &4172247088916361608
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +490,7 @@ PrefabInstance:
     - target: {fileID: 238492772694177622, guid: 41b738a26fbc66249bfd6ba6792a85fc,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 238492772888346651, guid: 41b738a26fbc66249bfd6ba6792a85fc,
         type: 3}

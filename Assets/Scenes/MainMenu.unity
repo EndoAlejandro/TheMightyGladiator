@@ -1046,7 +1046,6 @@ MonoBehaviour:
   levels:
   - enemies:
     - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
-    - {fileID: 7500587482687819955, guid: 5082e44f3469edd41bb590a09f5310c2, type: 3}
     boss: {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
     biome: 0
     floors: 1

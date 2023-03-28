@@ -509,7 +509,7 @@ MonoBehaviour:
   force: 10
   defendAngle: 90
   defendBoxSize: 1
-  parryTime: 0.1
+  parryTime: 1
   defendRate: 1
   dodgeSpeed: 10
   dodgeDistance: 2

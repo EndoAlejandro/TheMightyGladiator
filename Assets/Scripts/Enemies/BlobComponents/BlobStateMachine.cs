@@ -13,11 +13,8 @@ namespace Enemies.BlobComponents
         private Rigidbody _rigidbody;
         private Player _player;
 
-        protected override void Awake()
+        protected override void StateMachine()
         {
-            References();
-            base.Awake();
-
             var idle = new BlobIdle(_blob, _rigidbody, _player);
             var move = new BlobMove(_blob, _rigidbody, _player);
             var attack = new BlobAttack(_blob);
@@ -31,7 +28,7 @@ namespace Enemies.BlobComponents
             stateMachine.AddTransition(attack, idle, () => attack.Ended);
         }
 
-        private void References()
+        protected override void References()
         {
             _blob = GetComponent<Blob>();
             _rigidbody = GetComponent<Rigidbody>();

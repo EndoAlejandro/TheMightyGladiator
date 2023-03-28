@@ -8,7 +8,7 @@ namespace Enemies
     public abstract class Enemy : PooledMonoBehaviour
     {
         public abstract event Action<Enemy> OnDead;
-        
+
         [Header("Base Movement")]
         [SerializeField] protected float maxHealth;
 
@@ -19,19 +19,31 @@ namespace Enemies
         [SerializeField] private float rotationSpeed = 100f;
 
         [Header("Base Attack")]
-        [SerializeField] private float parryTimeWindow = 0.5f;
+        [SerializeField] private PoolAfterSeconds telegraphFx;
 
-        [SerializeField] private float prepareToAttackTime = 1f;
+        [SerializeField] private float parryTimeWindow = 0.5f;
+        [SerializeField] private float telegraphTime = 1f;
+        [SerializeField] private float recoverTime = 1f;
+
+        [Header("Get Hit")]
+        [SerializeField] private float stunTime = 1f;
+
+        [SerializeField] private float getHitTime = 1f;
+
         public float ParryTimeWindow => parryTimeWindow;
-        public float PrepareToAttackTime => prepareToAttackTime;
+        public float TelegraphTime => telegraphTime;
         public float Speed => speed;
         public float Acceleration => acceleration;
         public float StoppingDistance => stoppingDistance;
         public float RotationSpeed => rotationSpeed;
+        public PoolAfterSeconds TelegraphFx => telegraphFx;
         public bool IsAttacking { get; private set; }
         public bool CanBeParried { get; private set; }
 
         public abstract bool IsAlive { get; }
+        public float StunTime => stunTime;
+        public float GetHitTime => getHitTime;
+        public float RecoverTime => recoverTime;
 
         public abstract void TakeDamage(Vector3 position);
         public abstract void Parry(Player player);

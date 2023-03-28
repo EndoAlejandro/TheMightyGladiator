@@ -20,10 +20,7 @@ namespace Enemies.BlobComponents
             _animator = GetComponent<Animator>();
         }
 
-        private void Start()
-        {
-            _stateMachine.OnEntityStateChanged += StateMachineOnOnEntityStateChanged;
-        }
+        private void Start() => _stateMachine.OnEntityStateChanged += StateMachineOnOnEntityStateChanged;
 
         private void StateMachineOnOnEntityStateChanged(IState state)
         {

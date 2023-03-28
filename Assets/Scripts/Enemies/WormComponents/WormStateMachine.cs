@@ -1,4 +1,5 @@
 ﻿using System;
+using Enemies.BatComponents;
 using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
@@ -11,14 +12,11 @@ namespace Enemies.WormComponents
         private Player _player;
         private WormStun _stun;
 
-        protected override void Awake()
+        protected override void StateMachine()
         {
-            References();
-            base.Awake();
-
             var idle = new WormIdle(_worm, _player);
             var attack = new WormAttack(_worm);
-            var prepareAttack = new EnemyPrepareAttack(_worm);
+            var prepareAttack = new EnemyTelegraph(_worm);
             _stun = new WormStun(_worm);
 
             stateMachine.SetState(attack);
@@ -35,7 +33,7 @@ namespace Enemies.WormComponents
 
         private void WormOnParry(Player player) => stateMachine.SetState(_stun);
 
-        private void References()
+        protected override void References()
         {
             _worm = GetComponent<Worm>();
             _player = FindObjectOfType<Player>();

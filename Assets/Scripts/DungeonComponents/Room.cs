@@ -51,13 +51,16 @@ namespace DungeonComponents
                     break;
             }
 
-            _doors = GetComponentsInChildren<Door>();
-            _navMeshSurface = GetComponent<NavMeshSurface>();
-
-            StateManagement();
+            // StateMachine();
         }
 
-        private void StateManagement()
+        protected override void References()
+        {
+            _doors = GetComponentsInChildren<Door>();
+            _navMeshSurface = GetComponent<NavMeshSurface>();
+        }
+
+        protected override void StateMachine()
         {
             _idle = new RoomIdle(_doors);
             _spawn = new RoomSpawn(this, _doors);

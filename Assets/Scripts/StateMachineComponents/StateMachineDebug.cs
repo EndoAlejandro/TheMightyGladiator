@@ -21,7 +21,7 @@ namespace StateMachineComponents
         }
 
         private void FiniteStateBehaviourOnEntityStateChanged(IState state) =>
-            _debugText.SetText(state.GetType().ToString());
+            _debugText.SetText(state.ToString());
 
         private void Update() => transform.rotation = Quaternion.Euler(45, 0, 0);
 

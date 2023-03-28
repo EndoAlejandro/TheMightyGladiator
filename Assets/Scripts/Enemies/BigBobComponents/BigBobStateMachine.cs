@@ -11,11 +11,8 @@ namespace Enemies.BigBobComponents
         private Player _player;
         private Rigidbody _rigidbody;
 
-        protected override void Awake()
+        protected override void StateMachine()
         {
-            References();
-            base.Awake();
-
             var idle = new BigBobIdle(_bigBob);
             var attack = new BigBobAttack(_bigBob);
 
@@ -34,7 +31,7 @@ namespace Enemies.BigBobComponents
             stateMachine.AddTransition(attack, idle, () => attack.Ended);
         }
 
-        private void References()
+        protected override void References()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _bigBob = GetComponent<BigBob>();

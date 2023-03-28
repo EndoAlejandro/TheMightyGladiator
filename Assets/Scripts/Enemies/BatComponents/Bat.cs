@@ -15,17 +15,18 @@ namespace Enemies.BatComponents
         [SerializeField] private Transform sphere;
 
         [Header("Attack and Defend")]
-        [SerializeField] private float stunTime = 1f;
+        [SerializeField] private float idleTime = 2f;
+
         [SerializeField] private float deathTime = 1f;
         [SerializeField] private float attackSpeed = 10f;
 
-        public float StunTime => stunTime;
         public float AttackSpeed => attackSpeed;
         public float DeathTime => deathTime;
 
         private Rigidbody _rigidbody;
         private float _health;
         public override bool IsAlive => _health > 0;
+        public float IdleTime => idleTime;
 
         private void Awake() => _rigidbody = GetComponent<Rigidbody>();
 

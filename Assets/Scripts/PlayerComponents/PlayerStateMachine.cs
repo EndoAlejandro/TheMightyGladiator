@@ -10,11 +10,8 @@ namespace PlayerComponents
         private Player _player;
         private Rigidbody _rigidbody;
 
-        protected override void Awake()
+        protected override void StateMachine()
         {
-            References();
-            base.Awake();
-
             var idle = new PlayerIdle(_player, _rigidbody);
             var attack = new PlayerAttack(_player);
             var shield = new PlayerShield(_player, _rigidbody);
@@ -32,7 +29,7 @@ namespace PlayerComponents
             stateMachine.AddTransition(dodge, idle, () => dodge.Ended);
         }
 
-        private void References()
+        protected override void References()
         {
             _player = GetComponent<Player>();
             _rigidbody = GetComponent<Rigidbody>();

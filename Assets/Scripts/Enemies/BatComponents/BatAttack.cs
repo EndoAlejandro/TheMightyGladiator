@@ -44,8 +44,8 @@ namespace Enemies.BatComponents
             {
                 var result = _results[i];
                 if (!result.TryGetComponent(out Player player)) continue;
-                if (player.TryToDealDamage(_bat.transform.position))
-                    player.TakeDamage(_bat.transform.position, 1);
+                if (!player.TryToDealDamage(_bat.transform.position)) continue;
+                player.TakeDamage(_bat.transform.position, 1);
                 Ended = true;
             }
         }

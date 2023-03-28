@@ -1022,8 +1022,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpawnPoint: {fileID: 5206439076723739095}
-  maxEnemies: 2
-  waves: 2
+  maxEnemies: 1
+  waves: 5
   spawnRate: 1
   portal: {fileID: 7567207431361095525}
 --- !u!1 &5206439076723739094

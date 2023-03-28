@@ -1,13 +1,9 @@
-﻿using CustomUtils;
-using Enemies.BatComponents;
-using PlayerComponents;
-using StateMachineComponents;
+﻿using PlayerComponents;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace Enemies
+namespace Enemies.BatComponents
 {
-    public class BatIdle : IState
+    public class BatIdle : EnemyIdle
     {
         private readonly Bat _bat;
         private readonly Rigidbody _rigidbody;
@@ -16,9 +12,7 @@ namespace Enemies
         private readonly NavigationSteering _navigationSteering;
 
         private Vector3 _direction;
-
         private float _timer;
-        private readonly NavMeshPath _path;
 
         public bool PlayerOnRange { get; private set; }
         public bool CanSeePlayer { get; private set; }
@@ -29,24 +23,18 @@ namespace Enemies
             _bat = bat;
             _rigidbody = rigidbody;
             _player = player;
-            _path = new NavMeshPath();
             _navigationSteering = navigationSteering;
         }
 
-        public void Tick()
+        public override void Tick()
         {
             _timer -= Time.deltaTime;
-
             _direction = _navigationSteering.BestDirection.direction;
-            /*if (NavMesh.SamplePosition(_player.transform.position, out NavMeshHit hit, 5f, NavMesh.AllAreas))
-                NavMesh.CalculatePath(_bat.transform.position, hit.position, NavMesh.AllAreas, _path);
-            _direction = Utils.NormalizedFlatDirection(_path.corners[1], _bat.transform.position);*/
-
             _bat.transform.forward =
                 Vector3.Lerp(_bat.transform.forward, _direction, _bat.RotationSpeed * Time.deltaTime);
         }
 
-        public void FixedTick()
+        public override void FixedTick()
         {
             var distance = Vector3.Distance(_bat.transform.position, _player.transform.position);
             CanSeePlayer = !Physics.Linecast(_bat.transform.position, _player.transform.position);
@@ -54,19 +42,18 @@ namespace Enemies
 
             if (!PlayerOnRange)
                 _rigidbody.AddForce(_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Force);
-
-            if (!Ended)
+            else
                 _rigidbody.AddForce(-_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Force);
         }
 
-        public void OnEnter()
+        public override void OnEnter()
         {
-            _timer = _bat.StunTime;
+            _timer = _bat.IdleTime;
             CanSeePlayer = false;
             PlayerOnRange = false;
         }
 
-        public void OnExit()
+        public override void OnExit()
         {
         }
     }
