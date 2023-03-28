@@ -496,23 +496,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a29502f5d464665a9b38b3f569a6bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 6
   acceleration: 10
   rotationSpeed: 100
   dodgeCd: 0.1
   attackLayerMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  attackAngle: 60
+  attackAngle: 75
   hitBoxSize: 2
-  attackRate: 0
+  attackRate: 0.25
   force: 10
   defendAngle: 90
   defendBoxSize: 1
   parryTime: 1
   defendRate: 1
-  dodgeSpeed: 10
-  dodgeDistance: 2
+  dodgeSpeed: 12
+  dodgeDistance: 3
   immunityTime: 1.5
 --- !u!114 &907134496875557510
 MonoBehaviour:

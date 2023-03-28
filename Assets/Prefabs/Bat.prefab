@@ -66,6 +66,7 @@ MonoBehaviour:
   stunTime: 5
   getHitTime: 2
   sphere: {fileID: 4172247090026839953}
+  idleTime: 2
   deathTime: 2
   attackSpeed: 10
 --- !u!114 &4172247088674783528
@@ -490,7 +491,7 @@ PrefabInstance:
     - target: {fileID: 238492772694177622, guid: 41b738a26fbc66249bfd6ba6792a85fc,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 238492772888346651, guid: 41b738a26fbc66249bfd6ba6792a85fc,
         type: 3}

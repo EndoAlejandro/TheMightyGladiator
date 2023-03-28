@@ -37,11 +37,10 @@ namespace PlayerComponents
             _timer -= Time.deltaTime;
 
             if (_triggered) return;
-            if (_timer <= AttackAnimDuration / 2)
-            {
-                _triggered = true;
-                AttackDamage();
-            }
+            //if (_timer <= AttackAnimDuration / 2)
+            if (!(_timer <= 0f)) return;
+            _triggered = true;
+            AttackDamage();
         }
 
         private void AttackDamage()
@@ -98,13 +97,13 @@ namespace PlayerComponents
 
         public void OnEnter()
         {
+            _player.Attack();
             _triggered = false;
-            _timer = AttackAnimDuration;
+            _timer = 0.1f; //AttackAnimDuration;
         }
 
         public void OnExit()
         {
-            _player.Attack();
             _timer = 0f;
         }
     }

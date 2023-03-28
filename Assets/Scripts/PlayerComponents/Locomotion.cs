@@ -24,7 +24,6 @@ namespace PlayerComponents
             if (_playerStateMachine.CurrentStateType is PlayerDodge || !_player.CanMove) return;
 
             PlayerRotation();
-            //_moveDirection = new Vector3(InputReader.Instance.Movement.x, 0f, InputReader.Instance.Movement.y).normalized;
             _moveDirection = (Camera.main.transform.right * InputReader.Instance.Movement.x +
                               Camera.main.transform.forward * InputReader.Instance.Movement.y).With(y: 0f).normalized;
         }

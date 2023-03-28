@@ -25,7 +25,7 @@ namespace PlayerComponents
 
         [Range(5f, 90f)] [SerializeField] private float attackAngle = 45f;
         [SerializeField] private float hitBoxSize = 1.5f;
-        [SerializeField] private float attackRate;
+        [SerializeField] private float attackRate = 0.25f;
         [SerializeField] private float force;
         [Range(5f, 90f)] [SerializeField] private float defendAngle = 90f;
         [SerializeField] private float defendBoxSize = 1f;
