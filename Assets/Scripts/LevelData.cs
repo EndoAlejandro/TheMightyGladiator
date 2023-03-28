@@ -19,7 +19,7 @@ public struct LevelData
     [SerializeField] private InitialRoomController initialRoom;
     [SerializeField] private BossRoomController bossRoom;
     [SerializeField] private BigRoomController[] rooms;
-    public int Floors => floors + 2;
+    public int Floors => floors + 1;
     public InitialRoomController InitialRoom => initialRoom;
     public BossRoomController BossRoom => bossRoom;
     public BigRoomController[] Rooms => rooms;

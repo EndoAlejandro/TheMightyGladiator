@@ -50,7 +50,7 @@ public class GameManager : Singleton<GameManager>
             _currentFloor = 0;
             _currentBiome++;
 
-            if (_currentBiome > levels.Length)
+            if (_currentBiome >= levels.Length)
             {
                 LoadMainMenu();
                 return;
