@@ -2,7 +2,6 @@ using System.Collections;
 using Pooling;
 using StateMachineComponents;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PlayerComponents
 {

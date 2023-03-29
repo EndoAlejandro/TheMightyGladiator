@@ -36,7 +36,7 @@ namespace Enemies
             switch (state)
             {
                 case EnemyTelegraph telegraph:
-                    telegraphVfx.Get<PoolAfterSeconds>(transform.position + telegraphOffset, Quaternion.identity);
+                    // telegraphVfx.Get<PoolAfterSeconds>(transform.position + telegraphOffset, Quaternion.identity);
                     break;
             }
         }
