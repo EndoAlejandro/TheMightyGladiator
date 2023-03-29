@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 1
-  maxHealth: 3
+  maxHealth: 20
   speed: 2
   acceleration: 10
   stoppingDistance: 3

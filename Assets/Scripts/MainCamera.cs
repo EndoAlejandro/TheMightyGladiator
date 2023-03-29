@@ -22,7 +22,7 @@ public class MainCamera : MonoBehaviour
         _virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
     }
 
-    public void Shake(float force = 1f)
+    public void Shake(float force = 0.25f)
     {
         _impulseSource.GenerateImpulse(force);
     }

@@ -1,6 +1,5 @@
 using Inputs;
 using StateMachineComponents;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PlayerComponents

@@ -22,6 +22,7 @@ namespace PlayerComponents
         [SerializeField] private PoolAfterSeconds hitFx;
 
         [SerializeField] private GameObject slash;
+        [SerializeField] private ParticleSystem slashParticle;
 
         [Header("Shield")]
         [Range(0.01f, 1f)]
@@ -100,6 +101,7 @@ namespace PlayerComponents
             switch (_state)
             {
                 case PlayerAttack playerAttack:
+                    slashParticle.Play();
                     _animator.SetTrigger(Attack);
                     _animator.SetInteger(AttackIndex, (_animator.GetInteger(AttackIndex) + 1) % 2);
                     break;
