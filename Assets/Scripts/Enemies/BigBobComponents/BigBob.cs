@@ -7,7 +7,8 @@ namespace Enemies.BigBobComponents
     public class BigBob : Enemy
     {
         public override event Action<Enemy> OnDead;
-        
+        public override event Action<Vector3, float> OnHit;
+
         [SerializeField] private BigBobBullet bullet;
         [SerializeField] private int bulletsAmount = 5;
         [SerializeField] private float attackRange;
@@ -27,7 +28,7 @@ namespace Enemies.BigBobComponents
             _collider = GetComponent<Collider>();
         }
 
-        public override void TakeDamage(Vector3 position)
+        public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
         {
         }
 

@@ -20,5 +20,6 @@ public class VfxManager : MonoBehaviour
         };
     }
 
-    public static void PlayFx(Vfx fx) => _listedVfx[fx].GetComponent<PoolAfterSeconds>();
+    public static void PlayFxWithRotation(Vfx fx, Vector3 position, Quaternion rotation) => _listedVfx[fx].Get<PoolAfterSeconds>(position, rotation);
+    public static void PlayFx(Vfx fx, Vector3 position) => PlayFxWithRotation(Vfx.Sword, position, Quaternion.identity);
 }

@@ -8,6 +8,7 @@ public class Bullet : PooledMonoBehaviour
 {
     private Rigidbody _rigidbody;
 
+    private float _damage;
     private float _speed;
     private Vector3 _direction;
 
@@ -40,7 +41,7 @@ public class Bullet : PooledMonoBehaviour
             if (other.TryGetComponent(out Player player)) return;
 
             if (other.TryGetComponent(out Enemy enemy))
-                enemy.TakeDamage(transform.position);
+                enemy.TakeDamage(other.ClosestPoint(transform.position), _damage);
 
             ReturnToPool();
         }

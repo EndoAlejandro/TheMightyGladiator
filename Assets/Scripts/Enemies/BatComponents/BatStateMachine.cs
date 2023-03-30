@@ -55,14 +55,14 @@ namespace Enemies.BatComponents
         private void BatOnParry(Player player)
         {
             var direction = Utils.NormalizedFlatDirection(transform.position, _player.transform.position);
-            _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);
+            _rigidbody.AddForce(direction * player.KnockBackForce, ForceMode.VelocityChange);
             stateMachine.SetState(_stun);
         }
 
-        private void BatOnHit(Vector3 position)
+        private void BatOnHit(Vector3 hitPoint, float knockBack)
         {
-            var direction = Utils.NormalizedFlatDirection(transform.position, position);
-            _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);
+            var direction = Utils.NormalizedFlatDirection(transform.position, hitPoint);
+            _rigidbody.AddForce(direction * knockBack, ForceMode.VelocityChange);
 
             if (stateMachine.CurrentState is not EnemyStun)
                 stateMachine.SetState(_getHit);

@@ -2,6 +2,7 @@
 using System.Collections;
 using CustomUtils;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PlayerComponents
 {
@@ -12,27 +13,34 @@ namespace PlayerComponents
         public event Action OnParry;
         public event Action OnShieldHit;
 
+
         [Header("Locomotion")]
-        [SerializeField] private float speed = 3f;
+        [SerializeField] private float walkSpeed = 6f;
 
         [SerializeField] private float acceleration = 10f;
         [SerializeField] private float rotationSpeed = 100f;
 
-        [SerializeField] private float dodgeCd = 0.25f;
+        [Header("Dodge")]
+        [SerializeField] private float dodgeRate = 0.25f;
 
-        [Header("Attack and Defend")]
+        [SerializeField] private float dodgeSpeed = 12f;
+        [SerializeField] private float dodgeDistance = 3f;
+
+        [Header("Attack")]
+        [SerializeField] private float damage = 1f;
+
         [SerializeField] private LayerMask attackLayerMask;
-
         [Range(5f, 90f)] [SerializeField] private float attackAngle = 45f;
         [SerializeField] private float hitBoxSize = 1.5f;
         [SerializeField] private float attackRate = 0.25f;
-        [SerializeField] private float force;
+        [SerializeField] private float knockBackForce = 10f;
+
+        [Header("Defend")]
         [Range(5f, 90f)] [SerializeField] private float defendAngle = 90f;
+
         [SerializeField] private float defendBoxSize = 1f;
-        [SerializeField] private float parryTime;
+        [SerializeField] private float parryTime = 0.25f;
         [SerializeField] private float defendRate = 0.5f;
-        [SerializeField] private float dodgeSpeed;
-        [SerializeField] private float dodgeDistance;
 
         [Header("Health")]
         [SerializeField] private float immunityTime = 1.5f;
@@ -49,10 +57,11 @@ namespace PlayerComponents
         public bool CanDefend => _defendTimer <= 0f;
         public bool IsImmune => _immunityTimer > 0f;
         public bool IsDodging { get; private set; }
-        public float Speed => speed;
+        public float WalkSpeed => walkSpeed;
         public float Acceleration => acceleration;
         public float RotationSpeed => rotationSpeed;
-        public float Force => force;
+        public float KnockBackForce => knockBackForce;
+        public float Damage => damage;
         public float HitBoxSize => hitBoxSize;
         public float DefendBoxSize => defendBoxSize;
         public float AttackAngle => attackAngle;
@@ -87,14 +96,13 @@ namespace PlayerComponents
         public void SetDodgeState(bool state)
         {
             IsDodging = state;
-            if (!state) _dodgeTimer = dodgeCd;
+            if (!state) _dodgeTimer = dodgeRate;
         }
 
         public void Parry()
         {
             _defendTimer = defendRate;
             _immunityTimer = immunityTime;
-            Debug.Log("Parry!");
             OnParry?.Invoke();
         }
 

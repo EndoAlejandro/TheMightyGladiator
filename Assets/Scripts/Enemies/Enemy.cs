@@ -8,6 +8,8 @@ namespace Enemies
     public abstract class Enemy : PooledMonoBehaviour
     {
         public abstract event Action<Enemy> OnDead;
+        public abstract event Action<Vector3, float> OnHit;
+
 
         [Header("Base Movement")]
         [SerializeField] protected float maxHealth;
@@ -45,7 +47,7 @@ namespace Enemies
         public float GetHitTime => getHitTime;
         public float RecoverTime => recoverTime;
 
-        public abstract void TakeDamage(Vector3 position);
+        public abstract void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f);
         public abstract void Parry(Player player);
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;

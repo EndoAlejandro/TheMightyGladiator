@@ -8,6 +8,7 @@ namespace Enemies.WormComponents
     public class Worm : Enemy
     {
         public override event Action<Enemy> OnDead;
+        public override event Action<Vector3, float> OnHit;
         public event Action<Player> OnParry;
 
         [SerializeField] private float idleTime;
@@ -32,10 +33,11 @@ namespace Enemies.WormComponents
         private void OnEnable() => _health = maxHealth;
 
         private void Start() => SetIsAttacking(false);
-
-        public override void TakeDamage(Vector3 position)
+        
+        public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
         {
-            _health--;
+            _health -= damage;
+            OnHit?.Invoke(hitPoint, damage);
 
             if (_health <= 0)
             {

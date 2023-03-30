@@ -68,7 +68,6 @@ namespace PlayerComponents
 
             if (closestVase == null) return;
             closestVase.GetDamageFromPlayer(1f);
-            _player.DealDamage(closestVase.transform.position);
         }
 
         private void AttackEnemy(Enemy enemy, Collider result)
@@ -76,8 +75,7 @@ namespace PlayerComponents
             if (!enemy.IsAlive) return;
             if (!IsValidAngle(enemy.transform)) return;
 
-            enemy.TakeDamage(_player.transform.position);
-            // _player.DealDamage(result.ClosestPoint(_player.transform.position));
+            enemy.TakeDamage(result.ClosestPoint(_player.transform.position), _player.Damage, _player.KnockBackForce);
         }
 
         public bool IsValidAngle(Transform target)

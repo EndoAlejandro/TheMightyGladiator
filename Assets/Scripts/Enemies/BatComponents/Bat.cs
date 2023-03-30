@@ -8,7 +8,7 @@ namespace Enemies.BatComponents
     public class Bat : Enemy
     {
         public override event Action<Enemy> OnDead;
-        public event Action<Vector3> OnHit;
+        public override event Action<Vector3, float> OnHit;
         public event Action<Player> OnParry;
 
         [Header("Health")]
@@ -32,10 +32,10 @@ namespace Enemies.BatComponents
 
         private void OnEnable() => _health = maxHealth;
 
-        public override void TakeDamage(Vector3 position)
+        public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f)
         {
-            OnHit?.Invoke(position);
-            _health--;
+            _health -= damage;
+            OnHit?.Invoke(hitPoint, knockBack);
 
             if (_health <= 0)
             {

@@ -8,6 +8,7 @@ namespace Enemies.BlobComponents
     public class Blob : Enemy
     {
         public override event Action<Enemy> OnDead;
+        public override event Action<Vector3, float> OnHit;
 
         [SerializeField] private LayerMask playerLayerMask;
         [SerializeField] private float moveRate = 1.5f;
@@ -33,9 +34,10 @@ namespace Enemies.BlobComponents
 
         private void OnEnable() => _health = maxHealth;
 
-        public override void TakeDamage(Vector3 position)
+        public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
         {
-            _health--;
+            _health -= damage;
+            OnHit?.Invoke(hitPoint, damage);
 
             if (_health <= 0)
             {

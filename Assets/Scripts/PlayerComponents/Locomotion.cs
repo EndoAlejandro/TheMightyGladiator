@@ -32,7 +32,7 @@ namespace PlayerComponents
         {
             if (_playerStateMachine.CurrentStateType is PlayerDodge || !_player.CanMove) return;
 
-            _rigidbody.AddForce(_moveDirection * (_player.Speed * _player.Acceleration), ForceMode.Acceleration);
+            _rigidbody.AddForce(_moveDirection * (_player.WalkSpeed * _player.Acceleration), ForceMode.Acceleration);
             if (!_player.IsImmune) SpeedControl();
         }
 
@@ -49,9 +49,9 @@ namespace PlayerComponents
         private void SpeedControl()
         {
             var flatVelocity = _rigidbody.velocity.With(y: 0f);
-            if (flatVelocity.magnitude > _player.Speed)
+            if (flatVelocity.magnitude > _player.WalkSpeed)
                 _rigidbody.velocity =
-                    flatVelocity.normalized * _player.Speed +
+                    flatVelocity.normalized * _player.WalkSpeed +
                     Vector3.up * (_rigidbody.velocity.y - 9.8f * Time.deltaTime);
         }
     }
