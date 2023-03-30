@@ -41,7 +41,7 @@ namespace Enemies
         public PoolAfterSeconds TelegraphFx => telegraphFx;
         public bool IsAttacking { get; private set; }
         public bool CanBeParried { get; private set; }
-
+        public bool IsStun { get; private set; }
         public abstract bool IsAlive { get; }
         public float StunTime => stunTime;
         public float GetHitTime => getHitTime;
@@ -51,5 +51,6 @@ namespace Enemies
         public abstract void Parry(Player player);
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;
+        public void SetIsStun(bool isStun) => IsStun = isStun;
     }
 }

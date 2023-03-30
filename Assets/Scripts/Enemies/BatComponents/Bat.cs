@@ -2,6 +2,7 @@
 using CustomUtils;
 using PlayerComponents;
 using UnityEngine;
+using VfxComponents;
 
 namespace Enemies.BatComponents
 {
@@ -35,6 +36,7 @@ namespace Enemies.BatComponents
         public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f)
         {
             _health -= damage;
+            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
             OnHit?.Invoke(hitPoint, knockBack);
 
             if (_health <= 0)

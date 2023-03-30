@@ -7,11 +7,23 @@ namespace Enemies
     {
         private readonly Enemy _enemy;
         public EnemyStun(Enemy enemy) => _enemy = enemy;
-        public virtual void OnEnter() => timer = _enemy.StunTime;
+
+        public void OnEnter()
+        {
+            timer = _enemy.StunTime;
+            _enemy.SetIsStun(true);
+        }
+
         public override string ToString() => "Stun";
 
-        public virtual void FixedTick()
+        public void FixedTick()
         {
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            _enemy.SetIsStun(false);
         }
     }
 

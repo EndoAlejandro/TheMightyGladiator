@@ -2,6 +2,7 @@
 using Enemies;
 using StateMachineComponents;
 using UnityEngine;
+using VfxComponents;
 
 namespace PlayerComponents
 {
@@ -67,7 +68,8 @@ namespace PlayerComponents
             }
 
             if (closestVase == null) return;
-            closestVase.GetDamageFromPlayer(1f);
+            closestVase.TakeDamage(1f);
+            VfxManager.Instance.PlayFx(Vfx.Sword, closestVase.transform.position);
         }
 
         private void AttackEnemy(Enemy enemy, Collider result)
@@ -75,7 +77,19 @@ namespace PlayerComponents
             if (!enemy.IsAlive) return;
             if (!IsValidAngle(enemy.transform)) return;
 
-            enemy.TakeDamage(result.ClosestPoint(_player.transform.position), _player.Damage, _player.KnockBackForce);
+            var point = result.ClosestPoint(_player.transform.position);
+            var multiplier = 1f;
+            var fx = Vfx.Sword;
+            if (enemy.IsStun)
+            {
+                multiplier = _player.CriticalMultiplier;
+                fx = Vfx.SwordCritical;
+            }
+
+            enemy.TakeDamage(result.ClosestPoint(_player.transform.position), _player.Damage * multiplier,
+                _player.KnockBackForce);
+            VfxManager.Instance.PlayFx(fx, point);
+            MainCamera.Instance.Shake();
         }
 
         public bool IsValidAngle(Transform target)

@@ -64,7 +64,7 @@ MonoBehaviour:
   parryTimeWindow: 2
   telegraphTime: 1
   recoverTime: 1
-  stunTime: 2
+  stunTime: 5
   getHitTime: 0.5
   sphere: {fileID: 4172247090026839953}
   idleTime: 2
@@ -94,9 +94,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b883120e57ec457d8cc1c3298795bfc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  telegraphVfx: {fileID: 1281620300362115626, guid: 715da160e7c7e6343a41a9c1b0b3fb54,
-    type: 3}
-  telegraphOffset: {x: 0, y: 1.5, z: 0}
 --- !u!114 &4172247088674783531
 MonoBehaviour:
   m_ObjectHideFlags: 0

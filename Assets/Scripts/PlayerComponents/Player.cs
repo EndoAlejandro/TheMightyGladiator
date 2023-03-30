@@ -29,6 +29,9 @@ namespace PlayerComponents
         [Header("Attack")]
         [SerializeField] private float damage = 1f;
 
+        [Range(1f, 2f)]
+        [SerializeField] private float criticalMultiplier = 2f;
+
         [SerializeField] private LayerMask attackLayerMask;
         [Range(5f, 90f)] [SerializeField] private float attackAngle = 45f;
         [SerializeField] private float hitBoxSize = 1.5f;
@@ -72,6 +75,7 @@ namespace PlayerComponents
         public float DodgeSpeed => dodgeSpeed;
         public float DodgeDistance => dodgeDistance;
         public bool CanMove { get; private set; } = true;
+        public float CriticalMultiplier => criticalMultiplier;
 
         private Collider _collider;
         private Rigidbody _rigidbody;
