@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using DungeonComponents;
 using Enemies;
 using UnityEngine;
 
-namespace BigRoom
+namespace Rooms
 {
-    public class BigRoomController : HadesRoom
+    public class Room : BaseRoom
     {
         [SerializeField] private int maxEnemies = 2;
         [SerializeField] private int waves = 2;

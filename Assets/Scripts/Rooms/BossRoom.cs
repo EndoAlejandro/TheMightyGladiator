@@ -1,9 +1,9 @@
 ﻿using PlayerComponents;
 using UnityEngine;
 
-namespace BigRoom
+namespace Rooms
 {
-    public class BossRoomController : HadesRoom
+    public class BossRoom : BaseRoom
     {
         [SerializeField] private Transform bossSpawnPoint;
 

@@ -1,7 +1,7 @@
 using PlayerComponents;
 using UnityEngine;
 
-namespace BigRoom
+namespace Rooms
 {
     public class Portal : MonoBehaviour, IInteractable
     {

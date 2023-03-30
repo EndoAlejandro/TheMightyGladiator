@@ -39,20 +39,37 @@ namespace Enemies
 
         private void Update()
         {
-            if (!_isOn) return;
+            if (!visuals.gameObject.activeInHierarchy) return;
             transform.rotation = Quaternion.Euler(Vector3.zero);
         }
 
         private void StateMachineOnEntityStateChanged(IState state)
         {
-            if (state is not EnemyTelegraph) return;
-            StartCoroutine(CustomAnimation());
+            switch (state)
+            {
+                case EnemyTelegraph telegraph:
+                    StartCoroutine(AttackAnimation());
+                    break;
+                case EnemyStun stun:
+                    visuals.SetText("stun");
+                    visuals.color = initialColor;
+                    visuals.gameObject.SetActive(true);
+                    _isOn = true;
+                    break;
+                default:
+                    if (!_isOn) return;
+                    _isOn = false;
+                    StopCoroutine(AttackAnimation());
+                    visuals.gameObject.SetActive(false);
+                    break;
+            }
         }
 
-        private IEnumerator CustomAnimation()
+        private IEnumerator AttackAnimation()
         {
             _isOn = true;
             transform.localScale = Vector3.one * scaleRange.x;
+            visuals.SetText("!");
             visuals.gameObject.SetActive(true);
             var timer = _telegraphTime;
             while (timer > 0f)

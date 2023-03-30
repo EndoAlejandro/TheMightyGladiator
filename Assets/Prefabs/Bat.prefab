@@ -61,11 +61,11 @@ MonoBehaviour:
   rotationSpeed: 10
   telegraphFx: {fileID: 589803450516090148, guid: 01fe7029af7f9ed4d916e8a5a18a41b9,
     type: 3}
-  parryTimeWindow: 10
+  parryTimeWindow: 2
   telegraphTime: 1
   recoverTime: 1
-  stunTime: 5
-  getHitTime: 2
+  stunTime: 2
+  getHitTime: 0.5
   sphere: {fileID: 4172247090026839953}
   idleTime: 2
   deathTime: 2

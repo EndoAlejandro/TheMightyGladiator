@@ -1,8 +1,9 @@
 ﻿using System;
-using BigRoom;
 using Enemies;
 using Enemies.BigBobComponents;
+using Rooms;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public struct LevelData
@@ -16,13 +17,13 @@ public struct LevelData
     [SerializeField] private Biome biome;
 
     [SerializeField] private int floors;
-    [SerializeField] private InitialRoomController initialRoom;
-    [SerializeField] private BossRoomController bossRoom;
-    [SerializeField] private BigRoomController[] rooms;
+    [FormerlySerializedAs("initialBaseRoom")] [SerializeField] private InitialRoom initialRoom;
+    [FormerlySerializedAs("bossBaseRoom")] [SerializeField] private BossRoom bossRoom;
+    [SerializeField] private Room[] rooms;
     public int Floors => floors + 1;
-    public InitialRoomController InitialRoom => initialRoom;
-    public BossRoomController BossRoom => bossRoom;
-    public BigRoomController[] Rooms => rooms;
+    public InitialRoom InitialRoom => initialRoom;
+    public BossRoom BossRoom => bossRoom;
+    public Room[] Rooms => rooms;
     public Enemy[] Enemies => enemies;
     public BigBob Boss => boss;
 }

@@ -1,5 +1,4 @@
-﻿using Pooling;
-using StateMachineComponents;
+﻿using StateMachineComponents;
 using UnityEngine;
 
 namespace Enemies
@@ -17,11 +16,6 @@ namespace Enemies
         private FiniteStateBehaviour _stateMachine;
         private Animator _animator;
 
-        [Header("Telegraph")]
-        [SerializeField] private PoolAfterSeconds telegraphVfx;
-
-        [SerializeField] private Vector3 telegraphOffset = Vector3.up;
-
         private void Awake()
         {
             _stateMachine = GetComponent<FiniteStateBehaviour>();
@@ -29,16 +23,6 @@ namespace Enemies
         }
 
         private void Start() => _stateMachine.OnEntityStateChanged += StateMachineOnEntityStateChanged;
-
-        private void StateMachineOnEntityStateChanged(IState state)
-        {
-            _animator.SetTrigger(state.ToString());
-            switch (state)
-            {
-                case EnemyTelegraph telegraph:
-                    // telegraphVfx.Get<PoolAfterSeconds>(transform.position + telegraphOffset, Quaternion.identity);
-                    break;
-            }
-        }
+        private void StateMachineOnEntityStateChanged(IState state) => _animator.SetTrigger(state.ToString());
     }
 }

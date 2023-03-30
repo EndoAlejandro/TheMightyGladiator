@@ -50,9 +50,9 @@ namespace Enemies
 
     public class EnemyTelegraph : StateTimer, IState
     {
-        private readonly Enemy _enemy;
-        public EnemyTelegraph(Enemy enemy) => _enemy = enemy;
-        public virtual void OnEnter() => timer = _enemy.TelegraphTime;
+        protected readonly Enemy enemy;
+        public EnemyTelegraph(Enemy enemy) => this.enemy = enemy;
+        public virtual void OnEnter() => timer = enemy.TelegraphTime;
         public override string ToString() => "Telegraph";
 
         public virtual void FixedTick()

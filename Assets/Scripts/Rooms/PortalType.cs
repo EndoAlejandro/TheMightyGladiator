@@ -1,4 +1,4 @@
-﻿namespace BigRoom
+﻿namespace Rooms
 {
     public enum PortalType
     {

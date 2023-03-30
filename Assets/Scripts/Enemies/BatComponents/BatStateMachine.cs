@@ -13,20 +13,16 @@ namespace Enemies.BatComponents
         private Player _player;
         private NavigationSteering _navigationSteering;
 
-        // States
         private BatIdle _idle;
         private EnemyStun _stun;
-
         private EnemyGetHit _getHit;
-        // private BatDamage _damage;
-        // private EnemyKnockBack _knockBack;
 
         private float _distance;
 
         protected override void StateMachine()
         {
             var idle = new BatIdle(_bat, _rigidbody, _player, _navigationSteering);
-            var telegraph = new EnemyTelegraph(_bat);
+            var telegraph = new BatTelegraph(_bat, _player);
             var attack = new BatAttack(_bat, _rigidbody, _player);
             var recover = new EnemyRecover(_bat);
             _stun = new EnemyStun(_bat);
@@ -67,9 +63,10 @@ namespace Enemies.BatComponents
         {
             var direction = Utils.NormalizedFlatDirection(transform.position, position);
             _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);
-            stateMachine.SetState(_getHit);
-        }
 
+            if (stateMachine.CurrentState is not EnemyStun)
+                stateMachine.SetState(_getHit);
+        }
 
         protected override void References()
         {

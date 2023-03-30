@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
-using BigRoom;
 using CustomUtils;
 using PlayerComponents;
+using Rooms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -27,18 +27,18 @@ public class GameManager : Singleton<GameManager>
     {
         _currentLevelData = levels[_currentBiome];
 
-        HadesRoom instancedRoom = null;
+        BaseRoom instancedBaseRoom = null;
         if (_currentFloor == 0)
-            instancedRoom = Instantiate(_currentLevelData.InitialRoom);
+            instancedBaseRoom = Instantiate(_currentLevelData.InitialRoom);
         else if (_currentFloor < _currentLevelData.Floors)
         {
             var index = Random.Range(0, _currentLevelData.Rooms.Length);
-            instancedRoom = Instantiate(_currentLevelData.Rooms[index]);
+            instancedBaseRoom = Instantiate(_currentLevelData.Rooms[index]);
         }
         else
-            instancedRoom = Instantiate(_currentLevelData.BossRoom);
+            instancedBaseRoom = Instantiate(_currentLevelData.BossRoom);
 
-        instancedRoom.Setup(_currentLevelData, player);
+        instancedBaseRoom.Setup(_currentLevelData, player);
     }
 
     public void NextLevel()
