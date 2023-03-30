@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1405874100963962791}
-  - component: {fileID: 1405874100963962790}
+  - component: {fileID: 1696386911142719421}
   m_Layer: 0
   m_Name: SpawnPoint_2x2
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1405874100963962790
+--- !u!114 &1696386911142719421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1405874100963962789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2adecc6b98b3784abc51db8a2e7dae1, type: 3}
+  m_Script: {fileID: 11500000, guid: 142ea8bba9124b58b9ba706bab346183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fx: {fileID: 589803450516090148, guid: 01fe7029af7f9ed4d916e8a5a18a41b9, type: 3}
+  fx: {fileID: 0}

@@ -73,7 +73,7 @@ public class GameManager : Singleton<GameManager>
         else if (portalType == PortalType.Starting) StartGame();
     }
 
-    private void LoadNextGameScene() => StartCoroutine(LoadSceneAsync("HadesLike", SpawnNewLevel));
+    private void LoadNextGameScene() => StartCoroutine(LoadSceneAsync("Dungeon", SpawnNewLevel));
     public void StartGame() => LoadNextGameScene();
     public void LoadLobby() => StartCoroutine(LoadSceneAsync("Lobby"));
 
@@ -82,11 +82,4 @@ public class GameManager : Singleton<GameManager>
         yield return SceneManager.LoadSceneAsync(sceneName);
         callback?.Invoke();
     }
-}
-
-public enum Biome
-{
-    First,
-    Second,
-    Third,
 }

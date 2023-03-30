@@ -34,9 +34,7 @@ namespace PlayerComponents
         {
             _timer -= Time.deltaTime;
 
-            if (_triggered) return;
-            //if (_timer <= AttackAnimDuration / 2)
-            if (!(_timer <= 0f)) return;
+            if (_triggered || _timer > 0f) return;
             _triggered = true;
             AttackDamage();
         }
@@ -69,7 +67,7 @@ namespace PlayerComponents
             }
 
             if (closestVase == null) return;
-            closestVase.TakeDamage(1f);
+            closestVase.GetDamageFromPlayer(1f);
             _player.DealDamage(closestVase.transform.position);
         }
 
@@ -79,7 +77,7 @@ namespace PlayerComponents
             if (!IsValidAngle(enemy.transform)) return;
 
             enemy.TakeDamage(_player.transform.position);
-            _player.DealDamage(result.ClosestPoint(_player.transform.position));
+            // _player.DealDamage(result.ClosestPoint(_player.transform.position));
         }
 
         public bool IsValidAngle(Transform target)

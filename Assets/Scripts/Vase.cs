@@ -12,7 +12,7 @@ public class Vase : MonoBehaviour
         CanBreak = true;
     }
 
-    public void TakeDamage(float damageAmount)
+    public void GetDamageFromPlayer(float damageAmount)
     {
         _health -= damageAmount;
 

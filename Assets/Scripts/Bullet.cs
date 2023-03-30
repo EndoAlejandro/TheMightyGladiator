@@ -48,7 +48,7 @@ public class Bullet : PooledMonoBehaviour
         {
             if (other.TryGetComponent(out Enemy enemy)) return;
 
-            if (other.TryGetComponent(out Player player) && player.TryToDealDamage(transform.position))
+            if (other.TryGetComponent(out Player player) && player.GetDamageFromEnemy(transform.position))
                 player.TakeDamage(transform.position, 1);
             
             ReturnToPool();

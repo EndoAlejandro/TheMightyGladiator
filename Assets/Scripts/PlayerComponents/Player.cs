@@ -118,7 +118,7 @@ namespace PlayerComponents
 
         public void SetShieldActive(bool value) => _shieldActive = value;
 
-        public bool TryToDealDamage(Vector3 enemyPosition)
+        public bool GetDamageFromEnemy(Vector3 enemyPosition)
         {
             if (IsDodging) return false;
             if (IsImmune) return false;
