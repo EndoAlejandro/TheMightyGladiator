@@ -4,7 +4,7 @@ using PlayerComponents;
 using Pooling;
 using UnityEngine;
 
-public class Bullet : PooledMonoBehaviour
+public class Bullet : PooledMonoBehaviour, IDealDamage
 {
     private Rigidbody _rigidbody;
 
@@ -14,14 +14,17 @@ public class Bullet : PooledMonoBehaviour
 
     private bool _reflected;
 
+    public int Damage { get; private set; }
+
     private void Awake() => _rigidbody = GetComponent<Rigidbody>();
 
     private void OnEnable() => ReturnToPool(10f);
 
-    public void Setup(Vector3 direction, float speed)
+    public void Setup(Vector3 direction, float speed, int damage)
     {
         _direction = direction;
         _speed = speed;
+        Damage = damage;
     }
 
     private void FixedUpdate() => _rigidbody.velocity = _direction * _speed;
@@ -49,9 +52,9 @@ public class Bullet : PooledMonoBehaviour
         {
             if (other.TryGetComponent(out Enemy enemy)) return;
 
-            if (other.TryGetComponent(out Player player) && player.GetDamageFromEnemy(transform.position))
-                player.TakeDamage(transform.position, 1);
-            
+            if (other.TryGetComponent(out Player player))
+                player.TryToGetDamageFromEnemy(this);
+
             ReturnToPool();
         }
     }

@@ -46,9 +46,9 @@ namespace Enemies.BatComponents
             PlayerOnRange = distance <= _bat.StoppingDistance;
 
             if (!PlayerOnRange)
-                _rigidbody.AddForce(_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Force);
+                _rigidbody.AddForce(_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Acceleration);
             else if (distance <= _bat.StoppingDistance - _bat.DistanceTolerance)
-                _rigidbody.AddForce(-_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Force);
+                _rigidbody.AddForce(-_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Acceleration);
         }
 
         public override void OnEnter()
@@ -66,10 +66,8 @@ namespace Enemies.BatComponents
     public class BatAttack : EnemyAttack
     {
         private readonly Bat _bat;
-        private readonly Player _player;
         private readonly Rigidbody _rigidbody;
 
-        // private Vector3 _direction;
         private Vector3 _targetPosition;
 
         private float _timer;
@@ -81,10 +79,9 @@ namespace Enemies.BatComponents
 
         public bool Ended { get; private set; }
 
-        public BatAttack(Bat bat, Rigidbody rigidbody, Player player) : base(bat)
+        public BatAttack(Bat bat, Rigidbody rigidbody) : base(bat)
         {
             _bat = bat;
-            _player = player;
             _rigidbody = rigidbody;
 
             _results = new Collider[10];
@@ -100,8 +97,7 @@ namespace Enemies.BatComponents
             {
                 var result = _results[i];
                 if (!result.TryGetComponent(out Player player)) continue;
-                if (!player.GetDamageFromEnemy(_bat.transform.position)) continue;
-                player.TakeDamage(_bat.transform.position, 1);
+                // if (!player.TryToGetDamageFromEnemy(_bat)) continue;
                 Ended = true;
             }
         }
@@ -114,7 +110,8 @@ namespace Enemies.BatComponents
             if (_timer <= 0) Ended = true;
             // if (_currentDistance > _lastDistance || _timer <= 0) Ended = true;
 
-            _rigidbody.AddForce(_bat.transform.forward * (_bat.AttackSpeed * _bat.Acceleration * 2), ForceMode.Force);
+            _rigidbody.AddForce(_bat.transform.forward * (_bat.AttackSpeed * _bat.Acceleration * 2),
+                ForceMode.Acceleration);
             _lastDistance = GetDistance();
         }
 
@@ -154,6 +151,34 @@ namespace Enemies.BatComponents
             _direction = Utils.NormalizedFlatDirection(_player.transform.position, enemy.transform.position);
             enemy.transform.forward =
                 Vector3.Lerp(enemy.transform.forward, _direction, enemy.RotationSpeed * Time.deltaTime);
+        }
+    }
+
+    public class BatDeath : EnemyDeath
+    {
+        private readonly Bat _bat;
+        private readonly Collider _collider;
+        private readonly Rigidbody _rigidbody;
+
+        public BatDeath(Bat bat, Collider collider, Rigidbody rigidbody) : base(bat)
+        {
+            _bat = bat;
+            _collider = collider;
+            _rigidbody = rigidbody;
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            _rigidbody.isKinematic = true;
+            _collider.enabled = false;
+        }
+
+        public override void OnExit()
+        {
+            _rigidbody.isKinematic = false;
+            _collider.enabled = true;
+            base.OnExit();
         }
     }
 }

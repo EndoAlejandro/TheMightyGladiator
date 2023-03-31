@@ -1,8 +1,20 @@
-﻿using StateMachineComponents;
+﻿using CustomUtils;
+using StateMachineComponents;
 using UnityEngine;
 
 namespace Enemies
 {
+    public class EnemySpawn : StateTimer, IState
+    {
+        public override string ToString() => "Spawn";
+
+        public void FixedTick()
+        {
+        }
+
+        public void OnEnter() => timer = Constants.SPAWN_TIME;
+    }
+
     public class EnemyStun : StateTimer, IState
     {
         private readonly Enemy _enemy;
@@ -69,6 +81,24 @@ namespace Enemies
 
         public virtual void FixedTick()
         {
+        }
+    }
+
+    public class EnemyDeath : StateTimer, IState
+    {
+        public override string ToString() => "Death";
+        protected readonly Enemy enemy;
+        public EnemyDeath(Enemy enemy) => this.enemy = enemy;
+        public virtual void OnEnter() => timer = enemy.DeathTime;
+
+        public virtual void FixedTick()
+        {
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            enemy.DeSpawn();
         }
     }
 

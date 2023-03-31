@@ -31,8 +31,7 @@ namespace Enemies.WormComponents
             {
                 var result = _results[i];
                 if (!result.TryGetComponent(out Player player)) continue;
-                if (!player.GetDamageFromEnemy(_worm.transform.position)) continue;
-                player.TakeDamage(_worm.transform.position, 1);
+                player.TryToGetDamageFromEnemy(_worm);
             }
         }
 

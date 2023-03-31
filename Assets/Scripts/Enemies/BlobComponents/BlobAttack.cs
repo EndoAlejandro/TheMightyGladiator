@@ -17,8 +17,6 @@ namespace Enemies.BlobComponents
         public void Tick()
         {
             _timer -= Time.deltaTime;
-
-            // if (_timer <= 0f) Attack();
         }
 
         public void FixedTick()
@@ -41,8 +39,7 @@ namespace Enemies.BlobComponents
             {
                 var bullet = _blob.Bullet.Get<Bullet>(_blob.transform.position + Vector3.up * 0.5f,
                     Quaternion.LookRotation(direction));
-                // bullet.GetComponent<Rigidbody>().velocity = direction;
-                bullet.Setup(direction, _blob.BulletSpeed);
+                bullet.Setup(direction, _blob.BulletSpeed, _blob.Damage);
             }
         }
 

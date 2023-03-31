@@ -5,6 +5,11 @@ using Random = UnityEngine.Random;
 
 namespace CustomUtils
 {
+    public static class Constants
+    {
+        public static float SPAWN_TIME = 1f;
+    }
+
     public static class Utils
     {
         public static Vector3 BallisticVelocity(Vector3 from, Vector3 to, float angle)
@@ -20,7 +25,7 @@ namespace CustomUtils
             var vel = Mathf.Sqrt(dist * Physics.gravity.magnitude / Mathf.Sin(2 * a));
             return vel * dir.normalized;
         }
-        
+
         public static Vector3[] GetFanPatternDirections(Transform source, int segments, float angle)
         {
             if (segments <= 0 || angle <= 0) return Array.Empty<Vector3>();
@@ -39,14 +44,14 @@ namespace CustomUtils
 
             return positions;
         }
-        
+
         public static Vector3 FlatDirection(Vector3 to, Vector3 from)
         {
             to.y = 0f;
             from.y = 0f;
             return to - from;
         }
-        
+
         public static float NormalizedDotProduct(Vector3 a, Vector3 b)
         {
             var dot = Vector3.Dot(a, b);

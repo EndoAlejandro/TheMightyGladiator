@@ -11,3 +11,12 @@ public enum Vfx
     SwordCritical,
     PlayerHit,
 }
+
+public enum UpgradeType
+{
+    Heal,
+    MaxHeal,
+    Damage,
+    CriticalDamage,
+    CriticalProb,
+}

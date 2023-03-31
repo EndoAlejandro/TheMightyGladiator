@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public abstract class Enemy : PooledMonoBehaviour
+    public abstract class Enemy : PooledMonoBehaviour, IDealDamage
     {
         public abstract event Action<Enemy> OnDead;
+        public event Action<Enemy> OnDeSpawn;
         public abstract event Action<Vector3, float> OnHit;
 
         [Header("Base Movement")]
@@ -20,16 +21,18 @@ namespace Enemies
         [SerializeField] private float rotationSpeed = 100f;
 
         [Header("Base Attack")]
-        [SerializeField] private PoolAfterSeconds telegraphFx;
+        [SerializeField] private int damage = 1;
 
+        [SerializeField] private PoolAfterSeconds telegraphFx;
         [SerializeField] private float parryTimeWindow = 0.5f;
         [SerializeField] private float telegraphTime = 1f;
         [SerializeField] private float recoverTime = 1f;
 
-        [Header("Get Hit")]
+        [Header("Base Get Hit")]
         [SerializeField] private float stunTime = 1f;
 
         [SerializeField] private float getHitTime = 1f;
+        [SerializeField] private float deathTime = 1f;
 
         public float ParryTimeWindow => parryTimeWindow;
         public float TelegraphTime => telegraphTime;
@@ -45,11 +48,25 @@ namespace Enemies
         public float StunTime => stunTime;
         public float GetHitTime => getHitTime;
         public float RecoverTime => recoverTime;
+        public float DeathTime => deathTime;
+        public int Damage => damage;
 
         public abstract void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f);
         public abstract void Parry(Player player);
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;
         public void SetIsStun(bool isStun) => IsStun = isStun;
+
+        public void DeSpawn()
+        {
+            OnDeSpawn?.Invoke(this);
+            ReturnToPool();
+        }
+
+        protected virtual void OnCollisionEnter(Collision collision)
+        {
+            if (collision.transform.TryGetComponent(out Player player))
+                player.TryToGetDamageFromEnemy(this);
+        }
     }
 }

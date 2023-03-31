@@ -82,7 +82,7 @@ namespace PlayerComponents
             var fx = Vfx.Sword;
             if (enemy.IsStun)
             {
-                multiplier = _player.CriticalMultiplier;
+                multiplier = _player.CriticalDamage;
                 fx = Vfx.SwordCritical;
             }
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using CustomUtils;
+using Enemies;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PlayerComponents
 {
@@ -13,6 +13,10 @@ namespace PlayerComponents
         public event Action OnParry;
         public event Action OnShieldHit;
 
+        [Header("Health")]
+        [SerializeField] private int maxHealth;
+
+        [SerializeField] private float immunityTime = 1.5f;
 
         [Header("Locomotion")]
         [SerializeField] private float walkSpeed = 6f;
@@ -29,8 +33,11 @@ namespace PlayerComponents
         [Header("Attack")]
         [SerializeField] private float damage = 1f;
 
+        [Range(0f, 1f)]
+        [SerializeField] private float criticalProbability;
+
         [Range(1f, 2f)]
-        [SerializeField] private float criticalMultiplier = 2f;
+        [SerializeField] private float criticalDamage = 2f;
 
         [SerializeField] private LayerMask attackLayerMask;
         [Range(5f, 90f)] [SerializeField] private float attackAngle = 45f;
@@ -45,8 +52,7 @@ namespace PlayerComponents
         [SerializeField] private float parryTime = 0.25f;
         [SerializeField] private float defendRate = 0.5f;
 
-        [Header("Health")]
-        [SerializeField] private float immunityTime = 1.5f;
+        public int Health { get; private set; }
 
         private float _attackTimer;
         private float _dodgeTimer;
@@ -75,7 +81,7 @@ namespace PlayerComponents
         public float DodgeSpeed => dodgeSpeed;
         public float DodgeDistance => dodgeDistance;
         public bool CanMove { get; private set; } = true;
-        public float CriticalMultiplier => criticalMultiplier;
+        public float CriticalDamage => criticalDamage;
 
         private Collider _collider;
         private Rigidbody _rigidbody;
@@ -86,6 +92,8 @@ namespace PlayerComponents
             _collider = GetComponent<Collider>();
             Height = _collider.bounds.center.y;
         }
+
+        private void Start() => Health = maxHealth;
 
         private void Update()
         {
@@ -110,36 +118,36 @@ namespace PlayerComponents
             OnParry?.Invoke();
         }
 
-        public void Hit() => OnHit?.Invoke();
-
         public void ShieldHit() => OnShieldHit?.Invoke();
 
-        public void TakeDamage(Vector3 enemyPosition, int amount)
+        private void TakeDamage(Vector3 direction, int amount)
         {
             _immunityTimer = immunityTime;
-            var direction = Utils.NormalizedFlatDirection(transform.position, enemyPosition);
-            _rigidbody.AddForce(direction * 15f, ForceMode.Impulse);
-            Hit();
-        }
-
-        public void DealDamage(Vector3 hitPoint)
-        {
-            MainCamera.Instance.Shake();
-            OnDealDamage?.Invoke(hitPoint + Vector3.up * Height);
+            _rigidbody.AddForce(direction * 15f, ForceMode.VelocityChange);
+            OnHit?.Invoke();
         }
 
         public void SetShieldActive(bool value) => _shieldActive = value;
 
-        public bool GetDamageFromEnemy(Vector3 enemyPosition)
+        public bool TryToGetDamageFromEnemy(IDealDamage damageDealer)
         {
             if (IsDodging) return false;
             if (IsImmune) return false;
-            if (!_shieldActive) return true;
+            //if (!_shieldActive) return true;
 
-            var direction = Utils.NormalizedFlatDirection(enemyPosition, transform.position);
-            var result = Vector3.Angle(direction, transform.forward) > DefendAngle;
-            if (!result) ShieldHit();
-            return result;
+            var direction = Utils.NormalizedFlatDirection(damageDealer.transform.position, transform.position);
+
+            if (_shieldActive)
+            {
+                if (Vector3.Angle(direction, transform.forward) < DefendAngle)
+                {
+                    ShieldHit();
+                    return false;
+                }
+            }
+
+            TakeDamage(-direction, damageDealer.Damage);
+            return true;
         }
 
         private void OnDrawGizmos()
@@ -163,5 +171,11 @@ namespace PlayerComponents
         {
             //TODO: Teleport event and stop moving from input.
         }
+
+        public void IncreaseDamage(float value) => damage += value;
+        public void IncreaseCriticalProbability(float value) => criticalProbability += value;
+        public void IncreaseCriticalDamage(float value) => criticalDamage += value;
+        public void IncreaseMaxHealth(int value) => maxHealth += value;
+        public void Heal(int value) => Health += value;
     }
 }

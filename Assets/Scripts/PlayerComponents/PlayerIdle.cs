@@ -28,7 +28,7 @@ namespace PlayerComponents
 
             for (int i = 0; i < size; i++)
             {
-                if (!_results[i].TryGetComponent(out IInteractable interactable)) continue;
+                if (!_results[i].TryGetComponent(out Interactable interactable)) continue;
                 interactable.Interact(_player);
                 break;
             }

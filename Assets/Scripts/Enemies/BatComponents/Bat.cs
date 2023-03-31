@@ -16,7 +16,6 @@ namespace Enemies.BatComponents
         [Header("Health")]
         [SerializeField] private float idleTime = 2f;
 
-        [SerializeField] private float deathTime = 1f;
         [SerializeField] private float attackSpeed = 10f;
         [SerializeField] private float distanceTolerance = 2f;
         [SerializeField] private float attackTime = 0.5f;
@@ -43,19 +42,15 @@ namespace Enemies.BatComponents
             if (_health <= 0)
             {
                 OnDead?.Invoke(this);
-                ReturnToPool();
             }
         }
 
-        public override void Parry(Player player)
-        {
-            /*var direction = Utils.NormalizedFlatDirection(transform.position, player.transform.position);
-            _rigidbody.AddForce(direction * 5f, ForceMode.Impulse);*/
-            OnParry?.Invoke(player);
-        }
+        public override void Parry(Player player) => OnParry?.Invoke(player);
 
-        private void OnCollisionEnter(Collision collision)
+        protected override void OnCollisionEnter(Collision collision)
         {
+            base.OnCollisionEnter(collision);
+            
             if (!IsAttacking) return;
             if (collision.transform.CompareTag("Ground")) return;
             if (collision.transform.TryGetComponent(out Enemy enemy)) return;

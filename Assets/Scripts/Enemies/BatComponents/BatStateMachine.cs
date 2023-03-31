@@ -12,34 +12,42 @@ namespace Enemies.BatComponents
         private Bat _bat;
         private Rigidbody _rigidbody;
         private Player _player;
+        private Collider _collider;
         private NavigationSteering _navigationSteering;
 
         private BatIdle _idle;
         private EnemyStun _stun;
         private EnemyGetHit _getHit;
         private EnemyRecover _recover;
+        private BatDeath _death;
+        private EnemySpawn _spawn;
 
         private float _distance;
 
         protected override void StateMachine()
         {
-            var idle = new BatIdle(_bat, _rigidbody, _player, _navigationSteering);
+            _spawn = new EnemySpawn();
+            _idle = new BatIdle(_bat, _rigidbody, _player, _navigationSteering);
             var telegraph = new BatTelegraph(_bat, _player);
-            var attack = new BatAttack(_bat, _rigidbody, _player);
+            var attack = new BatAttack(_bat, _rigidbody);
             _recover = new EnemyRecover(_bat);
             _stun = new EnemyStun(_bat);
             _getHit = new EnemyGetHit(_bat);
+            _death = new BatDeath(_bat, _collider, _rigidbody);
 
-            stateMachine.SetState(idle);
+            stateMachine.SetState(_spawn);
+            stateMachine.AddTransition(_spawn, _idle, () => _spawn.Ended);
 
-            stateMachine.AddTransition(idle, telegraph,
-                () => idle.PlayerOnRange && idle.Ended && idle.CanSeePlayer);
+            stateMachine.AddTransition(_idle, telegraph,
+                () => _idle.PlayerOnRange && _idle.Ended && _idle.CanSeePlayer);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
             stateMachine.AddTransition(attack, _recover, () => attack.Ended);
-            stateMachine.AddTransition(_recover, idle, () => _recover.Ended);
+            stateMachine.AddTransition(_recover, _idle, () => _recover.Ended);
 
-            stateMachine.AddTransition(_getHit, idle, () => _getHit.Ended);
-            stateMachine.AddTransition(_stun, idle, () => _stun.Ended);
+            stateMachine.AddTransition(_getHit, _idle, () => _getHit.Ended);
+            stateMachine.AddTransition(_stun, _idle, () => _stun.Ended);
+
+            stateMachine.AddTransition(_death, _idle, () => _death.Ended);
         }
 
         private void OnEnable()
@@ -47,6 +55,9 @@ namespace Enemies.BatComponents
             _bat.OnHit += BatOnHit;
             _bat.OnParry += BatOnParry;
             _bat.OnAttackCollision += BatOnAttackCollision;
+            _bat.OnDead += BatOnDead;
+
+            stateMachine.SetState(_spawn);
         }
 
         private void OnDisable()
@@ -54,7 +65,10 @@ namespace Enemies.BatComponents
             _bat.OnHit -= BatOnHit;
             _bat.OnParry -= BatOnParry;
             _bat.OnAttackCollision -= BatOnAttackCollision;
+            _bat.OnDead -= BatOnDead;
         }
+
+        private void BatOnDead(Enemy enemy) => stateMachine.SetState(_death);
 
         private void BatOnAttackCollision()
         {
@@ -84,6 +98,7 @@ namespace Enemies.BatComponents
             _bat = GetComponent<Bat>();
             _player = FindObjectOfType<Player>();
             _navigationSteering = GetComponent<NavigationSteering>();
+            _collider = GetComponent<Collider>();
         }
     }
 }

@@ -112,8 +112,7 @@ namespace Enemies.BigBobComponents
             {
                 var result = _results[i];
                 if (!result.TryGetComponent(out Player player)) continue;
-                if (player.GetDamageFromEnemy(_bigBob.transform.position))
-                    player.TakeDamage(_bigBob.transform.position, 1);
+                player.TryToGetDamageFromEnemy(_bigBob);
             }
         }
 
