@@ -1,5 +1,6 @@
 using System;
 using CustomUtils;
+using NavigationSteeringComponents;
 using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Enemies.BatComponents
         private BatIdle _idle;
         private EnemyStun _stun;
         private EnemyGetHit _getHit;
+        private EnemyRecover _recover;
 
         private float _distance;
 
@@ -24,7 +26,7 @@ namespace Enemies.BatComponents
             var idle = new BatIdle(_bat, _rigidbody, _player, _navigationSteering);
             var telegraph = new BatTelegraph(_bat, _player);
             var attack = new BatAttack(_bat, _rigidbody, _player);
-            var recover = new EnemyRecover(_bat);
+            _recover = new EnemyRecover(_bat);
             _stun = new EnemyStun(_bat);
             _getHit = new EnemyGetHit(_bat);
 
@@ -33,8 +35,8 @@ namespace Enemies.BatComponents
             stateMachine.AddTransition(idle, telegraph,
                 () => idle.PlayerOnRange && idle.Ended && idle.CanSeePlayer);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
-            stateMachine.AddTransition(attack, recover, () => attack.Ended);
-            stateMachine.AddTransition(recover, idle, () => recover.Ended);
+            stateMachine.AddTransition(attack, _recover, () => attack.Ended);
+            stateMachine.AddTransition(_recover, idle, () => _recover.Ended);
 
             stateMachine.AddTransition(_getHit, idle, () => _getHit.Ended);
             stateMachine.AddTransition(_stun, idle, () => _stun.Ended);
@@ -44,12 +46,20 @@ namespace Enemies.BatComponents
         {
             _bat.OnHit += BatOnHit;
             _bat.OnParry += BatOnParry;
+            _bat.OnAttackCollision += BatOnAttackCollision;
         }
 
         private void OnDisable()
         {
             _bat.OnHit -= BatOnHit;
             _bat.OnParry -= BatOnParry;
+            _bat.OnAttackCollision -= BatOnAttackCollision;
+        }
+
+        private void BatOnAttackCollision()
+        {
+            _rigidbody.AddForce(-transform.forward * 2f, ForceMode.VelocityChange);
+            stateMachine.SetState(_recover);
         }
 
         private void BatOnParry(Player player)

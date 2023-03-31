@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using CustomUtils;
+using Enemies;
 using PlayerComponents;
 using UnityEngine;
 
-namespace Enemies
+namespace NavigationSteeringComponents
 {
     public class NavigationSteering : MonoBehaviour
     {

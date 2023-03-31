@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 5206439075959112689}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1022,7 +1022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpawnPoint: {fileID: 5206439076723739095}
-  maxEnemies: 5
+  maxEnemies: 2
   waves: 5
   spawnRate: 1
   portal: {fileID: 7567207431361095525}
@@ -7648,6 +7648,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 9098136043435330286, guid: 6695663f2e726264587518d2f69d2082,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6695663f2e726264587518d2f69d2082, type: 3}

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Enemies
+namespace NavigationSteeringComponents
 {
     [Serializable]
     public struct DirectionWeight

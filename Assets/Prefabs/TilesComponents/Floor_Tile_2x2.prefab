@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5769604835910184729}
   m_Layer: 6
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 5769604837274244079}
   m_Layer: 6
   m_Name: Floor_Tile_2x2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

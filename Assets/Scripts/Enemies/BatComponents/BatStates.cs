@@ -1,4 +1,5 @@
 ﻿using CustomUtils;
+using NavigationSteeringComponents;
 using PlayerComponents;
 using UnityEngine;
 
@@ -46,7 +47,7 @@ namespace Enemies.BatComponents
 
             if (!PlayerOnRange)
                 _rigidbody.AddForce(_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Force);
-            else
+            else if (distance <= _bat.StoppingDistance - _bat.DistanceTolerance)
                 _rigidbody.AddForce(-_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Force);
         }
 
@@ -64,14 +65,11 @@ namespace Enemies.BatComponents
 
     public class BatAttack : EnemyAttack
     {
-        private const float DodgeDistance = 2f;
-        private const float ExitDodgeTime = 2f;
-
         private readonly Bat _bat;
         private readonly Player _player;
         private readonly Rigidbody _rigidbody;
 
-        private Vector3 _direction;
+        // private Vector3 _direction;
         private Vector3 _targetPosition;
 
         private float _timer;
@@ -113,9 +111,10 @@ namespace Enemies.BatComponents
             _timer -= Time.fixedDeltaTime;
             _currentDistance = GetDistance();
 
-            if (_currentDistance > _lastDistance || _timer <= 0) Ended = true;
+            if (_timer <= 0) Ended = true;
+            // if (_currentDistance > _lastDistance || _timer <= 0) Ended = true;
 
-            _rigidbody.AddForce(_direction * (_bat.AttackSpeed * _bat.Acceleration * 2), ForceMode.Force);
+            _rigidbody.AddForce(_bat.transform.forward * (_bat.AttackSpeed * _bat.Acceleration * 2), ForceMode.Force);
             _lastDistance = GetDistance();
         }
 
@@ -126,11 +125,11 @@ namespace Enemies.BatComponents
             base.OnEnter();
             _bat.SetIsAttacking(true);
             Ended = false;
-            _timer = ExitDodgeTime;
+            _timer = _bat.AttackTime;
 
             var position = _bat.transform.position;
-            _direction = Utils.NormalizedFlatDirection(_player.transform.position, position);
-            _targetPosition = _direction * DodgeDistance + position;
+            // _direction = Utils.NormalizedFlatDirection(_player.transform.position, position);
+            // _targetPosition = _direction * DodgeDistance + position;
 
             _lastDistance = GetDistance();
         }

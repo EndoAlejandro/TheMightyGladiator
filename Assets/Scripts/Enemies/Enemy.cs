@@ -10,7 +10,6 @@ namespace Enemies
         public abstract event Action<Enemy> OnDead;
         public abstract event Action<Vector3, float> OnHit;
 
-
         [Header("Base Movement")]
         [SerializeField] protected float maxHealth;
 

@@ -66,10 +66,11 @@ MonoBehaviour:
   recoverTime: 1
   stunTime: 5
   getHitTime: 0.5
-  sphere: {fileID: 4172247090026839953}
   idleTime: 2
   deathTime: 2
-  attackSpeed: 10
+  attackSpeed: 15
+  distanceTolerance: 1.5
+  attackTime: 0.2
 --- !u!114 &4172247088674783528
 MonoBehaviour:
   m_ObjectHideFlags: 0
