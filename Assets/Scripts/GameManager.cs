@@ -12,7 +12,10 @@ using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private Player player;
+    [SerializeField] private Player playerPrefab;
+
+    [SerializeField] private PlayerData defaultPlayerData;
+
     [SerializeField] private Upgrade[] upgrades;
     [SerializeField] private LevelData[] levels;
 
@@ -20,6 +23,7 @@ public class GameManager : Singleton<GameManager>
     private int _currentFloor;
 
     private LevelData _currentLevelData;
+    public PlayerData DefaultPlayerData => defaultPlayerData;
 
     protected override void Awake()
     {
@@ -42,7 +46,7 @@ public class GameManager : Singleton<GameManager>
         else
             instancedBaseRoom = Instantiate(_currentLevelData.BossRoom);
 
-        instancedBaseRoom.Setup(_currentLevelData, player);
+        instancedBaseRoom.Setup(_currentLevelData, playerPrefab);
     }
 
     public void NextLevel()
@@ -71,14 +75,19 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(LoadSceneAsync("MainMenu"));
     }
 
-    public void PortalActivated(PortalType portalType)
+    public void StartDungeonPortalActivated()
     {
-        if (portalType == PortalType.Normal) NextLevel();
-        else if (portalType == PortalType.Starting) StartGame();
+        Player.Instance.SetPlayerData(DefaultPlayerData);
+        LoadNextGameScene();
+    }
+
+    public void PortalActivated()
+    {
+        Player.Instance.SaveData();
+        NextLevel();
     }
 
     private void LoadNextGameScene() => StartCoroutine(LoadSceneAsync("Dungeon", SpawnNewLevel));
-    public void StartGame() => LoadNextGameScene();
     public void LoadLobby() => StartCoroutine(LoadSceneAsync("Lobby"));
 
     private IEnumerator LoadSceneAsync(string sceneName, Action callback = null)
@@ -90,11 +99,15 @@ public class GameManager : Singleton<GameManager>
     public List<Upgrade> GetUpgrades(int amount)
     {
         var upgradesList = upgrades.ToList();
-        if (!player.CanBeHealed)
+        var result = new List<Upgrade>(upgradesList);
+        if (!Player.Instance.CanBeHealed)
             foreach (var upgrade in upgradesList.Where(upgrade => upgrade.UpgradeType == UpgradeType.Heal))
-                upgradesList.Remove(upgrade);
+            {
+                result.Remove(upgrade);
+                break;
+            }
 
-        upgradesList.Shuffle();
-        return upgradesList.Take(amount).ToList();
+        result.Shuffle();
+        return result.Take(amount).ToList();
     }
 }

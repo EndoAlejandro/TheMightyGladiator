@@ -498,28 +498,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a29502f5d464665a9b38b3f569a6bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  immunityTime: 0.25
-  walkSpeed: 6
-  acceleration: 10
-  rotationSpeed: 100
-  dodgeRate: 0.25
-  dodgeSpeed: 12
-  dodgeDistance: 3
-  damage: 1
-  criticalProbability: 0
-  criticalDamage: 2
+  currentPlayerData: {fileID: 11400000, guid: 3d82733d2e6d5d248bce1533a6187afb, type: 2}
   attackLayerMask:
     serializedVersion: 2
     m_Bits: 2147483647
   attackAngle: 90
   hitBoxSize: 2
-  attackRate: 0.25
-  knockBackForce: 10
   defendAngle: 90
   defendBoxSize: 1
-  parryTime: 0.25
-  defendRate: 1
 --- !u!114 &907134496875557510
 MonoBehaviour:
   m_ObjectHideFlags: 0

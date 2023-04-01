@@ -1043,6 +1043,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 907134496875557511, guid: 2153ec18300e5e44a974b1d2a7368bae, type: 3}
+  defaultPlayerData: {fileID: 11400000, guid: a7227ddfb0718924abc44fd88117a256, type: 2}
+  currentPlayerData: {fileID: 11400000, guid: 3d82733d2e6d5d248bce1533a6187afb, type: 2}
   upgrades:
   - {fileID: 2570485911198813466, guid: 33f991e04e011b243a51b7602dc117ab, type: 3}
   - {fileID: 2558836155170219776, guid: 39f00b855ccf6c840a83d3f26d49a0b7, type: 3}

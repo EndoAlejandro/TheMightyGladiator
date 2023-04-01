@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7add5e72ebf245259ee4571189a180ba, type: 3}
+  m_Name: CurrentPlayerData
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  health: 10
+  immunityTime: 0.25
+  walkSpeed: 6
+  acceleration: 10
+  rotationSpeed: 100
+  dodgeRate: 0.25
+  dodgeSpeed: 12
+  dodgeDistance: 3
+  damage: 1
+  criticalProbability: 0.05
+  criticalDamage: 1.2
+  attackRate: 0.25
+  defendRate: 1
+  parryTime: 0.25
+  knockBackForce: 10

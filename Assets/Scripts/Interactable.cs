@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
     private CustomToolTip _toolTip;
-    private void Awake() => _toolTip = GetComponentInChildren<CustomToolTip>();
+    protected virtual void Awake() => _toolTip = GetComponentInChildren<CustomToolTip>();
     public abstract void Interact(Player player);
 
     private void OnTriggerEnter(Collider other)
