@@ -82,6 +82,7 @@ namespace PlayerComponents
         public float DodgeDistance => dodgeDistance;
         public bool CanMove { get; private set; } = true;
         public float CriticalDamage => criticalDamage;
+        public bool CanBeHealed => Health < maxHealth;
 
         private Collider _collider;
         private Rigidbody _rigidbody;

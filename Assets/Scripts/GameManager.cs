@@ -1,15 +1,19 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using CustomUtils;
 using PlayerComponents;
 using Rooms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Upgrades;
 using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private Player player;
+    [SerializeField] private Upgrade[] upgrades;
     [SerializeField] private LevelData[] levels;
 
     private int _currentBiome;
@@ -81,5 +85,16 @@ public class GameManager : Singleton<GameManager>
     {
         yield return SceneManager.LoadSceneAsync(sceneName);
         callback?.Invoke();
+    }
+
+    public List<Upgrade> GetUpgrades(int amount)
+    {
+        var upgradesList = upgrades.ToList();
+        if (!player.CanBeHealed)
+            foreach (var upgrade in upgradesList.Where(upgrade => upgrade.UpgradeType == UpgradeType.Heal))
+                upgradesList.Remove(upgrade);
+
+        upgradesList.Shuffle();
+        return upgradesList.Take(amount).ToList();
     }
 }

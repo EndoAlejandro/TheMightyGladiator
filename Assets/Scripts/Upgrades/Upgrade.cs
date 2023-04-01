@@ -1,16 +1,20 @@
-﻿using PlayerComponents;
+﻿using System;
+using PlayerComponents;
 using UnityEngine;
 
 namespace Upgrades
 {
     public class Upgrade : Interactable
     {
+        public event Action<UpgradeType> OnUpgradeSelected;
         [SerializeField] private UpgradeType upgradeType;
 
         [SerializeField] private float value;
 
         [TextArea]
         [SerializeField] private string description;
+
+        public UpgradeType UpgradeType => upgradeType;
 
         public override void Interact(Player player)
         {
@@ -32,6 +36,8 @@ namespace Upgrades
                     player.IncreaseCriticalProbability(value);
                     break;
             }
+
+            OnUpgradeSelected?.Invoke(UpgradeType);
         }
     }
 }
