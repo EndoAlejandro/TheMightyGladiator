@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5399660367187709375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5399660367187709372}
+  - component: {fileID: 5399660367187709373}
+  m_Layer: 0
+  m_Name: '[GAME MANAGER]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5399660367187709372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5399660367187709375}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5399660367187709373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5399660367187709375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d77ffd6873f3f4bbb07c64471fbd89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 907134496875557511, guid: 2153ec18300e5e44a974b1d2a7368bae,
+    type: 3}
+  defaultPlayerData: {fileID: 11400000, guid: a7227ddfb0718924abc44fd88117a256, type: 2}
+  upgrades:
+  - {fileID: 2570485911198813466, guid: 33f991e04e011b243a51b7602dc117ab, type: 3}
+  - {fileID: 2558836155170219776, guid: 39f00b855ccf6c840a83d3f26d49a0b7, type: 3}
+  - {fileID: 5123674860796903598, guid: b25d550cfdaf1bc42ba8d546e4bc9aca, type: 3}
+  - {fileID: 569462598716781592, guid: 42c09ccfee2f5144eb016034090b811c, type: 3}
+  - {fileID: 2953447951795480837, guid: 86c1105e175ac3144aef8b3161c7485a, type: 3}
+  levels:
+  - enemies:
+    - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
+    boss: {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
+    biome: 0
+    floors: 4
+    initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
+      type: 3}
+    bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,
+      type: 3}
+    rooms:
+    - {fileID: 5206439076357889521, guid: c7517cdb763354944826ff28e1dcaefd, type: 3}
+    - {fileID: 5206439076357889521, guid: cfdd4bfdfc94f38498e1b57ef83fd319, type: 3}
+  - enemies:
+    - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
+    - {fileID: 7500587482687819955, guid: 5082e44f3469edd41bb590a09f5310c2, type: 3}
+    boss: {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
+    biome: 0
+    floors: 1
+    initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
+      type: 3}
+    bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,
+      type: 3}
+    rooms:
+    - {fileID: 5206439076357889521, guid: c7517cdb763354944826ff28e1dcaefd, type: 3}
+    - {fileID: 5206439076357889521, guid: cfdd4bfdfc94f38498e1b57ef83fd319, type: 3}

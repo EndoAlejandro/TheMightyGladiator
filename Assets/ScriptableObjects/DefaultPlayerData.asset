@@ -27,4 +27,4 @@ MonoBehaviour:
   attackRate: 0.25
   defendRate: 1
   parryTime: 0.25
-  knockBackForce: 10
+  knockBackForce: 2
