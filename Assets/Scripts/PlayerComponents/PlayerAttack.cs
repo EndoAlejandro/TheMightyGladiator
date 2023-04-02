@@ -81,7 +81,8 @@ namespace PlayerComponents
             var point = result.ClosestPoint(_player.transform.position);
             var multiplier = 1f;
             var fx = Vfx.Sword;
-            if (enemy.IsStun)
+            var isCritical = enemy.IsStun || Random.Range(0f, 1f) < _player.CriticalProbability;
+            if (isCritical)
             {
                 multiplier = _player.CriticalDamage;
                 fx = Vfx.SwordCritical;
@@ -90,7 +91,7 @@ namespace PlayerComponents
             enemy.TakeDamage(result.ClosestPoint(_player.transform.position), _player.Damage * multiplier,
                 _player.KnockBackForce);
             VfxManager.Instance.PlayFx(fx, point);
-            MainCamera.Instance.Shake();
+            MainCamera.Instance.Shake(isCritical ? 1 : 0.5f);
         }
 
         public bool IsValidAngle(Transform target)

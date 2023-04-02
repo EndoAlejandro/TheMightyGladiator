@@ -23,7 +23,6 @@ namespace Enemies
         [Header("Base Attack")]
         [SerializeField] private int damage = 1;
 
-        [SerializeField] private PoolAfterSeconds telegraphFx;
         [SerializeField] private float parryTimeWindow = 0.5f;
         [SerializeField] private float telegraphTime = 1f;
         [SerializeField] private float recoverTime = 1f;
@@ -40,7 +39,6 @@ namespace Enemies
         public float Acceleration => acceleration;
         public float StoppingDistance => stoppingDistance;
         public float RotationSpeed => rotationSpeed;
-        public PoolAfterSeconds TelegraphFx => telegraphFx;
         public bool IsAttacking { get; private set; }
         public bool CanBeParried { get; private set; }
         public bool IsStun { get; private set; }

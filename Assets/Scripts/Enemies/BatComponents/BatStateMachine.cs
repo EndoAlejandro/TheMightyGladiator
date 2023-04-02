@@ -72,7 +72,7 @@ namespace Enemies.BatComponents
 
         private void BatOnAttackCollision()
         {
-            _rigidbody.AddForce(-transform.forward * 2f, ForceMode.VelocityChange);
+            _rigidbody.AddForce(-transform.forward * 3f, ForceMode.VelocityChange);
             stateMachine.SetState(_recover);
         }
 
@@ -86,7 +86,7 @@ namespace Enemies.BatComponents
         private void BatOnHit(Vector3 hitPoint, float knockBack)
         {
             var direction = Utils.NormalizedFlatDirection(transform.position, hitPoint);
-            _rigidbody.AddForce(direction * knockBack, ForceMode.VelocityChange);
+            // _rigidbody.AddForce(direction * knockBack, ForceMode.VelocityChange);
 
             if (stateMachine.CurrentState is not EnemyStun)
                 stateMachine.SetState(_getHit);
