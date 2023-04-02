@@ -63,12 +63,24 @@ namespace Enemies
         }
     }
 
-    public abstract class EnemyIdle : IState
+    public class EnemyIdle : IState
     {
-        public abstract void Tick();
-        public abstract void FixedTick();
-        public abstract void OnEnter();
-        public abstract void OnExit();
+        public virtual void Tick()
+        {
+        }
+
+        public virtual void FixedTick()
+        {
+        }
+
+        public virtual void OnEnter()
+        {
+        }
+
+        public virtual void OnExit()
+        {
+        }
+
         public override string ToString() => "Idle";
     }
 

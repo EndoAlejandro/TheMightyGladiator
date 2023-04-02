@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CustomUtils;
 using Enemies;
 using UnityEngine;
 using Upgrades;
@@ -32,16 +33,23 @@ namespace Rooms
         private void SpawnEnemy()
         {
             waves--;
+            var spawnPointIndex = 0;
+            _spawnPoints.Shuffle();
             for (int i = 0; i < maxEnemies; i++)
             {
-                int spawnIndex = Random.Range(0, _spawnPoints.Length);
                 int enemyIndex = Random.Range(0, LevelData.Enemies.Length);
                 var enemy = LevelData.Enemies[enemyIndex]
-                    .Get<Enemy>(_spawnPoints[spawnIndex].transform.position, Quaternion.identity);
-                _spawnedEnemies.Add(enemy);
-
-                enemy.OnDead += EnemyOnDead;
+                    .Get<Enemy>(_spawnPoints[i].transform.position, Quaternion.identity);
+                RegisterEnemy(enemy);
+                spawnPointIndex = (spawnPointIndex + 1) % _spawnPoints.Length;
             }
+        }
+
+        public void RegisterEnemy(Enemy enemy)
+        {
+            enemy.Setup(this);
+            _spawnedEnemies.Add(enemy);
+            enemy.OnDead += EnemyOnDead;
         }
 
         private void EnemyOnDead(Enemy enemy)

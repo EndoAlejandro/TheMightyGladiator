@@ -15,10 +15,5 @@ namespace Rooms
             Player = Instantiate(player, playerSpawnPoint.position, Quaternion.identity);
             MainCamera.Instance.SetTarget(Player.transform);
         }
-
-        public void ActivatePortal()
-        {
-            
-        }
     }
 }

@@ -39,9 +39,7 @@ namespace Enemies.BatComponents
             OnHit?.Invoke(hitPoint, knockBack);
 
             if (_health <= 0)
-            {
                 OnDead?.Invoke(this);
-            }
         }
 
         public override void Parry(Player player) => OnParry?.Invoke(player);
@@ -49,7 +47,7 @@ namespace Enemies.BatComponents
         protected override void OnCollisionEnter(Collision collision)
         {
             base.OnCollisionEnter(collision);
-            
+
             if (!IsAttacking) return;
             if (collision.transform.CompareTag("Ground")) return;
             if (collision.transform.TryGetComponent(out Enemy enemy)) return;

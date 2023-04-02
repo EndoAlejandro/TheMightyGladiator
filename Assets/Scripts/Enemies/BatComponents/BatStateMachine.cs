@@ -11,7 +11,6 @@ namespace Enemies.BatComponents
     {
         private Bat _bat;
         private Rigidbody _rigidbody;
-        private Player _player;
         private Collider _collider;
         private NavigationSteering _navigationSteering;
 
@@ -27,8 +26,8 @@ namespace Enemies.BatComponents
         protected override void StateMachine()
         {
             _spawn = new EnemySpawn();
-            _idle = new BatIdle(_bat, _rigidbody, _player, _navigationSteering);
-            var telegraph = new BatTelegraph(_bat, _player);
+            _idle = new BatIdle(_bat, _rigidbody, _navigationSteering);
+            var telegraph = new BatTelegraph(_bat);
             var attack = new BatAttack(_bat, _rigidbody);
             _recover = new EnemyRecover(_bat);
             _stun = new EnemyStun(_bat);
@@ -78,7 +77,7 @@ namespace Enemies.BatComponents
 
         private void BatOnParry(Player player)
         {
-            var direction = Utils.NormalizedFlatDirection(transform.position, _player.transform.position);
+            var direction = Utils.NormalizedFlatDirection(transform.position, Player.Instance.transform.position);
             _rigidbody.AddForce(direction * player.KnockBackForce, ForceMode.VelocityChange);
             stateMachine.SetState(_stun);
         }
@@ -96,7 +95,6 @@ namespace Enemies.BatComponents
         {
             _rigidbody = GetComponent<Rigidbody>();
             _bat = GetComponent<Bat>();
-            _player = FindObjectOfType<Player>();
             _navigationSteering = GetComponent<NavigationSteering>();
             _collider = GetComponent<Collider>();
         }

@@ -9,8 +9,6 @@ namespace Enemies.BatComponents
     {
         private readonly Bat _bat;
         private readonly Rigidbody _rigidbody;
-
-        private readonly Player _player;
         private readonly NavigationSteering _navigationSteering;
 
         private Vector3 _direction;
@@ -20,11 +18,10 @@ namespace Enemies.BatComponents
         public bool CanSeePlayer { get; private set; }
         public bool Ended => _timer <= 0f;
 
-        public BatIdle(Bat bat, Rigidbody rigidbody, Player player, NavigationSteering navigationSteering)
+        public BatIdle(Bat bat, Rigidbody rigidbody, NavigationSteering navigationSteering)
         {
             _bat = bat;
             _rigidbody = rigidbody;
-            _player = player;
             _navigationSteering = navigationSteering;
         }
 
@@ -39,7 +36,7 @@ namespace Enemies.BatComponents
         public override void FixedTick()
         {
             var batPosition = _bat.transform.position;
-            var playerPosition = _player.transform.position;
+            var playerPosition = Player.Instance.transform.position;
 
             var distance = Vector3.Distance(batPosition, playerPosition);
             CanSeePlayer = !Physics.Linecast(batPosition, playerPosition);
@@ -71,9 +68,7 @@ namespace Enemies.BatComponents
         private Vector3 _targetPosition;
 
         private float _timer;
-        private float _currentDistance;
         private float _initialDistance;
-        private float _lastDistance;
 
         private readonly Collider[] _results;
 
@@ -98,24 +93,19 @@ namespace Enemies.BatComponents
                 var result = _results[i];
                 if (!result.TryGetComponent(out Player player)) continue;
                 // if (!player.TryToGetDamageFromEnemy(_bat)) continue;
-                Ended = true;
+                // Ended = true;
             }
         }
 
         public override void FixedTick()
         {
             _timer -= Time.fixedDeltaTime;
-            _currentDistance = GetDistance();
 
             if (_timer <= 0) Ended = true;
-            // if (_currentDistance > _lastDistance || _timer <= 0) Ended = true;
 
             _rigidbody.AddForce(_bat.transform.forward * (_bat.AttackSpeed * _bat.Acceleration * 2),
                 ForceMode.Acceleration);
-            _lastDistance = GetDistance();
         }
-
-        private float GetDistance() => Vector3.Distance(_bat.transform.position, _targetPosition);
 
         public override void OnEnter()
         {
@@ -123,12 +113,6 @@ namespace Enemies.BatComponents
             _bat.SetIsAttacking(true);
             Ended = false;
             _timer = _bat.AttackTime;
-
-            var position = _bat.transform.position;
-            // _direction = Utils.NormalizedFlatDirection(_player.transform.position, position);
-            // _targetPosition = _direction * DodgeDistance + position;
-
-            _lastDistance = GetDistance();
         }
 
         public override void OnExit()
@@ -140,15 +124,15 @@ namespace Enemies.BatComponents
 
     public class BatTelegraph : EnemyTelegraph
     {
-        private readonly Player _player;
+        private readonly Bat _bat;
         private Vector3 _direction;
 
-        public BatTelegraph(Bat bat, Player player) : base(bat) => _player = player;
+        public BatTelegraph(Bat bat) : base(bat) => _bat = bat;
 
         public override void Tick()
         {
             base.Tick();
-            _direction = Utils.NormalizedFlatDirection(_player.transform.position, enemy.transform.position);
+            _direction = Utils.NormalizedFlatDirection(Player.Instance.transform.position, enemy.transform.position);
             enemy.transform.forward =
                 Vector3.Lerp(enemy.transform.forward, _direction, enemy.RotationSpeed * Time.deltaTime);
         }

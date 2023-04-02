@@ -11,6 +11,7 @@ namespace PlayerComponents
         public event Action OnHit;
         public event Action OnParry;
         public event Action OnShieldHit;
+        public event Action OnUpgrade;
 
         [SerializeField] private PlayerData currentPlayerData;
         [SerializeField] private LayerMask attackLayerMask;
@@ -64,9 +65,8 @@ namespace PlayerComponents
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
             Height = _collider.bounds.center.y;
+            SetPlayerData(currentPlayerData);
         }
-
-        private void Start() => SetPlayerData(currentPlayerData);
 
         private void Update()
         {
@@ -93,10 +93,15 @@ namespace PlayerComponents
 
         public void ShieldHit() => OnShieldHit?.Invoke();
 
-        private void TakeDamage(Vector3 direction, int amount)
+        private void TakeDamage(Vector3 direction, int damageAmount)
         {
+            if (Health > 0f)
+                Health -= damageAmount;
             _immunityTimer = ImmunityTime;
+            
+            _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(direction * 15f, ForceMode.VelocityChange);
+            
             OnHit?.Invoke();
         }
 
@@ -144,11 +149,35 @@ namespace PlayerComponents
             //TODO: Teleport event and stop moving from input.
         }
 
-        public void IncreaseDamage(float value) => Damage += value;
-        public void IncreaseCriticalProbability(float value) => CriticalProbability += value;
-        public void IncreaseCriticalDamage(float value) => CriticalDamage += value;
-        public void IncreaseMaxHealth(int value) => MaxHealth += value;
-        public void Heal(int value) => Health += value;
+        public void IncreaseDamage(float value)
+        {
+            Damage += value;
+            OnUpgrade?.Invoke();
+        }
+
+        public void IncreaseCriticalProbability(float value)
+        {
+            CriticalProbability += value;
+            OnUpgrade?.Invoke();
+        }
+
+        public void IncreaseCriticalDamage(float value)
+        {
+            CriticalDamage += value;
+            OnUpgrade?.Invoke();
+        }
+
+        public void IncreaseMaxHealth(int value)
+        {
+            MaxHealth += value;
+            OnUpgrade?.Invoke();
+        }
+
+        public void Heal(int value)
+        {
+            Health += value;
+            OnUpgrade?.Invoke();
+        }
 
         public void SetPlayerData(PlayerData playerData)
         {

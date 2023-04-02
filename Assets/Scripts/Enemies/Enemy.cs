@@ -1,6 +1,7 @@
 ﻿using System;
 using PlayerComponents;
 using Pooling;
+using Rooms;
 using UnityEngine;
 
 namespace Enemies
@@ -49,11 +50,15 @@ namespace Enemies
         public float DeathTime => deathTime;
         public int Damage => damage;
 
+        protected Room room;
+
         public abstract void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f);
         public abstract void Parry(Player player);
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;
         public void SetIsStun(bool isStun) => IsStun = isStun;
+
+        public void Setup(Room room) => this.room = room;
 
         public void DeSpawn()
         {
