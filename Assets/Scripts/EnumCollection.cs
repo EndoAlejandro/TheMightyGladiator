@@ -10,7 +10,8 @@ public enum Vfx
     Sword,
     SwordCritical,
     PlayerHit,
-    NormalSpawn,
+    SpawnCircle,
+    EnemySpawn,
 }
 
 public enum UpgradeType

@@ -48,10 +48,11 @@ namespace Rooms
 
         private IEnumerator SpawnEnemyAfterSeconds(Enemy enemyPrefab, Vector3 spawnPosition)
         {
-            VfxManager.Instance.PlayFx(Vfx.NormalSpawn, spawnPosition);
+            VfxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition);
             yield return new WaitForSeconds(spawnRate);
             var enemy = enemyPrefab.Get<Enemy>(spawnPosition, Quaternion.identity);
             RegisterEnemy(enemy);
+            VfxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
         }
 
         public void RegisterEnemy(Enemy enemy)

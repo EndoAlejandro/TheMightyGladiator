@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CustomUtils;
 using Pooling;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace VfxComponents
 {
@@ -11,7 +12,11 @@ namespace VfxComponents
         [SerializeField] private PoolAfterSeconds swordHit;
         [SerializeField] private PoolAfterSeconds swordCriticalHit;
         [SerializeField] private PoolAfterSeconds playerGetHit;
-        [SerializeField] private PoolAfterSeconds normalSpawn;
+
+        [FormerlySerializedAs("normalSpawn")] [SerializeField]
+        private PoolAfterSeconds normalSpawnCircle;
+
+        [SerializeField] private PoolAfterSeconds enemySpawn;
 
         private Dictionary<Vfx, PoolAfterSeconds> _listedVfx;
 
@@ -25,7 +30,8 @@ namespace VfxComponents
                 { Vfx.Sword, swordHit },
                 { Vfx.SwordCritical, swordCriticalHit },
                 { Vfx.PlayerHit, playerGetHit },
-                { Vfx.NormalSpawn, normalSpawn },
+                { Vfx.SpawnCircle, normalSpawnCircle },
+                { Vfx.EnemySpawn, enemySpawn }
             };
         }
 

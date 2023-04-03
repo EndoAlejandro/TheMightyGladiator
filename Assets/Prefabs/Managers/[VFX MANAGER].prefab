@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4094113796105587458}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -50,4 +50,8 @@ MonoBehaviour:
   swordCriticalHit: {fileID: 6079090089231751116, guid: 6decc339d487e6f4f89181c5efd21818,
     type: 3}
   playerGetHit: {fileID: 8515076130945141092, guid: c4bc409346844824ea331aa0d4323695,
+    type: 3}
+  normalSpawnCircle: {fileID: 2561271797263224521, guid: 45f7a73e18440b84590e872996ce27ee,
+    type: 3}
+  enemySpawn: {fileID: 6971114046201472792, guid: fc2e139c4e026024185b7f0d2948e02d,
     type: 3}
