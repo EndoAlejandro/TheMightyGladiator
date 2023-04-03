@@ -30,14 +30,7 @@ namespace Enemies.SpawnerComponents
             _batSpawner.SpawnedBats.Clear();
 
             foreach (var direction in _directions)
-            {
                 _batSpawner.SpawnBat(_batSpawner.transform.position + direction * 1.5f);
-                /*var bat = _batSpawner.BatPrefab.Get<Bat>(
-                    _batSpawner.transform.position + direction * 1.5f, Quaternion.identity);
-                _spawnedBats.Add(bat);*/
-            }
-
-            // _batSpawner.RegisterSpawnedBats(_spawnedBats);
         }
 
         public override void OnExit()

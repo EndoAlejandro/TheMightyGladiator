@@ -44,18 +44,7 @@ namespace Enemies.SpawnerComponents
         public override void Parry(Player player)
         {
         }
-
-        public void RegisterSpawnedBats(List<Bat> spawnedBats)
-        {
-            SpawnedBats = new List<Bat>(spawnedBats);
-
-            foreach (var spawnedBat in SpawnedBats)
-            {
-                room.RegisterEnemy(spawnedBat);
-                spawnedBat.OnDead += SpawnedBatOnDead;
-            }
-        }
-
+        
         public void SpawnBat(Vector3 position) => StartCoroutine(SpawnEnemyAfterSeconds(position));
 
         private IEnumerator SpawnEnemyAfterSeconds(Vector3 spawnPosition)
