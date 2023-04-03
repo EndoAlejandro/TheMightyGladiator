@@ -12,6 +12,8 @@ using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
+    public event Action OnGameOver;
+
     [SerializeField] private Player playerPrefab;
 
     [SerializeField] private PlayerData defaultPlayerData;
@@ -68,12 +70,7 @@ public class GameManager : Singleton<GameManager>
         LoadNextGameScene();
     }
 
-    private void LoadMainMenu()
-    {
-        _currentBiome = 0;
-        _currentFloor = 0;
-        StartCoroutine(LoadSceneAsync("MainMenu"));
-    }
+    public void LoadMainMenu() => StartCoroutine(LoadSceneAsync("MainMenu"));
 
     public void StartDungeonPortalActivated()
     {
@@ -88,7 +85,13 @@ public class GameManager : Singleton<GameManager>
     }
 
     private void LoadNextGameScene() => StartCoroutine(LoadSceneAsync("Dungeon", SpawnNewLevel));
-    public void LoadLobby() => StartCoroutine(LoadSceneAsync("Lobby"));
+
+    public void LoadLobby()
+    {
+        _currentBiome = 0;
+        _currentFloor = 0;
+        StartCoroutine(LoadSceneAsync("Lobby"));
+    }
 
     private IEnumerator LoadSceneAsync(string sceneName, Action callback = null)
     {
@@ -100,7 +103,7 @@ public class GameManager : Singleton<GameManager>
     {
         var upgradesList = upgrades.ToList();
         var result = new List<Upgrade>(upgradesList);
-        if (!Player.Instance.CanBeHealed)
+        if (Player.Instance.CanBeHealed)
             foreach (var upgrade in upgradesList.Where(upgrade => upgrade.UpgradeType == UpgradeType.Heal))
             {
                 result.Remove(upgrade);
@@ -110,4 +113,6 @@ public class GameManager : Singleton<GameManager>
         result.Shuffle();
         return result.Take(amount).ToList();
     }
+
+    public void GameOver() => OnGameOver?.Invoke();
 }

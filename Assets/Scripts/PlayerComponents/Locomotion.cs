@@ -21,7 +21,9 @@ namespace PlayerComponents
 
         private void Update()
         {
-            if (_playerStateMachine.CurrentStateType is PlayerDodge || !_player.CanMove) return;
+            if (_playerStateMachine.CurrentStateType is PlayerDodge ||
+                !_player.CanMove ||
+                !_player.IsAlive) return;
 
             PlayerRotation();
             _moveDirection = (Camera.main.transform.right * InputReader.Instance.Movement.x +
@@ -30,7 +32,9 @@ namespace PlayerComponents
 
         private void FixedUpdate()
         {
-            if (_playerStateMachine.CurrentStateType is PlayerDodge || !_player.CanMove) return;
+            if (_playerStateMachine.CurrentStateType is PlayerDodge ||
+                !_player.CanMove ||
+                !_player.IsAlive) return;
 
             _rigidbody.AddForce(_moveDirection * (_player.WalkSpeed * _player.Acceleration), ForceMode.Acceleration);
             if (!_player.IsImmune) SpeedControl();

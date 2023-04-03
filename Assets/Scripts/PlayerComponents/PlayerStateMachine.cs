@@ -8,6 +8,7 @@ namespace PlayerComponents
     {
         private Player _player;
         private Rigidbody _rigidbody;
+        private Collider _collider;
 
         protected override void StateMachine()
         {
@@ -15,6 +16,7 @@ namespace PlayerComponents
             var attack = new PlayerAttack(_player);
             var shield = new PlayerShield(_player, _rigidbody);
             var dodge = new PlayerDodge(_player, _rigidbody);
+            var death = new PlayerDeath(_rigidbody, _collider);
 
             stateMachine.SetState(idle);
             stateMachine.AddTransition(idle, attack, () => InputReader.Instance.Attack && _player.CanAttack);
@@ -26,12 +28,15 @@ namespace PlayerComponents
             stateMachine.AddTransition(idle, dodge, () => InputReader.Instance.Dodge && _player.CanDodge);
             stateMachine.AddTransition(shield, dodge, () => InputReader.Instance.Dodge && _player.CanDodge);
             stateMachine.AddTransition(dodge, idle, () => dodge.Ended);
+
+            stateMachine.AddAnyTransition(death, () => !_player.IsAlive);
         }
 
         protected override void References()
         {
             _player = GetComponent<Player>();
             _rigidbody = GetComponent<Rigidbody>();
+            _collider = GetComponent<Collider>();
         }
 
         protected override void Update()

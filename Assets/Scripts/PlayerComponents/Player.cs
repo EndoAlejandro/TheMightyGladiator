@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using CustomUtils;
+using JetBrains.Annotations;
 using UnityEngine;
+using VfxComponents;
 
 namespace PlayerComponents
 {
@@ -12,6 +14,7 @@ namespace PlayerComponents
         public event Action OnParry;
         public event Action OnShieldHit;
         public event Action OnUpgrade;
+        public event Action OnDead;
 
         [SerializeField] private PlayerData currentPlayerData;
         [SerializeField] private LayerMask attackLayerMask;
@@ -54,6 +57,7 @@ namespace PlayerComponents
         public bool CanDodge => _dodgeTimer <= 0f;
         public bool CanDefend => _defendTimer <= 0f;
         public bool IsImmune => _immunityTimer > 0f;
+        public bool IsAlive => Health > 0f;
         public LayerMask AttackLayerMask => attackLayerMask;
 
         private Collider _collider;
@@ -91,17 +95,29 @@ namespace PlayerComponents
             OnParry?.Invoke();
         }
 
-        public void ShieldHit() => OnShieldHit?.Invoke();
+        public void ShieldHit()
+        {
+            VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
+            OnShieldHit?.Invoke();
+        }
 
         private void TakeDamage(Vector3 direction, int damageAmount)
         {
-            if (Health > 0f)
-                Health -= damageAmount;
+            Health -= damageAmount;
+            if (Health <= 0f)
+            {
+                OnDead?.Invoke();
+                VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(".#"),
+                    false);
+                VfxManager.Instance.PlayFx(Vfx.SwordCritical, transform.position + Vector3.up);
+                return;
+            }
+
+            VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
             _immunityTimer = ImmunityTime;
-            
+
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(direction * 15f, ForceMode.VelocityChange);
-            
             OnHit?.Invoke();
         }
 

@@ -16,6 +16,7 @@ namespace PlayerComponents
         private static readonly int Hit = Animator.StringToHash("Hit");
         private static readonly int ShieldHit = Animator.StringToHash("ShieldHit");
         private static readonly int Parry = Animator.StringToHash("Parry");
+        private static readonly int Death = Animator.StringToHash("Death");
 
         [Header("Fx")]
         [SerializeField] private PoolAfterSeconds hitFx;
@@ -32,7 +33,7 @@ namespace PlayerComponents
 
         [SerializeField] private float shieldIdleScale = 1f;
         [SerializeField] private float shieldActiveScale = 1.5f;
-        [SerializeField] private float shieldPlacementOffset = 0.1f; 
+        [SerializeField] private float shieldPlacementOffset = 0.1f;
 
         private Vector3 _shieldTargetScale;
 
@@ -74,20 +75,21 @@ namespace PlayerComponents
 
         private void OnParryEvent()
         {
-            // StartCoroutine(SlowTime());
         }
 
         private IEnumerator SlowTime()
         {
-            Time.timeScale = 0.1f;
-            yield return new WaitForSecondsRealtime(0.05f);
+            MainCamera.Instance.Shake(2f);
+            Time.timeScale = 0.05f;
+            yield return new WaitForSecondsRealtime(1.5f);
             while (Time.timeScale < 0.95f)
             {
-                Time.timeScale += Time.unscaledDeltaTime * 1f;
+                Time.timeScale += Time.unscaledDeltaTime * 0.25f;
                 yield return null;
             }
 
             Time.timeScale = 1f;
+            GameManager.Instance.GameOver();
         }
 
         private void PlayerOnParry() => _animator.SetTrigger(Parry);
@@ -103,6 +105,10 @@ namespace PlayerComponents
                     slashParticle.Play();
                     _animator.SetTrigger(Attack);
                     _animator.SetInteger(AttackIndex, (_animator.GetInteger(AttackIndex) + 1) % 2);
+                    break;
+                case PlayerDeath playerDeath:
+                    _animator.SetTrigger(Death);
+                    StartCoroutine(SlowTime());
                     break;
             }
 

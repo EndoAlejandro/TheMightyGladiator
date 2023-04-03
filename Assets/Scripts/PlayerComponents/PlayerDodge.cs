@@ -61,4 +61,34 @@ namespace PlayerComponents
 
         public void OnExit() => _player.SetDodgeState(false);
     }
+
+    public class PlayerDeath : IState
+    {
+        private readonly Rigidbody _rigidbody;
+        private readonly Collider _collider;
+
+        public PlayerDeath(Rigidbody rigidbody, Collider collider)
+        {
+            _rigidbody = rigidbody;
+            _collider = collider;
+        }
+
+        public void Tick()
+        {
+        }
+
+        public void FixedTick()
+        {
+        }
+
+        public void OnEnter()
+        {
+            _rigidbody.isKinematic = true;
+            _collider.enabled = false;
+        }
+
+        public void OnExit()
+        {
+        }
+    }
 }
