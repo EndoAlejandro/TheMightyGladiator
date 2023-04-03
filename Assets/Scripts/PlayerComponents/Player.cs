@@ -191,7 +191,7 @@ namespace PlayerComponents
 
         public void Heal(int value)
         {
-            Health += value;
+            Health = Mathf.Min(Health + value, MaxHealth);
             OnUpgrade?.Invoke();
         }
 

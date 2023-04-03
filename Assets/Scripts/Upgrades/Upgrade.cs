@@ -8,7 +8,7 @@ namespace Upgrades
     {
         public event Action<UpgradeType> OnUpgradeSelected;
         [SerializeField] private UpgradeType upgradeType;
-
+        [SerializeField] private bool destroyAfterUse;
         [SerializeField] private float value;
 
         [TextArea]
@@ -38,6 +38,8 @@ namespace Upgrades
             }
 
             OnUpgradeSelected?.Invoke(UpgradeType);
+            
+            if (destroyAfterUse) Destroy(gameObject);
         }
     }
 }
