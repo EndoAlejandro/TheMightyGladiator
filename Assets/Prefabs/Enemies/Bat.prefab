@@ -70,6 +70,7 @@ MonoBehaviour:
   attackSpeed: 15
   distanceTolerance: 1.5
   attackTime: 0.2
+  detectionDistance: 5
 --- !u!114 &4172247088674783528
 MonoBehaviour:
   m_ObjectHideFlags: 0

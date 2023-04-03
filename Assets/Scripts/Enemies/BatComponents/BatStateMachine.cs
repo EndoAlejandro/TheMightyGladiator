@@ -14,6 +14,7 @@ namespace Enemies.BatComponents
         private Collider _collider;
         private NavigationSteering _navigationSteering;
 
+        private BatPatrol _patrol;
         private BatIdle _idle;
         private EnemyStun _stun;
         private EnemyGetHit _getHit;
@@ -25,6 +26,7 @@ namespace Enemies.BatComponents
 
         protected override void StateMachine()
         {
+            _patrol = new BatPatrol(_bat, _rigidbody);
             _spawn = new EnemySpawn();
             _idle = new BatIdle(_bat, _rigidbody, _navigationSteering);
             var telegraph = new BatTelegraph(_bat);
@@ -34,8 +36,7 @@ namespace Enemies.BatComponents
             _getHit = new EnemyGetHit(_bat);
             _death = new BatDeath(_bat, _collider, _rigidbody);
 
-            stateMachine.SetState(_spawn);
-            stateMachine.AddTransition(_spawn, _idle, () => _spawn.Ended);
+            stateMachine.AddTransition(_spawn, _patrol, () => _spawn.Ended);
 
             stateMachine.AddTransition(_idle, telegraph,
                 () => _idle.PlayerOnRange && _idle.Ended && _idle.CanSeePlayer);
@@ -55,6 +56,7 @@ namespace Enemies.BatComponents
             _bat.OnParry += BatOnParry;
             _bat.OnAttackCollision += BatOnAttackCollision;
             _bat.OnDead += BatOnDead;
+            _bat.OnPlayerOnRange += BatOnPlayerOnRange;
 
             stateMachine.SetState(_spawn);
         }
@@ -65,8 +67,10 @@ namespace Enemies.BatComponents
             _bat.OnParry -= BatOnParry;
             _bat.OnAttackCollision -= BatOnAttackCollision;
             _bat.OnDead -= BatOnDead;
+            _bat.OnPlayerOnRange -= BatOnPlayerOnRange;
         }
 
+        private void BatOnPlayerOnRange() => stateMachine.SetState(_idle);
         private void BatOnDead(Enemy enemy) => stateMachine.SetState(_death);
 
         private void BatOnAttackCollision()
@@ -87,8 +91,10 @@ namespace Enemies.BatComponents
             var direction = Utils.NormalizedFlatDirection(transform.position, hitPoint);
             _rigidbody.AddForce(direction * knockBack, ForceMode.VelocityChange);
 
+            /*
             if (stateMachine.CurrentState is not EnemyStun)
                 stateMachine.SetState(_getHit);
+            */
         }
 
         protected override void References()

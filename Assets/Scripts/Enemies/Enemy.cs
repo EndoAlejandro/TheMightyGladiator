@@ -10,6 +10,7 @@ namespace Enemies
     {
         public abstract event Action<Enemy> OnDead;
         public event Action<Enemy> OnDeSpawn;
+        public event Action OnPlayerOnRange;
         public abstract event Action<Vector3, float> OnHit;
 
         [Header("Base Movement")]
@@ -71,5 +72,7 @@ namespace Enemies
             if (collision.transform.TryGetComponent(out Player player))
                 player.TryToGetDamageFromEnemy(this);
         }
+
+        public virtual void PlayerOnRange() => OnPlayerOnRange?.Invoke();
     }
 }

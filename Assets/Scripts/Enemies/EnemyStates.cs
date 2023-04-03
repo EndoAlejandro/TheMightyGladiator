@@ -63,6 +63,31 @@ namespace Enemies
         }
     }
 
+    public class EnemyPatrol : IState
+    {
+        //TODO: Change to string to patrol when animation if animation is required.
+        public override string ToString() => "Idle";
+        protected readonly Enemy enemy;
+        public EnemyPatrol(Enemy enemy) => this.enemy = enemy;
+        
+        public virtual void Tick()
+        {
+            
+        }
+
+        public virtual void FixedTick()
+        {
+        }
+
+        public virtual void OnEnter()
+        {
+        }
+
+        public virtual void OnExit()
+        {
+        }
+    }
+    
     public class EnemyIdle : IState
     {
         public virtual void Tick()

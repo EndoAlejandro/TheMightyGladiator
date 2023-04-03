@@ -147,7 +147,7 @@ MonoBehaviour:
   deathTime: 1
   batPrefab: {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c,
     type: 3}
-  spawnAmount: 3
+  spawnAmount: 5
 --- !u!114 &7530001112276235162
 MonoBehaviour:
   m_ObjectHideFlags: 0
