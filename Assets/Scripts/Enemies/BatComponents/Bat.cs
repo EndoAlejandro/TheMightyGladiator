@@ -23,8 +23,7 @@ namespace Enemies.BatComponents
         public float AttackSpeed => attackSpeed;
 
         private Rigidbody _rigidbody;
-        private float _health;
-        public override bool IsAlive => _health > 0;
+        public override bool IsAlive => Health > 0;
         public float IdleTime => idleTime;
         public float DistanceTolerance => distanceTolerance;
         public float AttackTime => attackTime;
@@ -32,16 +31,13 @@ namespace Enemies.BatComponents
 
         private void Awake() => _rigidbody = GetComponent<Rigidbody>();
 
-        private void OnEnable() => _health = maxHealth;
-
         public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f)
         {
-            _health -= damage;
+            Health -= damage;
             VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
             OnHit?.Invoke(hitPoint, knockBack);
 
-            if (_health <= 0)
-                OnDead?.Invoke(this);
+            if (!IsAlive) OnDead?.Invoke(this);
         }
 
         public override void Parry(Player player) => OnParry?.Invoke(player);

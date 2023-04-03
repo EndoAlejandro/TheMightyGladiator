@@ -11,6 +11,7 @@ namespace VfxComponents
         [SerializeField] private PoolAfterSeconds swordHit;
         [SerializeField] private PoolAfterSeconds swordCriticalHit;
         [SerializeField] private PoolAfterSeconds playerGetHit;
+        [SerializeField] private PoolAfterSeconds normalSpawn;
 
         private Dictionary<Vfx, PoolAfterSeconds> _listedVfx;
 
@@ -24,6 +25,7 @@ namespace VfxComponents
                 { Vfx.Sword, swordHit },
                 { Vfx.SwordCritical, swordCriticalHit },
                 { Vfx.PlayerHit, playerGetHit },
+                { Vfx.NormalSpawn, normalSpawn },
             };
         }
 

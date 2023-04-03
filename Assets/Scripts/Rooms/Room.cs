@@ -1,8 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using CustomUtils;
 using Enemies;
 using UnityEngine;
 using Upgrades;
+using VfxComponents;
 
 namespace Rooms
 {
@@ -38,11 +40,18 @@ namespace Rooms
             for (int i = 0; i < maxEnemies; i++)
             {
                 int enemyIndex = Random.Range(0, LevelData.Enemies.Length);
-                var enemy = LevelData.Enemies[enemyIndex]
-                    .Get<Enemy>(_spawnPoints[i].transform.position, Quaternion.identity);
-                RegisterEnemy(enemy);
+                StartCoroutine(
+                    SpawnEnemyAfterSeconds(LevelData.Enemies[enemyIndex], _spawnPoints[i].transform.position));
                 spawnPointIndex = (spawnPointIndex + 1) % _spawnPoints.Length;
             }
+        }
+
+        private IEnumerator SpawnEnemyAfterSeconds(Enemy enemyPrefab, Vector3 spawnPosition)
+        {
+            VfxManager.Instance.PlayFx(Vfx.NormalSpawn, spawnPosition);
+            yield return new WaitForSeconds(spawnRate);
+            var enemy = enemyPrefab.Get<Enemy>(spawnPosition, Quaternion.identity);
+            RegisterEnemy(enemy);
         }
 
         public void RegisterEnemy(Enemy enemy)

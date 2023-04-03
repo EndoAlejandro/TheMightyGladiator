@@ -24,17 +24,20 @@ namespace Enemies.SpawnerComponents
 
         public void OnEnter()
         {
-            timer = 0.5f;
+            timer = 2f;
             _directions = Utils.GetFanPatternDirections(_batSpawner.transform, _batSpawner.SpawnAmount, 360f);
+
+            _batSpawner.SpawnedBats.Clear();
 
             foreach (var direction in _directions)
             {
-                var bat = _batSpawner.BatPrefab.Get<Bat>(
+                _batSpawner.SpawnBat(_batSpawner.transform.position + direction * 1.5f);
+                /*var bat = _batSpawner.BatPrefab.Get<Bat>(
                     _batSpawner.transform.position + direction * 1.5f, Quaternion.identity);
-                _spawnedBats.Add(bat);
+                _spawnedBats.Add(bat);*/
             }
 
-            _batSpawner.RegisterSpawnedBats(_spawnedBats);
+            // _batSpawner.RegisterSpawnedBats(_spawnedBats);
         }
 
         public override void OnExit()

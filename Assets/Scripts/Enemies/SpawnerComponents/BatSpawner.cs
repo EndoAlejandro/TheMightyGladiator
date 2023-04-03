@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Enemies.BatComponents;
 using PlayerComponents;
@@ -53,6 +54,19 @@ namespace Enemies.SpawnerComponents
                 room.RegisterEnemy(spawnedBat);
                 spawnedBat.OnDead += SpawnedBatOnDead;
             }
+        }
+
+        public void SpawnBat(Vector3 position) => StartCoroutine(SpawnEnemyAfterSeconds(position));
+
+        private IEnumerator SpawnEnemyAfterSeconds(Vector3 spawnPosition)
+        {
+            VfxManager.Instance.PlayFx(Vfx.NormalSpawn, spawnPosition);
+            yield return new WaitForSeconds(1f);
+
+            var spawnedBat = batPrefab.Get<Bat>(spawnPosition, Quaternion.identity);
+            room.RegisterEnemy(spawnedBat);
+            spawnedBat.OnDead += SpawnedBatOnDead;
+            SpawnedBats.Add(spawnedBat);
         }
 
         private void SpawnedBatOnDead(Enemy enemy)

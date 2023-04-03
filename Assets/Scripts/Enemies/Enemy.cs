@@ -36,11 +36,13 @@ namespace Enemies
         [SerializeField] private float deathTime = 1f;
 
         public float ParryTimeWindow => parryTimeWindow;
+        public float MaxHealth => maxHealth;
         public float TelegraphTime => telegraphTime;
         public float Speed => speed;
         public float Acceleration => acceleration;
         public float StoppingDistance => stoppingDistance;
         public float RotationSpeed => rotationSpeed;
+        public float Health { get; protected set; }
         public bool IsAttacking { get; private set; }
         public bool CanBeParried { get; private set; }
         public bool IsStun { get; private set; }
@@ -53,13 +55,14 @@ namespace Enemies
 
         protected Room room;
 
+        protected virtual void OnEnable() => Health = MaxHealth;
         public abstract void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f);
         public abstract void Parry(Player player);
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;
         public void SetIsStun(bool isStun) => IsStun = isStun;
-
         public void Setup(Room room) => this.room = room;
+        public virtual void PlayerOnRange() => OnPlayerOnRange?.Invoke();
 
         public void DeSpawn()
         {
@@ -72,7 +75,5 @@ namespace Enemies
             if (collision.transform.TryGetComponent(out Player player))
                 player.TryToGetDamageFromEnemy(this);
         }
-
-        public virtual void PlayerOnRange() => OnPlayerOnRange?.Invoke();
     }
 }
