@@ -51,11 +51,18 @@ namespace Enemies.FatGuyComponents
     public class FatGuyTelegraph : EnemyTelegraph
     {
         private readonly Action _fx;
-        public FatGuyTelegraph(FatGuy fatGuy, Action fx = null) : base(fatGuy) => _fx = fx;
+        private readonly float _customTime;
+
+        public FatGuyTelegraph(FatGuy fatGuy, Action fx = null, float customTime = -1f) : base(fatGuy)
+        {
+            _fx = fx;
+            _customTime = customTime;
+        }
 
         public override void OnEnter()
         {
             base.OnEnter();
+            if (_customTime > 0) timer = _customTime;
             _fx?.Invoke();
         }
     }
@@ -129,7 +136,7 @@ namespace Enemies.FatGuyComponents
     {
         private readonly FatGuy _fatGuy;
 
-        private Collider[] _results;
+        private readonly Collider[] _results;
 
         public FatGuyAoEAttack(FatGuy fatGuy)
         {
@@ -157,6 +164,37 @@ namespace Enemies.FatGuyComponents
             {
                 if (_results[i].TryGetComponent(out Player player))
                     player.TryToGetDamageFromEnemy(_fatGuy, true);
+            }
+        }
+
+        public void OnExit()
+        {
+        }
+    }
+
+    public class FatGuyShot : IState
+    {
+        private readonly FatGuy _fatGuy;
+        private Vector3[] _directions;
+        public FatGuyShot(FatGuy fatGuy) => _fatGuy = fatGuy;
+
+        public void Tick()
+        {
+        }
+
+        public void FixedTick()
+        {
+        }
+
+        public void OnEnter()
+        {
+            _directions = Utils.GetFanPatternDirections(_fatGuy.transform, _fatGuy.BulletsAmount, 360f);
+
+            foreach (var direction in _directions)
+            {
+                var bullet = _fatGuy.BulletPrefab.Get<Bullet>(_fatGuy.transform.position + Vector3.up,
+                    Quaternion.Euler(direction));
+                bullet.Setup(direction, 10f, _fatGuy.Damage);
             }
         }
 

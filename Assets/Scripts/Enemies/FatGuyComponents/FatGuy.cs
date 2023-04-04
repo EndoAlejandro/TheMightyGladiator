@@ -12,9 +12,13 @@ namespace Enemies.FatGuyComponents
         public event Action OnAttackCollision;
 
         [SerializeField] private float aoeTime = 2f;
+        [SerializeField] private Bullet bulletPrefab;
+        [SerializeField] private int bulletsAmount = 10;
 
         public float AoETime => aoeTime;
         public float NormalizedHealth => Health / MaxHealth;
+        public Bullet BulletPrefab => bulletPrefab;
+        public int BulletsAmount => bulletsAmount;
 
         public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
         {

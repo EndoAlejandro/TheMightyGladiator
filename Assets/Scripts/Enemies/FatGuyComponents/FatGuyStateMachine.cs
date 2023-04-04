@@ -2,6 +2,7 @@
 using StateMachineComponents;
 using UnityEngine;
 using VfxComponents;
+using Random = UnityEngine.Random;
 
 namespace Enemies.FatGuyComponents
 {
@@ -35,15 +36,22 @@ namespace Enemies.FatGuyComponents
             var aoeTelegraph = new FatGuyTelegraph(_fatGuy, AoEFx);
             var aoeAttack = new FatGuyAoEAttack(_fatGuy);
 
-            stateMachine.AddTransition(_spawn, idle, () => _spawn.Ended);
-            stateMachine.AddTransition(idle, dashTelegraph, () => idle.Ended && _patternIndex < 2);
-            stateMachine.AddTransition(idle, aoeTelegraph, () => idle.Ended && _patternIndex == 2);
+            var shotTelegraph = new FatGuyTelegraph(_fatGuy, customTime: 0.1f);
+            var shotAttack = new FatGuyShot(_fatGuy);
 
-            stateMachine.AddTransition(dashTelegraph, dashAttack, () => dashTelegraph.Ended && _patternIndex < 2);
+            stateMachine.AddTransition(_spawn, idle, () => _spawn.Ended);
+
+            stateMachine.AddTransition(idle, dashTelegraph, () => idle.Ended && _patternIndex == 0);
+            stateMachine.AddTransition(dashTelegraph, dashAttack, () => dashTelegraph.Ended);
             stateMachine.AddTransition(dashAttack, _recover, () => dashAttack.Ended);
 
-            stateMachine.AddTransition(aoeTelegraph, aoeAttack, () => aoeTelegraph.Ended && _patternIndex == 2);
+            stateMachine.AddTransition(idle, aoeTelegraph, () => idle.Ended && _patternIndex == 1);
+            stateMachine.AddTransition(aoeTelegraph, aoeAttack, () => aoeTelegraph.Ended);
             stateMachine.AddTransition(aoeAttack, _recover, () => true);
+
+            stateMachine.AddTransition(idle, shotTelegraph, () => idle.Ended && _patternIndex == 2);
+            stateMachine.AddTransition(shotTelegraph, shotAttack, () => shotTelegraph.Ended);
+            stateMachine.AddTransition(shotAttack, _recover, () => true);
 
             stateMachine.AddTransition(_recover, idle, () => _recover.Ended);
         }
@@ -54,7 +62,17 @@ namespace Enemies.FatGuyComponents
                 _fatGuy.StoppingDistance);
         }
 
-        private void NextAttackPattern() => _patternIndex = (_patternIndex + 1) % 3;
+        private void NextAttackPattern()
+        {
+            int limit = _fatGuy.NormalizedHealth switch
+            {
+                < 0.3f => 3,
+                < 0.6f => 2,
+                _ => 1
+            };
+            _patternIndex = Random.Range(0, limit);
+            Debug.Log($"Limit:{limit}:Index:{_patternIndex}");
+        }
 
         private void OnEnable()
         {
