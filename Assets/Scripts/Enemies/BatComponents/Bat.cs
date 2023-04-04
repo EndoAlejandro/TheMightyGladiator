@@ -22,14 +22,10 @@ namespace Enemies.BatComponents
 
         public float AttackSpeed => attackSpeed;
 
-        private Rigidbody _rigidbody;
-        public override bool IsAlive => Health > 0;
         public float IdleTime => idleTime;
         public float DistanceTolerance => distanceTolerance;
         public float AttackTime => attackTime;
         public float DetectionDistance => detectionDistance;
-
-        private void Awake() => _rigidbody = GetComponent<Rigidbody>();
 
         public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f)
         {

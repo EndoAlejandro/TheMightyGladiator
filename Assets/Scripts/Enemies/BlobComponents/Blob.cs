@@ -23,27 +23,19 @@ namespace Enemies.BlobComponents
         [SerializeField] private Bullet bullet;
         [SerializeField] private float bulletSpeed = 10f;
         [SerializeField] private float detectionRange = 10f;
-        private float _health;
         public Bullet Bullet => bullet;
-
         public float MoveRate => moveRate;
         public LayerMask PlayerLayerMask => playerLayerMask;
-        public override bool IsAlive => true;
         public float BulletSpeed => bulletSpeed;
         public float DetectionRange => detectionRange;
 
-        private void OnEnable() => _health = maxHealth;
 
         public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
         {
-            _health -= damage;
+            Health -= damage;
             OnHit?.Invoke(hitPoint, damage);
 
-            if (_health <= 0)
-            {
-                OnDead?.Invoke(this);
-                ReturnToPool();
-            }
+            if (!IsAlive) OnDead?.Invoke(this);
         }
 
         public override void Parry(Player player)

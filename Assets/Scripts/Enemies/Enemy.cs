@@ -46,7 +46,7 @@ namespace Enemies
         public bool IsAttacking { get; private set; }
         public bool CanBeParried { get; private set; }
         public bool IsStun { get; private set; }
-        public abstract bool IsAlive { get; }
+        public bool IsAlive => Health > 0f;
         public float StunTime => stunTime;
         public float GetHitTime => getHitTime;
         public float RecoverTime => recoverTime;
@@ -74,6 +74,12 @@ namespace Enemies
         {
             if (collision.transform.TryGetComponent(out Player player))
                 player.TryToGetDamageFromEnemy(this);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, stoppingDistance);
         }
     }
 }

@@ -9,9 +9,11 @@ namespace VfxComponents
     public class VfxManager : Singleton<VfxManager>
     {
         [SerializeField] private FloatingText floatingText;
+        [SerializeField] private AoEFx aoeFx;
         [SerializeField] private PoolAfterSeconds swordHit;
         [SerializeField] private PoolAfterSeconds swordCriticalHit;
         [SerializeField] private PoolAfterSeconds playerGetHit;
+        [SerializeField] private PoolAfterSeconds explosion;
 
         [FormerlySerializedAs("normalSpawn")] [SerializeField]
         private PoolAfterSeconds normalSpawnCircle;
@@ -31,12 +33,19 @@ namespace VfxComponents
                 { Vfx.SwordCritical, swordCriticalHit },
                 { Vfx.PlayerHit, playerGetHit },
                 { Vfx.SpawnCircle, normalSpawnCircle },
-                { Vfx.EnemySpawn, enemySpawn }
+                { Vfx.EnemySpawn, enemySpawn },
+                { Vfx.Explosion, explosion }
             };
         }
 
         public void PlayFx(Vfx fx, Vector3 position) =>
             _listedVfx[fx].Get<PoolAfterSeconds>(position, Quaternion.identity);
+
+        public void PlayAoEFx(Vector3 position, float duration = 1f, float size = 1f)
+        {
+            var aoe = aoeFx.Get<AoEFx>(position, Quaternion.identity);
+            aoe.Setup(duration, size);
+        }
 
         public void PlayFloatingText(Vector3 position, string damage, bool isCritical)
         {

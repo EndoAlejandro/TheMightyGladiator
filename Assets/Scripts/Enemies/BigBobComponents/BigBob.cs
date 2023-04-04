@@ -15,18 +15,13 @@ namespace Enemies.BigBobComponents
         [SerializeField] private float yOffset = 0.5f;
 
         public BigBobBullet Bullet => bullet;
-
         public int BulletsAmount => bulletsAmount;
-        public override bool IsAlive => true;
         public float AttackRange => attackRange;
         public float YOffset => yOffset;
 
         private Collider _collider;
 
-        private void Awake()
-        {
-            _collider = GetComponent<Collider>();
-        }
+        private void Awake() => _collider = GetComponent<Collider>();
 
         public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
         {
@@ -42,9 +37,6 @@ namespace Enemies.BigBobComponents
             _collider.isTrigger = isAttacking;
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(transform.position + Vector3.up * YOffset, attackRange);
-        }
+        private void OnDrawGizmos() => Gizmos.DrawWireSphere(transform.position + Vector3.up * YOffset, attackRange);
     }
 }

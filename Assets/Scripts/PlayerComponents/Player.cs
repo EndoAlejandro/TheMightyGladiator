@@ -123,14 +123,14 @@ namespace PlayerComponents
 
         public void SetShieldActive(bool value) => _shieldActive = value;
 
-        public bool TryToGetDamageFromEnemy(IDealDamage damageDealer)
+        public bool TryToGetDamageFromEnemy(IDealDamage damageDealer, bool ignoreShield = false)
         {
             if (IsDodging) return false;
             if (IsImmune) return false;
 
             var direction = Utils.NormalizedFlatDirection(damageDealer.transform.position, transform.position);
 
-            if (_shieldActive)
+            if (_shieldActive && !ignoreShield)
             {
                 if (Vector3.Angle(direction, transform.forward) < DefendAngle)
                 {

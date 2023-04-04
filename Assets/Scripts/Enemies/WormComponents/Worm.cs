@@ -17,7 +17,6 @@ namespace Enemies.WormComponents
         private Collider _collider;
         private Rigidbody _rigidbody;
         private float _health;
-        public override bool IsAlive => true;
 
         public float IdleTime => idleTime;
         public float AttackRadius => attackRadius;

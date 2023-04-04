@@ -17,28 +17,24 @@ namespace Enemies.SpawnerComponents
 
         public override event Action<Enemy> OnDead;
         public override event Action<Vector3, float> OnHit;
-        public override bool IsAlive => _health > 0f;
 
-        private float _health;
         public Bat BatPrefab => batPrefab;
 
         public List<Bat> SpawnedBats { get; private set; }
 
         public int SpawnAmount => spawnAmount;
 
-        private void Awake()
+        protected override void OnEnable()
         {
-            _health = maxHealth;
             SpawnedBats = new List<Bat>();
         }
 
         public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
         {
-            _health -= damage;
+            Health -= damage;
             VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
             OnHit?.Invoke(hitPoint, knockBack);
-            if (_health <= 0)
-                OnDead?.Invoke(this);
+            if (!IsAlive) OnDead?.Invoke(this);
         }
 
         public override void Parry(Player player)
