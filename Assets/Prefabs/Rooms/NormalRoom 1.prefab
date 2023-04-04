@@ -1150,9 +1150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpawnPoint: {fileID: 5206439076723739095}
-  maxEnemies: 1
+  spawnTime: 1
+  maxEnemies: 4
   waves: 1
-  spawnRate: 1
   portal: {fileID: 7567207431361095525}
   upgradePositions:
   - {fileID: 8549672348274470692}

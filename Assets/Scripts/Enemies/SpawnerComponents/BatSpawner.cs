@@ -26,6 +26,7 @@ namespace Enemies.SpawnerComponents
 
         protected override void OnEnable()
         {
+            base.OnEnable();
             SpawnedBats = new List<Bat>();
         }
 

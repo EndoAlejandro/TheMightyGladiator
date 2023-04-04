@@ -11,7 +11,7 @@ public struct LevelData
     [Header("Enemies")]
     [SerializeField] private Enemy[] enemies;
 
-    [SerializeField] private BigBob boss;
+    [SerializeField] private Enemy boss;
 
     [Header("Floors")]
     [SerializeField] private Biome biome;
@@ -25,5 +25,5 @@ public struct LevelData
     public BossRoom BossRoom => bossRoom;
     public Room[] Rooms => rooms;
     public Enemy[] Enemies => enemies;
-    public BigBob Boss => boss;
+    public Enemy Boss => boss;
 }

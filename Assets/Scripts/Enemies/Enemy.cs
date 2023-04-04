@@ -35,6 +35,8 @@ namespace Enemies
         [SerializeField] private float getHitTime = 1f;
         [SerializeField] private float deathTime = 1f;
 
+        protected BaseRoom room;
+
         public float ParryTimeWindow => parryTimeWindow;
         public float MaxHealth => maxHealth;
         public float TelegraphTime => telegraphTime;
@@ -52,16 +54,13 @@ namespace Enemies
         public float RecoverTime => recoverTime;
         public float DeathTime => deathTime;
         public int Damage => damage;
-
-        protected Room room;
-
         protected virtual void OnEnable() => Health = MaxHealth;
         public abstract void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f);
         public abstract void Parry(Player player);
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;
         public void SetIsStun(bool isStun) => IsStun = isStun;
-        public void Setup(Room room) => this.room = room;
+        public void Setup(BaseRoom room) => this.room = room;
         public virtual void PlayerOnRange() => OnPlayerOnRange?.Invoke();
 
         public void DeSpawn()

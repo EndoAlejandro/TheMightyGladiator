@@ -46,10 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatingText: {fileID: 579982764298065617, guid: 7113d7f266e206742af2473d94e9d9a3,
     type: 3}
+  aoeFx: {fileID: 6716445832691833715, guid: 0fac01d6f30a851479af5de239f0a050, type: 3}
   swordHit: {fileID: 158150341614363626, guid: feeeb06c89e133148a84c5a2dce05f1d, type: 3}
   swordCriticalHit: {fileID: 6079090089231751116, guid: 6decc339d487e6f4f89181c5efd21818,
     type: 3}
   playerGetHit: {fileID: 8515076130945141092, guid: c4bc409346844824ea331aa0d4323695,
+    type: 3}
+  explosion: {fileID: 165920097653272266, guid: c130746bcc3e61748b9e699d99ed7f93,
     type: 3}
   normalSpawnCircle: {fileID: 2561271797263224521, guid: 45f7a73e18440b84590e872996ce27ee,
     type: 3}

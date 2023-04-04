@@ -1,4 +1,6 @@
-﻿using PlayerComponents;
+﻿using System;
+using Enemies;
+using PlayerComponents;
 using UnityEngine;
 
 namespace Rooms
@@ -6,11 +8,29 @@ namespace Rooms
     public class BossRoom : BaseRoom
     {
         [SerializeField] private Transform bossSpawnPoint;
+        [SerializeField] private Portal portal;
 
-        public override void Setup(LevelData levelData, Player player)
+        private Enemy _boss;
+
+        private void Awake()
         {
-            base.Setup(levelData, player);
-            Instantiate(LevelData.Boss, bossSpawnPoint.position, Quaternion.identity);
+            portal.gameObject.SetActive(false);
+        }
+
+        private void Start() =>
+            StartCoroutine(SpawnEnemyAfterSeconds(LevelData.Boss, bossSpawnPoint.position, 3f));
+
+        public override void RegisterEnemy(Enemy enemy)
+        {
+            _boss = enemy;
+            _boss.Setup(this);
+            _boss.OnDead += BossOnDead;
+        }
+
+        private void BossOnDead(Enemy boss)
+        {
+            _boss.OnDead -= BossOnDead;
+            portal.gameObject.SetActive(true);
         }
     }
 }

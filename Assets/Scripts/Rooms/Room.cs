@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CustomUtils;
 using Enemies;
+using PlayerComponents;
 using UnityEngine;
 using Upgrades;
 using VfxComponents;
@@ -12,7 +13,6 @@ namespace Rooms
     {
         [SerializeField] private int maxEnemies = 2;
         [SerializeField] private int waves = 2;
-        [SerializeField] private float spawnRate = 1f;
         [SerializeField] private Portal portal;
         [SerializeField] private Transform[] upgradePositions;
 
@@ -30,7 +30,13 @@ namespace Rooms
             portal.gameObject.SetActive(false);
         }
 
-        private void Start() => SpawnEnemy();
+        // private void Start() => SpawnEnemy();
+
+        public override void Setup(LevelData levelData, Player player)
+        {
+            base.Setup(levelData, player);
+            SpawnEnemy();
+        }
 
         private void SpawnEnemy()
         {
@@ -46,16 +52,7 @@ namespace Rooms
             }
         }
 
-        private IEnumerator SpawnEnemyAfterSeconds(Enemy enemyPrefab, Vector3 spawnPosition)
-        {
-            VfxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition);
-            yield return new WaitForSeconds(spawnRate);
-            var enemy = enemyPrefab.Get<Enemy>(spawnPosition, Quaternion.identity);
-            RegisterEnemy(enemy);
-            VfxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
-        }
-
-        public void RegisterEnemy(Enemy enemy)
+        public override void RegisterEnemy(Enemy enemy)
         {
             enemy.Setup(this);
             _spawnedEnemies.Add(enemy);

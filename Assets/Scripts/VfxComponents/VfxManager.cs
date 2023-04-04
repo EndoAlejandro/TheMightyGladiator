@@ -38,8 +38,11 @@ namespace VfxComponents
             };
         }
 
-        public void PlayFx(Vfx fx, Vector3 position) =>
-            _listedVfx[fx].Get<PoolAfterSeconds>(position, Quaternion.identity);
+        public void PlayFx(Vfx fx, Vector3 position, float scale = 1f)
+        {
+            var vfx = _listedVfx[fx].Get<PoolAfterSeconds>(position, Quaternion.identity);
+            vfx.transform.localScale = Vector3.one * scale;
+        }
 
         public void PlayAoEFx(Vector3 position, float duration = 1f, float size = 1f)
         {
