@@ -1366,6 +1366,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
         type: 3}
+      propertyPath: levels.Array.data[0].rooms.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
+        type: 3}
       propertyPath: levels.Array.data[0].enemies.Array.size
       value: 2
       objectReference: {fileID: 0}

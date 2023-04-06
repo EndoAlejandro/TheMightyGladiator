@@ -30,8 +30,6 @@ namespace Rooms
             portal.gameObject.SetActive(false);
         }
 
-        // private void Start() => SpawnEnemy();
-
         public override void Setup(LevelData levelData, Player player)
         {
             base.Setup(levelData, player);

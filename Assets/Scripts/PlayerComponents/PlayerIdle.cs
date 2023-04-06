@@ -17,7 +17,7 @@ namespace PlayerComponents
             _player = player;
             _rigidbody = rigidbody;
 
-            _results = new Collider[10];
+            _results = new Collider[50];
         }
 
         public void Tick()

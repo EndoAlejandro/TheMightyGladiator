@@ -28,7 +28,7 @@ namespace PlayerComponents
             _hitBoxSize = _player.HitBoxSize;
             _offset = Vector3.up * _player.Height;
 
-            _results = new Collider[20];
+            _results = new Collider[50];
         }
 
         public void Tick()
