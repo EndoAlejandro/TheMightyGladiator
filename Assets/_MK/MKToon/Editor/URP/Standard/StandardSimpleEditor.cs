@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
@@ -20,6 +20,8 @@ namespace MK.Toon.Editor.URP
 {
     internal class StandardSimpleEditor : MK.Toon.Editor.SimpleEditorBase 
     {
+        public StandardSimpleEditor() : base(RenderPipeline.Universal) {}
+
         protected override void DrawEmissionFlags(MaterialEditor materialEditor)
         {
 

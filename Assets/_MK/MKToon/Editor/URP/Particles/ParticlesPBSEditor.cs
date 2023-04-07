@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
@@ -20,6 +20,8 @@ namespace MK.Toon.Editor.URP
 {
     internal sealed class ParticlesPBSEditor : MK.Toon.Editor.PhysicallyBasedEditorBase
     {
+        public ParticlesPBSEditor() : base(RenderPipeline.Universal) {}
+        
         /////////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                              //
 		/////////////////////////////////////////////////////////////////////////////////////////////

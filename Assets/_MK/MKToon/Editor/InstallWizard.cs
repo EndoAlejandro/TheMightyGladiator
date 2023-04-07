@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 using System.Collections;
@@ -18,7 +18,7 @@ namespace MK.Toon.Editor.InstallWizard
     public sealed class InstallWizard : EditorWindow
     {
         #pragma warning disable CS0414
-        private static readonly string _version = "3.0.19C";
+        private static readonly string _version = "3.0.20";
         #pragma warning restore CS0414
         
         private static readonly Vector2Int _referenceResolution = new Vector2Int(2560, 1440);

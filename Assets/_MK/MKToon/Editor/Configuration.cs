@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 using UnityEngine;
@@ -45,9 +45,7 @@ namespace MK.Toon.Editor.InstallWizard
         [SerializeField][Space]
         private Object _basePackageBuiltin = null;
         [SerializeField]
-        private Object _basePackageURP_2019_4_Or_Newer = null;
-        [SerializeField]
-        private Object _basePackageURP_2021_2_Or_Newer = null;
+        private Object _basePackageURP = null;
 
         [SerializeField][Space]
         private Object _examplesPackageInc = null;
@@ -381,11 +379,7 @@ namespace MK.Toon.Editor.InstallWizard
                     //    AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._basePackageLWRP), false);
                     //break;
                     case RenderPipeline.Universal:
-                        #if UNITY_2021_2_OR_NEWER
-                            AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._basePackageURP_2021_2_Or_Newer), false);
-                        #else
-                            AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._basePackageURP_2019_4_Or_Newer), false);
-                        #endif
+                        AssetDatabase.ImportPackage(AssetDatabase.GetAssetPath(_instance._basePackageURP), false);
                     break;
                     default:
                     //All cases should be handled

@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 namespace MK.Toon
@@ -19,15 +19,17 @@ namespace MK.Toon
         /////////////////
         // Options     //
         /////////////////
-        public static readonly EnumProperty<Workflow> workflow     = new EnumProperty<Workflow>(Uniforms.workflow, Keywords.workflow);
-        public static readonly EnumProperty<RenderFace> renderFace = new EnumProperty<RenderFace>(Uniforms.renderFace);
-        public static readonly SurfaceProperty surface             = new SurfaceProperty(Uniforms.surface, Keywords.surface);
-        public static readonly EnumProperty<ZWrite> zWrite         = new EnumProperty<ZWrite>(Uniforms.zWrite);
-        public static readonly EnumProperty<ZTest> zTest           = new EnumProperty<ZTest>(Uniforms.zTest);
-        public static readonly EnumProperty<BlendFactor> blendSrc  = new EnumProperty<BlendFactor>(Uniforms.blendSrc);
-        public static readonly EnumProperty<BlendFactor> blendDst  = new EnumProperty<BlendFactor>(Uniforms.blendDst);
-        public static readonly BlendProperty blend                 = new BlendProperty(Uniforms.blend, Keywords.blend);
-        public static readonly AlphaClippingProperty alphaClipping = new AlphaClippingProperty(Uniforms.alphaClipping, Keywords.alphaClipping);
+        public static readonly EnumProperty<Workflow> workflow          = new EnumProperty<Workflow>(Uniforms.workflow, Keywords.workflow);
+        public static readonly EnumProperty<RenderFace> renderFace      = new EnumProperty<RenderFace>(Uniforms.renderFace);
+        public static readonly SurfaceProperty surface                  = new SurfaceProperty(Uniforms.surface, Keywords.surface);
+        public static readonly EnumProperty<ZWrite> zWrite              = new EnumProperty<ZWrite>(Uniforms.zWrite);
+        public static readonly EnumProperty<ZTest> zTest                = new EnumProperty<ZTest>(Uniforms.zTest);
+        public static readonly EnumProperty<BlendFactor> blendSrc       = new EnumProperty<BlendFactor>(Uniforms.blendSrc);
+        public static readonly EnumProperty<BlendFactor> blendDst       = new EnumProperty<BlendFactor>(Uniforms.blendDst);
+        public static readonly EnumProperty<BlendFactor> blendSrcAlpha  = new EnumProperty<BlendFactor>(Uniforms.blendSrcAlpha);
+        public static readonly EnumProperty<BlendFactor> blendDstAlpha  = new EnumProperty<BlendFactor>(Uniforms.blendDstAlpha);
+        public static readonly BlendProperty blend                      = new BlendProperty(Uniforms.blend, Keywords.blend);
+        public static readonly AlphaClippingProperty alphaClipping      = new AlphaClippingProperty(Uniforms.alphaClipping, Keywords.alphaClipping);
 
         /////////////////
         // Input       //

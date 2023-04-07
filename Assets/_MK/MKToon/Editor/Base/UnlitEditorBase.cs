@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
@@ -39,15 +39,17 @@ namespace MK.Toon.Editor
     /// </summary>
     internal abstract class UnlitEditorBase : ShaderGUI
     {
-        public UnlitEditorBase()
+        public UnlitEditorBase(RenderPipeline renderPipeline)
         {
             _shaderTemplate = ShaderTemplate.Unlit;
+            _renderPipeline = renderPipeline;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                              //
 		/////////////////////////////////////////////////////////////////////////////////////////////
-        protected ShaderTemplate _shaderTemplate;  
+        protected ShaderTemplate _shaderTemplate;
+        protected RenderPipeline _renderPipeline; 
    
         /////////////////
         // Options     //
@@ -58,6 +60,8 @@ namespace MK.Toon.Editor
         protected MaterialProperty _zTest;
         protected MaterialProperty _blendSrc;
         protected MaterialProperty _blendDst;
+        protected MaterialProperty _blendSrcAlpha;
+        protected MaterialProperty _blendDstAlpha;
         protected MaterialProperty _alphaClipping;
         protected MaterialProperty _renderFace;
 
@@ -143,6 +147,8 @@ namespace MK.Toon.Editor
             _zTest = FindProperty(Properties.zTest.uniform.name, props);
             _blendSrc = FindProperty(Properties.blendSrc.uniform.name, props);
             _blendDst = FindProperty(Properties.blendDst.uniform.name, props);
+            _blendSrcAlpha = FindProperty(Properties.blendSrcAlpha.uniform.name, props);
+            _blendDstAlpha = FindProperty(Properties.blendDstAlpha.uniform.name, props);
             _alphaClipping = FindProperty(Properties.alphaClipping.uniform.name, props);
             _renderFace = FindProperty(Properties.renderFace.uniform.name, props);
 
@@ -372,6 +378,11 @@ namespace MK.Toon.Editor
                 materialEditor.ShaderProperty(_zTest, UI.zTest, 1);
                 materialEditor.ShaderProperty(_blendSrc, UI.blendSrc, 1);
                 materialEditor.ShaderProperty(_blendDst, UI.blendDst, 1);
+                if(_renderPipeline == RenderPipeline.Universal)
+                {
+                    materialEditor.ShaderProperty(_blendSrcAlpha, UI.blendSrcAlpha, 1);
+                    materialEditor.ShaderProperty(_blendDstAlpha, UI.blendDstAlpha, 1);
+                }
             }
         }
 

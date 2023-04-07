@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 namespace MK.Toon
@@ -20,6 +20,8 @@ namespace MK.Toon
         public static readonly Uniform zTest         = new Uniform("_ZTest");
         public static readonly Uniform blendSrc      = new Uniform("_BlendSrc");
         public static readonly Uniform blendDst      = new Uniform("_BlendDst");
+        public static readonly Uniform blendSrcAlpha = new Uniform("_BlendSrcAlpha");
+        public static readonly Uniform blendDstAlpha = new Uniform("_BlendDstAlpha");
         public static readonly Uniform blend         = new Uniform("_Blend");
         public static readonly Uniform alphaClipping = new Uniform("_AlphaClipping");
 

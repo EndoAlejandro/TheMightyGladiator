@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
@@ -67,13 +67,23 @@ namespace MK.Toon.Editor
         );
         internal static readonly GUIContent blendSrc = new GUIContent
         (
-            "Src Factor", 
+            "Src Factor RGB", 
             "Generated color is multiplied by the Src Factor."
         );
         internal static readonly GUIContent blendDst = new GUIContent
         (
-            "Dst Factor", 
+            "Dst Factor RGB", 
             "Color that is already on the screen is multiplied by the Dst Factor."
+        );
+        internal static readonly GUIContent blendSrcAlpha = new GUIContent
+        (
+            "Src Factor Alpha", 
+            "Generated alpha is multiplied by the Src Factor."
+        );
+        internal static readonly GUIContent blendDstAlpha = new GUIContent
+        (
+            "Dst Factor Alpha", 
+            "Alpha that is already on the screen is multiplied by the Dst Factor."
         );
         internal static readonly GUIContent alphaClipping = new GUIContent
         (

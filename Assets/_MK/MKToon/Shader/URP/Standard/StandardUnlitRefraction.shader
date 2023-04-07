@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 Shader "MK/Toon/URP/Standard/Unlit + Refraction"
@@ -14,7 +14,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		// Options     //
 		/////////////////
 		[Enum(MK.Toon.SurfaceRefraction)] _Surface ("", int) = 1
-		 _Blend ("", int) = 0
+		_Blend ("", int) = 0
 		[Toggle] _AlphaClipping ("", int) = 0
 		[Enum(MK.Toon.RenderFace)] _RenderFace ("", int) = 2
 
@@ -51,6 +51,8 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		/////////////////
 		[HideInInspector] [Enum(MK.Toon.BlendFactor)] _BlendSrc ("", int) = 1
 		[HideInInspector] [Enum(MK.Toon.BlendFactor)] _BlendDst ("", int) = 0
+		[HideInInspector] [Enum(MK.Toon.BlendFactor)] _BlendSrcAlpha ("", int) = 1
+		[HideInInspector] [Enum(MK.Toon.BlendFactor)] _BlendDstAlpha ("", int) = 0
 		[Enum(MK.Toon.ZWrite)] _ZWrite ("", int) = 0
 		[Enum(MK.Toon.ZTest)] _ZTest ("", int) = 4.0
 		[MKToonRenderPriority] _RenderPriority ("", Range(-50, 50)) = 0.0
@@ -103,6 +105,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		Pass
 		{
+			PackageRequirements 
+			{
+				"com.unity.render-pipelines.universal":"[7.0,11.99]"
+			}
 			Stencil
 			{
 				Ref [_StencilRef]
@@ -114,10 +120,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 				ZFail [_StencilZFail]
 			}
 
-			Tags { "LightMode" = "UniversalForwardOnly" }
+			Tags { "LightMode" = "UniversalForward" }
 			Name "ForwardBase" 
 			Cull [_RenderFace]
-			Blend [_BlendSrc] [_BlendDst]
+			Blend [_BlendSrc] [_BlendDst], [_BlendSrcAlpha] [_BlendDstAlpha]
 			ZWrite [_ZWrite]
 			ZTest [_ZTest]
 
@@ -141,7 +147,11 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 
 			#if UNITY_VERSION >= 202220
 				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
-				#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#if UNITY_VERSION >= 202310
+					#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+				#else
+					#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#endif
 			#endif
 
 			#pragma fragmentoption ARB_precision_hint_fastest
@@ -157,6 +167,78 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#define MK_REFRACTION
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
+
+			#include "../../Lib/Forward/BaseSetup.hlsl"
+			
+			ENDHLSL
+		}
+
+		Pass
+		{
+			PackageRequirements 
+			{
+				"com.unity.render-pipelines.universal":"[12.0,99.99]"
+			}
+			Stencil
+			{
+				Ref [_StencilRef]
+				ReadMask [_StencilReadMask]
+				WriteMask [_StencilWriteMask]
+				Comp [_StencilComp]
+				Pass [_StencilPass]
+				Fail [_StencilFail]
+				ZFail [_StencilZFail]
+			}
+
+			Tags { "LightMode" = "UniversalForwardOnly" }
+			Name "ForwardBase" 
+			Cull [_RenderFace]
+			Blend [_BlendSrc] [_BlendDst], [_BlendSrcAlpha] [_BlendDstAlpha]
+			ZWrite [_ZWrite]
+			ZTest [_ZTest]
+
+			HLSLPROGRAM
+			#pragma target 4.5
+			#pragma exclude_renderers gles gles3 glcore d3d11_9x wiiu n3ds switch
+			#pragma shader_feature_local __ _MK_SURFACE_TYPE_TRANSPARENT
+			#pragma shader_feature_local __ _MK_ALPHA_CLIPPING
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_STUTTER
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_SINE _MK_VERTEX_ANIMATION_PULSE _MK_VERTEX_ANIMATION_NOISE
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_MAP
+			#pragma shader_feature_local __ _MK_DISSOLVE_DEFAULT _MK_DISSOLVE_BORDER_COLOR _MK_DISSOLVE_BORDER_RAMP
+			#pragma shader_feature_local __ _MK_ALBEDO_MAP
+            #pragma shader_feature_local __ _MK_BLEND_PREMULTIPLY _MK_BLEND_ADDITIVE _MK_BLEND_MULTIPLY
+			#pragma shader_feature_local __ _MK_COLOR_GRADING_ALBEDO _MK_COLOR_GRADING_FINAL_OUTPUT
+			#pragma shader_feature_local __ _MK_REFRACTION_DISTORTION_MAP
+			#pragma shader_feature_local __ _MK_INDEX_OF_REFRACTION
+			#if UNITY_VERSION >= 202120
+				#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#endif
+
+			#if UNITY_VERSION >= 202220
+				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+				#if UNITY_VERSION >= 202310
+					#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+				#else
+					#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#endif
+			#endif
+
+			#pragma fragmentoption ARB_precision_hint_fastest
+			#pragma vertex ForwardVert
+			#pragma fragment ForwardFrag
+
+            #pragma multi_compile_fog
+			#pragma multi_compile_instancing
+			#pragma instancing_options renderinglayer
+			#pragma multi_compile __ DOTS_INSTANCING_ON
+
+			#define MK_URP
+			#define MK_REFRACTION
+			#define MK_UNLIT
+			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
 			#include "../../Lib/Forward/BaseSetup.hlsl"
 			
@@ -200,6 +282,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#define MK_URP
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
 			#include "../../Lib/Meta/Setup.hlsl"
 			ENDHLSL
@@ -241,6 +324,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#define MK_URP
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
             #include "../../Lib/DepthOnly/Setup.hlsl"
             ENDHLSL
@@ -252,7 +336,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		Pass
         {
             Name "DepthNormals"
-            Tags { "LightMode" = "DepthNormalsOnly" }
+            Tags { "LightMode" = "DepthNormals" }
 
             ZWrite On
             Cull [_RenderFace]
@@ -273,17 +357,67 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 
 			#if UNITY_VERSION >= 202220
 				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
-				#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#if UNITY_VERSION >= 202310
+					#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+				#else
+					#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#endif
 			#endif
 
             #pragma multi_compile_instancing
 			#pragma multi_compile __ DOTS_INSTANCING_ON
 
 			#define MK_URP
-			#define MK_SIMPLE
+			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
             #include "../../Lib/DepthNormals/Setup.hlsl"
+            ENDHLSL
+        }
+
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		// Motion Vectors
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		Pass
+        {
+			PackageRequirements 
+			{
+				"com.unity.render-pipelines.universal":"[16.0,99.99]"
+			}
+            Name "MotionVectors"
+            Tags { "LightMode" = "MotionVectors" }
+
+            ZWrite On
+            Cull [_RenderFace]
+			ColorMask RG
+
+            HLSLPROGRAM
+            #pragma target 4.5
+			#pragma exclude_renderers gles gles3 glcore d3d11_9x wiiu n3ds switch
+
+            #pragma vertex MotionVectorsVert
+            #pragma fragment MotionVectorsFrag
+
+			#pragma shader_feature_local __ _MK_DISSOLVE_DEFAULT _MK_DISSOLVE_BORDER_COLOR _MK_DISSOLVE_BORDER_RAMP
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_STUTTER
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_SINE _MK_VERTEX_ANIMATION_PULSE _MK_VERTEX_ANIMATION_NOISE
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_MAP
+            #pragma shader_feature_local __ _MK_ALBEDO_MAP
+            #pragma shader_feature_local __ _MK_ALPHA_CLIPPING
+
+            #pragma multi_compile_instancing
+
+			#if UNITY_VERSION >= 202220
+				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+			#endif
+
+			#define MK_URP
+			#define MK_UNLIT
+			#define MK_STANDARD
+
+            #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ObjectMotionVectors.hlsl"
+            #include "../../Lib/MotionVectors/Setup.hlsl"
             ENDHLSL
         }
 
@@ -321,6 +455,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
             #define MK_URP
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
             #include "../../Lib/Universal2D/Setup.hlsl"
 
@@ -340,6 +475,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		Pass
 		{
+			PackageRequirements 
+			{
+				"com.unity.render-pipelines.universal":"[7.0,11.99]"
+			}
 			Stencil
 			{
 				Ref [_StencilRef]
@@ -351,10 +490,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 				ZFail [_StencilZFail]
 			}
 
-			Tags { "LightMode" = "UniversalForwardOnly" }
+			Tags { "LightMode" = "UniversalForward" }
 			Name "ForwardBase" 
 			Cull [_RenderFace]
-			Blend [_BlendSrc] [_BlendDst]
+			Blend [_BlendSrc] [_BlendDst], [_BlendSrcAlpha] [_BlendDstAlpha]
 			ZWrite [_ZWrite]
 			ZTest [_ZTest]
 
@@ -377,7 +516,11 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#endif
 
 			#if UNITY_VERSION >= 202220
-				#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#if UNITY_VERSION >= 202310
+					#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+				#else
+					#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#endif
 				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 			#endif
 
@@ -393,6 +536,77 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#define MK_REFRACTION
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
+
+			#include "../../Lib/Forward/BaseSetup.hlsl"
+			
+			ENDHLSL
+		}
+
+		Pass
+		{
+			PackageRequirements 
+			{
+				"com.unity.render-pipelines.universal":"[12.0,99.99]"
+			}
+			Stencil
+			{
+				Ref [_StencilRef]
+				ReadMask [_StencilReadMask]
+				WriteMask [_StencilWriteMask]
+				Comp [_StencilComp]
+				Pass [_StencilPass]
+				Fail [_StencilFail]
+				ZFail [_StencilZFail]
+			}
+
+			Tags { "LightMode" = "UniversalForwardOnly" }
+			Name "ForwardBase" 
+			Cull [_RenderFace]
+			Blend [_BlendSrc] [_BlendDst], [_BlendSrcAlpha] [_BlendDstAlpha]
+			ZWrite [_ZWrite]
+			ZTest [_ZTest]
+
+			HLSLPROGRAM
+			#pragma target 3.5
+			#pragma exclude_renderers gles d3d11_9x d3d11 ps4 ps5 xboxone
+			#pragma shader_feature_local __ _MK_SURFACE_TYPE_TRANSPARENT
+			#pragma shader_feature_local __ _MK_ALPHA_CLIPPING
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_STUTTER
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_SINE _MK_VERTEX_ANIMATION_PULSE _MK_VERTEX_ANIMATION_NOISE
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_MAP
+			#pragma shader_feature_local __ _MK_DISSOLVE_DEFAULT _MK_DISSOLVE_BORDER_COLOR _MK_DISSOLVE_BORDER_RAMP
+			#pragma shader_feature_local __ _MK_ALBEDO_MAP
+            #pragma shader_feature_local __ _MK_BLEND_PREMULTIPLY _MK_BLEND_ADDITIVE _MK_BLEND_MULTIPLY
+			#pragma shader_feature_local __ _MK_COLOR_GRADING_ALBEDO _MK_COLOR_GRADING_FINAL_OUTPUT
+			#pragma shader_feature_local __ _MK_REFRACTION_DISTORTION_MAP
+			#pragma shader_feature_local __ _MK_INDEX_OF_REFRACTION
+			#if UNITY_VERSION >= 202120
+				#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#endif
+
+			#if UNITY_VERSION >= 202220
+				#if UNITY_VERSION >= 202310
+					#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+				#else
+					#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#endif
+				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+			#endif
+
+			#pragma fragmentoption ARB_precision_hint_fastest
+			#pragma vertex ForwardVert
+			#pragma fragment ForwardFrag
+
+            #pragma multi_compile_fog
+			#pragma multi_compile_instancing
+			#pragma instancing_options renderinglayer
+
+			#define MK_URP
+			#define MK_REFRACTION
+			#define MK_UNLIT
+			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
 			#include "../../Lib/Forward/BaseSetup.hlsl"
 			
@@ -437,6 +651,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#define MK_URP
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
 			#include "../../Lib/Meta/Setup.hlsl"
 			ENDHLSL
@@ -477,6 +692,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#define MK_URP
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
             #include "../../Lib/DepthOnly/Setup.hlsl"
             ENDHLSL
@@ -488,7 +704,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		Pass
         {
             Name "DepthNormals"
-            Tags { "LightMode" = "DepthNormalsOnly" }
+            Tags { "LightMode" = "DepthNormals" }
 
             ZWrite On
             Cull [_RenderFace]
@@ -508,17 +724,67 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
             #pragma shader_feature_local __ _MK_ALPHA_CLIPPING
 
 			#if UNITY_VERSION >= 202220
-				#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#if UNITY_VERSION >= 202310
+					#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+				#else
+					#pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+				#endif
 				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 			#endif
 
             #pragma multi_compile_instancing
 
 			#define MK_URP
-			#define MK_SIMPLE
+			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
             #include "../../Lib/DepthNormals/Setup.hlsl"
+            ENDHLSL
+        }
+
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		// Motion Vectors
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		Pass
+        {
+			PackageRequirements 
+			{
+				"com.unity.render-pipelines.universal":"[16.0,99.99]"
+			}
+            Name "MotionVectors"
+            Tags { "LightMode" = "MotionVectors" }
+
+            ZWrite On
+            Cull [_RenderFace]
+			ColorMask RG
+
+            HLSLPROGRAM
+            #pragma target 3.5
+			#pragma exclude_renderers gles d3d11_9x d3d11 ps4 ps5 xboxone
+
+            #pragma vertex MotionVectorsVert
+            #pragma fragment MotionVectorsFrag
+
+			#pragma shader_feature_local __ _MK_DISSOLVE_DEFAULT _MK_DISSOLVE_BORDER_COLOR _MK_DISSOLVE_BORDER_RAMP
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_STUTTER
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_SINE _MK_VERTEX_ANIMATION_PULSE _MK_VERTEX_ANIMATION_NOISE
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_MAP
+            #pragma shader_feature_local __ _MK_ALBEDO_MAP
+            #pragma shader_feature_local __ _MK_ALPHA_CLIPPING
+
+            #pragma multi_compile_instancing
+
+			#if UNITY_VERSION >= 202220
+				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+			#endif
+
+			#define MK_URP
+			#define MK_UNLIT
+			#define MK_STANDARD
+
+            #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ObjectMotionVectors.hlsl"
+            #include "../../Lib/MotionVectors/Setup.hlsl"
             ENDHLSL
         }
 
@@ -554,6 +820,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
             #define MK_URP
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
             #include "../../Lib/Universal2D/Setup.hlsl"
 
@@ -573,6 +840,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		Pass
 		{
+			PackageRequirements 
+			{
+				"com.unity.render-pipelines.universal":"[7.0,11.99]"
+			}
 			Stencil
 			{
 				Ref [_StencilRef]
@@ -584,10 +855,10 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 				ZFail [_StencilZFail]
 			}
 
-			Tags { "LightMode" = "UniversalForwardOnly" }
+			Tags { "LightMode" = "UniversalForward" }
 			Name "ForwardBase" 
 			Cull [_RenderFace]
-			Blend [_BlendSrc] [_BlendDst]
+			Blend [_BlendSrc] [_BlendDst], [_BlendSrcAlpha] [_BlendDstAlpha]
 			ZWrite [_ZWrite]
 			ZTest [_ZTest]
 
@@ -621,6 +892,68 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#define MK_REFRACTION
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
+
+			#include "../../Lib/Forward/BaseSetup.hlsl"
+			
+			ENDHLSL
+		}
+
+		Pass
+		{
+			PackageRequirements 
+			{
+				"com.unity.render-pipelines.universal":"[12.0,99.99]"
+			}
+			Stencil
+			{
+				Ref [_StencilRef]
+				ReadMask [_StencilReadMask]
+				WriteMask [_StencilWriteMask]
+				Comp [_StencilComp]
+				Pass [_StencilPass]
+				Fail [_StencilFail]
+				ZFail [_StencilZFail]
+			}
+
+			Tags { "LightMode" = "UniversalForwardOnly" }
+			Name "ForwardBase" 
+			Cull [_RenderFace]
+			Blend [_BlendSrc] [_BlendDst], [_BlendSrcAlpha] [_BlendDstAlpha]
+			ZWrite [_ZWrite]
+			ZTest [_ZTest]
+
+			HLSLPROGRAM
+			#pragma target 2.5
+			#pragma exclude_renderers gles3 d3d11 ps4 ps5 xboxone wiiu n3ds switch
+			#pragma shader_feature_local __ _MK_SURFACE_TYPE_TRANSPARENT
+			#pragma shader_feature_local __ _MK_ALPHA_CLIPPING
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_STUTTER
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_SINE _MK_VERTEX_ANIMATION_PULSE _MK_VERTEX_ANIMATION_NOISE
+			#pragma shader_feature_local __ _MK_DISSOLVE_DEFAULT _MK_DISSOLVE_BORDER_COLOR _MK_DISSOLVE_BORDER_RAMP
+			#pragma shader_feature_local __ _MK_ALBEDO_MAP
+            #pragma shader_feature_local __ _MK_BLEND_PREMULTIPLY _MK_BLEND_ADDITIVE _MK_BLEND_MULTIPLY
+			#pragma shader_feature_local __ _MK_COLOR_GRADING_ALBEDO _MK_COLOR_GRADING_FINAL_OUTPUT
+			#pragma shader_feature_local __ _MK_REFRACTION_DISTORTION_MAP
+			#pragma shader_feature_local __ _MK_INDEX_OF_REFRACTION
+
+			#if UNITY_VERSION >= 202220
+				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+			#endif
+
+			#pragma fragmentoption ARB_precision_hint_fastest
+			#pragma vertex ForwardVert
+			#pragma fragment ForwardFrag
+
+            #pragma multi_compile_fog
+			#pragma multi_compile_instancing
+			#pragma instancing_options renderinglayer
+
+			#define MK_URP
+			#define MK_REFRACTION
+			#define MK_UNLIT
+			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
 			#include "../../Lib/Forward/BaseSetup.hlsl"
 			
@@ -665,6 +998,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#define MK_URP
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
 			#include "../../Lib/Meta/Setup.hlsl"
 			ENDHLSL
@@ -705,6 +1039,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 			#define MK_URP
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
             #include "../../Lib/DepthOnly/Setup.hlsl"
             ENDHLSL
@@ -716,7 +1051,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
 		Pass
         {
             Name "DepthNormals"
-            Tags { "LightMode" = "DepthNormalsOnly" }
+            Tags { "LightMode" = "DepthNormals" }
 
             ZWrite On
             Cull [_RenderFace]
@@ -742,10 +1077,56 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
             #pragma multi_compile_instancing
 
 			#define MK_URP
-			#define MK_SIMPLE
+			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
             #include "../../Lib/DepthNormals/Setup.hlsl"
+            ENDHLSL
+        }
+
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		// Motion Vectors
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		Pass
+        {
+			PackageRequirements 
+			{
+				"com.unity.render-pipelines.universal":"[16.0,99.99]"
+			}
+            Name "MotionVectors"
+            Tags { "LightMode" = "MotionVectors" }
+
+            ZWrite On
+            Cull [_RenderFace]
+			ColorMask RG
+
+            HLSLPROGRAM
+            #pragma target 2.5
+			#pragma exclude_renderers gles3 d3d11 ps4 ps5 xboxone wiiu n3ds switch
+
+            #pragma vertex MotionVectorsVert
+            #pragma fragment MotionVectorsFrag
+
+			#pragma shader_feature_local __ _MK_DISSOLVE_DEFAULT _MK_DISSOLVE_BORDER_COLOR _MK_DISSOLVE_BORDER_RAMP
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_STUTTER
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_SINE _MK_VERTEX_ANIMATION_PULSE _MK_VERTEX_ANIMATION_NOISE
+			#pragma shader_feature_local __ _MK_VERTEX_ANIMATION_MAP
+            #pragma shader_feature_local __ _MK_ALBEDO_MAP
+            #pragma shader_feature_local __ _MK_ALPHA_CLIPPING
+
+            #pragma multi_compile_instancing
+
+			#if UNITY_VERSION >= 202220
+				#pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+			#endif
+
+			#define MK_URP
+			#define MK_UNLIT
+			#define MK_STANDARD
+
+            #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ObjectMotionVectors.hlsl"
+            #include "../../Lib/MotionVectors/Setup.hlsl"
             ENDHLSL
         }
 
@@ -782,6 +1163,7 @@ Shader "MK/Toon/URP/Standard/Unlit + Refraction"
             #define MK_URP
 			#define MK_UNLIT
 			#define MK_STANDARD
+			#include_with_pragmas "../../Lib/DotsInstancingSetup.hlsl"
 
             #include "../../Lib/Universal2D/Setup.hlsl"
 

@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
@@ -117,7 +117,11 @@ namespace MK.Toon.Editor
 
             foreach (var obj in  materialEditor.targets)
             {
+                #if UNITY_2023_1_OR_NEWER
+                ParticleSystemRenderer[] renderers = UnityEngine.Object.FindObjectsByType<ParticleSystemRenderer>(FindObjectsSortMode.InstanceID);
+                #else
                 ParticleSystemRenderer[] renderers = UnityEngine.Object.FindObjectsOfType(typeof(ParticleSystemRenderer)) as ParticleSystemRenderer[];
+                #endif
                 foreach (ParticleSystemRenderer renderer in renderers)
                 {
                     if (renderer.sharedMaterial == material)

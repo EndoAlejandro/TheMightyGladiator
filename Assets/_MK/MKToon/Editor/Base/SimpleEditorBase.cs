@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
@@ -23,9 +23,10 @@ namespace MK.Toon.Editor
     /// </summary>
     internal abstract class SimpleEditorBase : UnlitEditorBase
     {
-        public SimpleEditorBase()
+        public SimpleEditorBase(RenderPipeline renderPipeline) : base(renderPipeline)
         {
             _shaderTemplate = ShaderTemplate.Simple;
+            _renderPipeline = renderPipeline;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                              //
@@ -233,6 +234,12 @@ namespace MK.Toon.Editor
                 Properties.environmentReflections.SetValue(materialDst, (Properties.environmentReflections.GetValue(materialSrc)) > EnvironmentReflection.Ambient ? EnvironmentReflection.Ambient : Properties.environmentReflections.GetValue(materialSrc));
             else
                 {}
+            if(!materialSrc.shader.name.Contains("MK/Toon/"))
+            {
+                bool emissionEnabled = materialSrc.globalIlluminationFlags.HasFlag(MaterialGlobalIlluminationFlags.EmissiveIsBlack);
+                if(emissionEnabled)
+                    Properties.emissionColor.SetValue(materialDst, Color.black);
+            }
         }
 
         /////////////////

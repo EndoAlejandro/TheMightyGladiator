@@ -3,7 +3,7 @@
 //					                                //
 // Created by Michael Kremmel                       //
 // www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
+// Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
 #if UNITY_EDITOR
@@ -24,9 +24,10 @@ namespace MK.Toon.Editor
     /// </summary>
     internal abstract class PhysicallyBasedEditorBase : SimpleEditorBase
     {
-        public PhysicallyBasedEditorBase()
+        public PhysicallyBasedEditorBase(RenderPipeline renderPipeline) : base(renderPipeline)
         {
             _shaderTemplate = ShaderTemplate.PhysicallyBased;
+            _renderPipeline = renderPipeline;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////
