@@ -8,8 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Floor_CelThresholdAquarelle
-  m_Shader: {fileID: 4800000, guid: 7633a2fd8a3bed44791c9e952ff86e5d, type: 3}
-  m_ValidKeywords:
+  m_Shader: {fileID: 4800000, guid: 22c8483a0088cff4ea29f92544b8304b, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _FRESNELHIGHLIGHTS_ON
   - _MK_ARTISTIC_ANIMATION_STUTTER
   - _MK_ARTISTIC_PROJECTION_SCREEN_SPACE
   - _MK_DETAIL_BLEND_MIX
@@ -19,8 +21,6 @@ Material:
   - _MK_RECEIVE_SHADOWS
   - _MK_SPECULAR_ISOTROPIC
   - _MK_THRESHOLD_MAP
-  m_InvalidKeywords:
-  - _FRESNELHIGHLIGHTS_ON
   - _RECEIVESHADOWS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -193,7 +193,9 @@ Material:
     - _ArtisticProjection: 1
     - _Blend: 0
     - _BlendDst: 0
+    - _BlendDstAlpha: 0
     - _BlendSrc: 1
+    - _BlendSrcAlpha: 1
     - _Brightness: 1
     - _BumpScale: 1
     - _ColorGrading: 0
