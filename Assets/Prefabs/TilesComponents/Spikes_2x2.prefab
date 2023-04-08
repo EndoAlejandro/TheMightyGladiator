@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6952483145034347226}
   - component: {fileID: 3792754282741358805}
   - component: {fileID: 5800145918745662681}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Spikes_2x2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 6952483145636398344}
   - component: {fileID: 6952483145636398343}
   - component: {fileID: 6952483145636398342}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,6 +591,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6952483145034347226}
     m_Modifications:
+    - target: {fileID: 773652452771567331, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 773652452771567333, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}
       propertyPath: m_Mesh
@@ -615,6 +620,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpikeSingle (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 773652452908702559, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 773652452908702560, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}
@@ -712,6 +722,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6952483145034347226}
     m_Modifications:
+    - target: {fileID: 773652452771567331, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 773652452771567333, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}
       propertyPath: m_Mesh
@@ -736,6 +751,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpikeSingle (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 773652452908702559, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 773652452908702560, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}
@@ -833,6 +853,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6952483145034347226}
     m_Modifications:
+    - target: {fileID: 773652452771567331, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 773652452771567333, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}
       propertyPath: m_Mesh
@@ -857,6 +882,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpikeSingle (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 773652452908702559, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 773652452908702560, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}
@@ -954,6 +984,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6952483145034347226}
     m_Modifications:
+    - target: {fileID: 773652452771567331, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 773652452771567333, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}
       propertyPath: m_Mesh
@@ -978,6 +1013,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpikeSingle (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 773652452908702559, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 773652452908702560, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}
@@ -1075,6 +1115,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6952483145034347226}
     m_Modifications:
+    - target: {fileID: 773652452771567331, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 773652452771567333, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}
       propertyPath: m_Mesh
@@ -1099,6 +1144,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpikeSingle
+      objectReference: {fileID: 0}
+    - target: {fileID: 773652452908702559, guid: 126e1ef06c57b42428aa44d5b940bba0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 773652452908702560, guid: 126e1ef06c57b42428aa44d5b940bba0,
         type: 3}

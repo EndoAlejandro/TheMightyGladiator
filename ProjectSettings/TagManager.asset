@@ -17,8 +17,8 @@ TagManager:
   - IgnoreGround
   - OnlyGround
   - Obstacle
-  - 
-  - 
+  - Wall
+  - Hazard
   - 
   - 
   - 
