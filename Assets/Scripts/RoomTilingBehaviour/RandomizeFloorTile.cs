@@ -4,7 +4,6 @@ namespace RoomTilingBehaviour
 {
     public class RandomizeFloorTile : MonoBehaviour
     {
-        [Range(0f, 1f)] [SerializeField] private float prob = .75f;
         [SerializeField] private GameObject[] variations;
 
         private void Awake()
