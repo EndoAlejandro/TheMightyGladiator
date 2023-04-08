@@ -35,7 +35,7 @@ namespace Pooling
             OnReturnToPool?.Invoke(this);
         }
 
-        protected void ReturnToPool(float delay = 0f) {
+        protected internal void ReturnToPool(float delay = 0f) {
             StartCoroutine(ReturnToPoolAfterSeconds(delay));
         }
 

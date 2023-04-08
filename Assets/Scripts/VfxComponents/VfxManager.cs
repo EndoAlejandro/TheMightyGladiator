@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CustomUtils;
 using Pooling;
@@ -14,6 +15,7 @@ namespace VfxComponents
         [SerializeField] private PoolAfterSeconds swordCriticalHit;
         [SerializeField] private PoolAfterSeconds playerGetHit;
         [SerializeField] private PoolAfterSeconds explosion;
+        [SerializeField] private PooledMonoBehaviour hitPointPrediction;
 
         [FormerlySerializedAs("normalSpawn")] [SerializeField]
         private PoolAfterSeconds normalSpawnCircle;
@@ -48,6 +50,12 @@ namespace VfxComponents
         {
             var aoe = aoeFx.Get<AoEFx>(position, Quaternion.identity);
             aoe.Setup(duration, size);
+        }
+
+        public PooledMonoBehaviour PlayHitPointPredictionFx(Vector3 position)
+        {
+            var pooled = hitPointPrediction.Get<PooledMonoBehaviour>(position, Quaternion.identity);
+            return pooled;
         }
 
         public void PlayFloatingText(Vector3 position, string damage, bool isCritical)

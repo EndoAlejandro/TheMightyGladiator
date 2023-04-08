@@ -9787,4 +9787,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 5
-  particles: {fileID: 8479782595927007183}

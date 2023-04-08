@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using CustomUtils;
 using Enemies;
@@ -6,7 +5,6 @@ using PlayerComponents;
 using Unity.AI.Navigation;
 using UnityEngine;
 using Upgrades;
-using VfxComponents;
 
 namespace Rooms
 {
@@ -19,26 +17,23 @@ namespace Rooms
 
         private List<Enemy> _spawnedEnemies;
         private SpawnPoint[] _spawnPoints;
-        private NavMeshSurface _navMeshSurface;
         
         private float _timer;
         private List<Upgrade> _upgrades;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _spawnPoints = GetComponentsInChildren<SpawnPoint>();
-            _navMeshSurface = GetComponent<NavMeshSurface>();
             _spawnedEnemies = new List<Enemy>();
 
             portal.gameObject.SetActive(false);
-            _navMeshSurface.BuildNavMesh();
-
         }
 
         public override void Setup(LevelData levelData, Player player)
         {
             base.Setup(levelData, player);
-            _navMeshSurface.BuildNavMesh();
+            NavMeshSurface.BuildNavMesh();
             SpawnEnemy();
         }
 

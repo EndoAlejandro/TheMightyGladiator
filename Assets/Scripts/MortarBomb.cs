@@ -1,6 +1,8 @@
+using System;
 using CustomUtils;
 using Pooling;
 using UnityEngine;
+using VfxComponents;
 
 public class MortarBomb : PooledMonoBehaviour, IDealDamage
 {
@@ -13,6 +15,8 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
 
     [SerializeField] private int bulletsAmount = 6;
     private Rigidbody _rigidbody;
+
+    private PooledMonoBehaviour _hitPredictionFx;
     public int Damage => damage;
 
     private void Awake() => _rigidbody = GetComponent<Rigidbody>();
@@ -38,12 +42,14 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
     public void Setup(Vector3 target, float angle)
     {
         var velocity = Utils.BallisticVelocity(transform.position, target, angle);
+        _hitPredictionFx = VfxManager.Instance.PlayHitPointPredictionFx(target);
         _rigidbody.velocity = velocity;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
+        if (_hitPredictionFx != null) _hitPredictionFx.ReturnToPool();
         _rigidbody.velocity = Vector3.zero;
     }
 }

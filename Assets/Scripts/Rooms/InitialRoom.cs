@@ -6,7 +6,6 @@ namespace Rooms
     {
         public override void RegisterEnemy(Enemy enemy)
         {
-            // No enemy registry required.            
         }
     }
 }

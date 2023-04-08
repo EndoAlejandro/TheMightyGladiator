@@ -50,7 +50,7 @@ namespace Enemies.SpawnerComponents
             yield return new WaitForSeconds(1f);
 
             var spawnedBat = batPrefab.Get<Bat>(spawnPosition, Quaternion.identity);
-            room.RegisterEnemy(spawnedBat);
+            Room.RegisterEnemy(spawnedBat);
             spawnedBat.OnDead += SpawnedBatOnDead;
             SpawnedBats.Add(spawnedBat);
             VfxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);

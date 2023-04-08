@@ -39,7 +39,7 @@ namespace Enemies
         [SerializeField] private float getHitTime = 1f;
         [SerializeField] private float deathTime = 1f;
 
-        protected BaseRoom room;
+        public BaseRoom Room { get; private set; }
 
         public float ParryTimeWindow => parryTimeWindow;
         public float MaxHealth => maxHealth;
@@ -66,7 +66,7 @@ namespace Enemies
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;
         public void SetIsStun(bool isStun) => IsStun = isStun;
-        public void Setup(BaseRoom room) => this.room = room;
+        public void Setup(BaseRoom room) => Room = room;
         public virtual void PlayerOnRange() => OnPlayerOnRange?.Invoke();
 
         public void DeSpawn()

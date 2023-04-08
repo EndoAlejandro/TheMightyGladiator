@@ -12,8 +12,9 @@ namespace Rooms
 
         private Enemy _boss;
 
-        private void Awake()
+        protected virtual void Awake()
         {
+            base.Awake();
             portal.gameObject.SetActive(false);
         }
 

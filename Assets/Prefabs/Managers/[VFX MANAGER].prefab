@@ -54,6 +54,8 @@ MonoBehaviour:
     type: 3}
   explosion: {fileID: 165920097653272266, guid: c130746bcc3e61748b9e699d99ed7f93,
     type: 3}
+  hitPointPrediction: {fileID: 4137804265680899392, guid: adc9f1eb3bf237047a3a1709d4cb4841,
+    type: 3}
   normalSpawnCircle: {fileID: 2561271797263224521, guid: 45f7a73e18440b84590e872996ce27ee,
     type: 3}
   enemySpawn: {fileID: 6971114046201472792, guid: fc2e139c4e026024185b7f0d2948e02d,
