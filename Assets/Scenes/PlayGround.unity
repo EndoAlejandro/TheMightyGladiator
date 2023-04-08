@@ -1455,6 +1455,10 @@ MonoBehaviour:
   stunTime: 1
   getHitTime: 1
   deathTime: 1
+  bombsAmount: 1
+  mortarBombPrefab: {fileID: 3504919690102820189, guid: 1d787f31288a4694c817cff0b618f818,
+    type: 3}
+  accuracy: 7
 --- !u!114 &1896857157
 MonoBehaviour:
   m_ObjectHideFlags: 0

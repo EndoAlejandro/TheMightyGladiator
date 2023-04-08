@@ -1,6 +1,7 @@
 using System;
 using PlayerComponents;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Enemies.BigBobComponents
 {
@@ -9,12 +10,12 @@ namespace Enemies.BigBobComponents
         public override event Action<Enemy> OnDead;
         public override event Action<Vector3, float> OnHit;
 
-        [SerializeField] private BigBobBullet bullet;
+        [FormerlySerializedAs("bullet")] [SerializeField] private MortarBomb bomb;
         [SerializeField] private int bulletsAmount = 5;
         [SerializeField] private float attackRange;
         [SerializeField] private float yOffset = 0.5f;
 
-        public BigBobBullet Bullet => bullet;
+        public MortarBomb Bomb => bomb;
         public int BulletsAmount => bulletsAmount;
         public float AttackRange => attackRange;
         public float YOffset => yOffset;

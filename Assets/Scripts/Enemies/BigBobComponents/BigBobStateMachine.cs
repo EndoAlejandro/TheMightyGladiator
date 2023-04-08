@@ -65,7 +65,7 @@ namespace Enemies.BigBobComponents
             for (int i = 0; i < _bigBob.BulletsAmount; i++)
             {
                 var bullet =
-                    _bigBob.Bullet.Get<BigBobBullet>(_bigBob.transform.position.With(y: 1f), Quaternion.identity);
+                    _bigBob.Bomb.Get<MortarBomb>(_bigBob.transform.position.With(y: 1f), Quaternion.identity);
                 var target = _bigBob.transform.position +
                              Random.insideUnitSphere.With(y: 0f).normalized * Random.Range(5f, 10f);
                 bullet.Setup(target, 70f);

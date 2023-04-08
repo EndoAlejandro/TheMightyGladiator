@@ -2,10 +2,16 @@ using CustomUtils;
 using Pooling;
 using UnityEngine;
 
-public class BigBobBullet : PooledMonoBehaviour, IDealDamage
+public class MortarBomb : PooledMonoBehaviour, IDealDamage
 {
+    [SerializeField] private int damage = 1;
+
+    [Header("Branching")]
+    [SerializeField] private bool branchAtExplosion;
+
     [SerializeField] private Bullet bulletPrefab;
-    [SerializeField] private int damage = 2;
+
+    [SerializeField] private int bulletsAmount = 6;
     private Rigidbody _rigidbody;
     public int Damage => damage;
 
@@ -13,7 +19,13 @@ public class BigBobBullet : PooledMonoBehaviour, IDealDamage
 
     private void OnCollisionEnter(Collision collision)
     {
-        var directions = Utils.GetFanPatternDirections(transform, 6, 360);
+        if (branchAtExplosion) Branching();
+        ReturnToPool();
+    }
+
+    private void Branching()
+    {
+        var directions = Utils.GetFanPatternDirections(transform, bulletsAmount, 360);
 
         foreach (var direction in directions)
         {
@@ -21,8 +33,6 @@ public class BigBobBullet : PooledMonoBehaviour, IDealDamage
             var bullet = bulletPrefab.Get<Bullet>(position, Quaternion.identity);
             bullet.Setup(direction, 5f, Damage);
         }
-
-        ReturnToPool();
     }
 
     public void Setup(Vector3 target, float angle)

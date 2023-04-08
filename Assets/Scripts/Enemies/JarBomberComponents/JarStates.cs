@@ -1,27 +1,36 @@
-﻿using NavigationSteeringComponents;
+﻿using CustomUtils;
+using PlayerComponents;
 using UnityEngine;
 
 namespace Enemies.JarBomberComponents
 {
-    /*public class JarIdle : EnemyIdle
+    public class JarBomberAttack : EnemyAttack
     {
         private readonly JarBomber _jarBomber;
-        private readonly Rigidbody _rigidbody;
-        private readonly NavigationSteering _navigationSteering;
+        public bool Ended { get; private set; }
 
-        private Vector3 _direction;
-        private float _timer;
-        
-        public JarIdle(JarBomber jarBomber, Rigidbody rigidbody, NavigationSteering navigationSteering)
+        public JarBomberAttack(JarBomber jarBomber) : base(jarBomber) => _jarBomber = jarBomber;
+
+        public override void FixedTick()
         {
-            _jarBomber = jarBomber;
-            _rigidbody = rigidbody;
-            _navigationSteering = navigationSteering;
+            Ended = true;
         }
 
-        public override void Tick()
+        public override void OnEnter()
         {
-            
+            Ended = false;
+            base.OnEnter();
+
+            for (int i = 0; i < _jarBomber.BombsAmount; i++)
+            {
+                var mortarBullet =
+                    _jarBomber.MortarBombPrefab.Get<MortarBomb>(
+                        _jarBomber.transform.position.With(y: 1f),
+                        Quaternion.identity);
+                var target = Player.Instance.transform.position +
+                             Random.insideUnitSphere.With(y: 0f).normalized * Random.Range(1f, _jarBomber.Accuracy);
+                mortarBullet.Setup(target, 70f);
+            }
         }
-    }*/
+    }
 }

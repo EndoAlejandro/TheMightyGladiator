@@ -27,7 +27,6 @@ namespace Enemies.BatComponents
         {
             _spawn = new EnemySpawn();
             var patrol = new EnemyPatrol(_bat, _rigidbody);
-            // _idle = new BatIdle(_bat, _rigidbody, _navigationSteering);
             _idle = new EnemyIdle(_bat, _rigidbody, _navigationSteering);
             var telegraph = new BatTelegraph(_bat);
             var attack = new BatAttack(_bat, _rigidbody);
