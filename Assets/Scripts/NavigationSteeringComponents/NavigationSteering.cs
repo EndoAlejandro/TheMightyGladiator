@@ -9,16 +9,14 @@ namespace NavigationSteeringComponents
     public class NavigationSteering : MonoBehaviour
     {
         [Range(1f, 360f)]
-        [SerializeField] private float visionAngle = 270f;
+        [SerializeField] private float visionAngle = 360f;
 
         [Range(1, 100)]
-        [SerializeField] private int segmentsAmount = 5;
+        [SerializeField] private int segmentsAmount = 20;
 
-        [SerializeField] private float detectionRange;
-        [SerializeField] private float yOffset;
+        [SerializeField] private float detectionRange = 2f;
+        [SerializeField] private float yOffset = 0.25f;
         [SerializeField] private LayerMask obstacleLayerMask;
-
-        private Transform _playerTransform;
 
         private Vector3 _playerDirection;
 
@@ -27,13 +25,12 @@ namespace NavigationSteeringComponents
 
         public DirectionWeight BestDirection { get; private set; }
 
-        private void Awake() => _playerTransform = FindObjectOfType<Player>().transform;
         private void OnEnable() => StartCoroutine(FindPath());
         private void OnDisable() => StopAllCoroutines();
 
         private IEnumerator FindPath()
         {
-            _playerDirection = Utils.NormalizedFlatDirection(_playerTransform.position, transform.position);
+            _playerDirection = Utils.NormalizedFlatDirection(Player.Instance.transform.position, transform.position);
             _directions = Utils.GetFanPatternDirections(transform, segmentsAmount, visionAngle);
             _sample = new DirectionWeight[_directions.Length];
             var w = 0f;

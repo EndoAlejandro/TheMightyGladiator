@@ -14,6 +14,8 @@ namespace Enemies
         public abstract event Action<Vector3, float> OnHit;
 
         [Header("Base Movement")]
+        [SerializeField] private LayerMask ignoreGroundLayerMask;
+
         [SerializeField] protected float maxHealth;
 
         [SerializeField] private float speed = 2f;
@@ -21,6 +23,8 @@ namespace Enemies
         [SerializeField] private float acceleration = 10f;
         [SerializeField] private float stoppingDistance = 1f;
         [SerializeField] private float rotationSpeed = 100f;
+
+        [SerializeField] private float detectionDistance = 5f;
 
         [Header("Base Attack")]
         [SerializeField] private int damage = 1;
@@ -44,16 +48,18 @@ namespace Enemies
         public float Acceleration => acceleration;
         public float StoppingDistance => stoppingDistance;
         public float RotationSpeed => rotationSpeed;
+        public float StunTime => stunTime;
+        public float GetHitTime => getHitTime;
+        public float RecoverTime => recoverTime;
+        public float DeathTime => deathTime;
+        public float DetectionDistance => detectionDistance;
         public float Health { get; protected set; }
         public bool IsAttacking { get; private set; }
         public bool CanBeParried { get; private set; }
         public bool IsStun { get; private set; }
         public bool IsAlive => Health > 0f;
-        public float StunTime => stunTime;
-        public float GetHitTime => getHitTime;
-        public float RecoverTime => recoverTime;
-        public float DeathTime => deathTime;
         public int Damage => damage;
+        public LayerMask IgnoreGroundLayerMask => ignoreGroundLayerMask;
         protected virtual void OnEnable() => Health = MaxHealth;
         public abstract void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f);
         public abstract void Parry(Player player);

@@ -14,8 +14,7 @@ namespace Enemies.BatComponents
         private Collider _collider;
         private NavigationSteering _navigationSteering;
 
-        private BatPatrol _patrol;
-        private BatIdle _idle;
+        private EnemyIdle _idle;
         private EnemyStun _stun;
         private EnemyGetHit _getHit;
         private EnemyRecover _recover;
@@ -26,9 +25,10 @@ namespace Enemies.BatComponents
 
         protected override void StateMachine()
         {
-            _patrol = new BatPatrol(_bat, _rigidbody);
             _spawn = new EnemySpawn();
-            _idle = new BatIdle(_bat, _rigidbody, _navigationSteering);
+            var patrol = new EnemyPatrol(_bat, _rigidbody);
+            // _idle = new BatIdle(_bat, _rigidbody, _navigationSteering);
+            _idle = new EnemyIdle(_bat, _rigidbody, _navigationSteering);
             var telegraph = new BatTelegraph(_bat);
             var attack = new BatAttack(_bat, _rigidbody);
             _recover = new EnemyRecover(_bat);
@@ -36,10 +36,9 @@ namespace Enemies.BatComponents
             _getHit = new EnemyGetHit(_bat);
             _death = new BatDeath(_bat, _collider, _rigidbody);
 
-            stateMachine.AddTransition(_spawn, _patrol, () => _spawn.Ended);
+            stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
 
-            stateMachine.AddTransition(_idle, telegraph,
-                () => _idle.PlayerOnRange && _idle.Ended && _idle.CanSeePlayer);
+            stateMachine.AddTransition(_idle, telegraph, () => _idle.PlayerOnRange && _idle.CanSeePlayer);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
             stateMachine.AddTransition(attack, _recover, () => attack.Ended);
             stateMachine.AddTransition(_recover, _idle, () => _recover.Ended);
@@ -90,11 +89,6 @@ namespace Enemies.BatComponents
         {
             var direction = Utils.NormalizedFlatDirection(transform.position, hitPoint);
             _rigidbody.AddForce(direction * knockBack, ForceMode.VelocityChange);
-
-            /*
-            if (stateMachine.CurrentState is not EnemyStun)
-                stateMachine.SetState(_getHit);
-            */
         }
 
         protected override void References()

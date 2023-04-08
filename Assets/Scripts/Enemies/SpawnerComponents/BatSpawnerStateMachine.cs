@@ -20,7 +20,7 @@ namespace Enemies.SpawnerComponents
         protected override void StateMachine()
         {
             _spawn = new EnemySpawn();
-            var idle = new EnemyIdle();
+            var idle = new BlankState();
             var telegraph = new EnemyTelegraph(_batSpawner);
             var spawnWave = new BatSpawnerSpawn(_batSpawner);
             _death = new BatSpawnedDeath(_batSpawner, _collider);
