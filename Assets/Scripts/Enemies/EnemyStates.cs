@@ -130,7 +130,7 @@ namespace Enemies
                     enemy.PlayerOnRange();
         }
 
-        public override string ToString() => "Idle";
+        public override string ToString() => "Patrol";
     }
 
     public class EnemyIdle : IState
@@ -140,9 +140,11 @@ namespace Enemies
         private readonly NavigationSteering _navigationSteering;
 
         private Vector3 _direction;
+        private float _angleVision;
 
         public bool PlayerOnRange { get; private set; }
         public bool CanSeePlayer { get; private set; }
+        public bool PlayerInFront { get; private set; }
 
         public EnemyIdle(Enemy enemy, Rigidbody rigidbody, NavigationSteering navigationSteering)
         {
@@ -156,6 +158,11 @@ namespace Enemies
             _direction = _navigationSteering.BestDirection.direction;
             _enemy.transform.forward =
                 Vector3.Lerp(_enemy.transform.forward, _direction, _enemy.RotationSpeed * Time.deltaTime);
+
+            var playerDirection =
+                Utils.NormalizedFlatDirection(Player.Instance.transform.position, _enemy.transform.position);
+            _angleVision = Vector3.Dot(_enemy.transform.forward, playerDirection);
+            PlayerInFront = _angleVision > 0.95f;
         }
 
         public void FixedTick()
@@ -201,9 +208,18 @@ namespace Enemies
     public class EnemyDeath : StateTimer, IState
     {
         public override string ToString() => "Death";
-        protected readonly Enemy enemy;
-        public EnemyDeath(Enemy enemy) => this.enemy = enemy;
-        public virtual void OnEnter() => timer = enemy.DeathTime;
+        private readonly Enemy _enemy;
+        private readonly Rigidbody _rigidbody;
+        private readonly Collider _collider;
+
+        public EnemyDeath(Enemy enemy, Rigidbody rigidbody, Collider collider)
+        {
+            _enemy = enemy;
+            _rigidbody = rigidbody;
+            _collider = collider;
+        }
+
+        public virtual void OnEnter() => timer = _enemy.DeathTime;
 
         public virtual void FixedTick()
         {
@@ -212,7 +228,9 @@ namespace Enemies
         public override void OnExit()
         {
             base.OnExit();
-            enemy.DeSpawn();
+            _rigidbody.isKinematic = false;
+            _collider.enabled = true;
+            _enemy.DeSpawn();
         }
     }
 

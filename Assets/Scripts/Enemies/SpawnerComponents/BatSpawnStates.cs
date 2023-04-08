@@ -39,28 +39,4 @@ namespace Enemies.SpawnerComponents
             _spawnedBats.Clear();
         }
     }
-
-    public class BatSpawnedDeath : EnemyDeath
-    {
-        private readonly BatSpawner _batSpawner;
-        private readonly Collider _collider;
-
-        public BatSpawnedDeath(BatSpawner batSpawner, Collider collider) : base(batSpawner)
-        {
-            _batSpawner = batSpawner;
-            _collider = collider;
-        }
-
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            _collider.enabled = false;
-        }
-
-        public override void OnExit()
-        {
-            _collider.enabled = true;
-            base.OnExit();
-        }
-    }
 }

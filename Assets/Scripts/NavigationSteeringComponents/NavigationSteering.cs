@@ -30,7 +30,9 @@ namespace NavigationSteeringComponents
 
         private IEnumerator FindPath()
         {
-            _playerDirection = Utils.NormalizedFlatDirection(Player.Instance.transform.position, transform.position);
+            _playerDirection = Player.Instance == null
+                ? transform.forward
+                : Utils.NormalizedFlatDirection(Player.Instance.transform.position, transform.position);
             _directions = Utils.GetFanPatternDirections(transform, segmentsAmount, visionAngle);
             _sample = new DirectionWeight[_directions.Length];
             var w = 0f;

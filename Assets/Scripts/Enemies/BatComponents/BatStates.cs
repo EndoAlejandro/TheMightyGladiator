@@ -136,32 +136,4 @@ namespace Enemies.BatComponents
                 Vector3.Lerp(enemy.transform.forward, _direction, enemy.RotationSpeed * Time.deltaTime);
         }
     }
-
-    public class BatDeath : EnemyDeath
-    {
-        private readonly Bat _bat;
-        private readonly Collider _collider;
-        private readonly Rigidbody _rigidbody;
-
-        public BatDeath(Bat bat, Collider collider, Rigidbody rigidbody) : base(bat)
-        {
-            _bat = bat;
-            _collider = collider;
-            _rigidbody = rigidbody;
-        }
-
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            _rigidbody.isKinematic = true;
-            _collider.enabled = false;
-        }
-
-        public override void OnExit()
-        {
-            _rigidbody.isKinematic = false;
-            _collider.enabled = true;
-            base.OnExit();
-        }
-    }
 }

@@ -1,5 +1,6 @@
 using System;
 using CustomUtils;
+using PlayerComponents;
 using Pooling;
 using UnityEngine;
 using VfxComponents;
@@ -19,10 +20,31 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
     private PooledMonoBehaviour _hitPredictionFx;
     public int Damage => damage;
 
-    private void Awake() => _rigidbody = GetComponent<Rigidbody>();
+    private Collider[] _results;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        _results = new Collider[10];
+    }
+
+    private void Update()
+    {
+        transform.forward = _rigidbody.velocity;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
+        VfxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
+        if (_hitPredictionFx != null) _hitPredictionFx.ReturnToPool();
+
+        var size = Physics.OverlapSphereNonAlloc(transform.position, 1f, _results);
+        for (int i = 0; i < size; i++)
+        {
+            if (!_results[i].TryGetComponent(out Player player)) continue;
+            player.TryToGetDamageFromEnemy(this);
+        }
+
         if (branchAtExplosion) Branching();
         ReturnToPool();
     }
@@ -49,7 +71,6 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
     protected override void OnDisable()
     {
         base.OnDisable();
-        if (_hitPredictionFx != null) _hitPredictionFx.ReturnToPool();
         _rigidbody.velocity = Vector3.zero;
     }
 }

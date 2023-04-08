@@ -6,15 +6,17 @@ namespace Enemies.SpawnerComponents
     public class BatSpawnerStateMachine : FiniteStateBehaviour
     {
         private BatSpawner _batSpawner;
+        private Rigidbody _rigidbody;
         private Collider _collider;
 
         private EnemySpawn _spawn;
-        private BatSpawnedDeath _death;
+        private EnemyDeath _death;
 
         protected override void References()
         {
             _batSpawner = GetComponent<BatSpawner>();
             _collider = GetComponent<Collider>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         protected override void StateMachine()
@@ -23,7 +25,7 @@ namespace Enemies.SpawnerComponents
             var idle = new BlankState();
             var telegraph = new EnemyTelegraph(_batSpawner);
             var spawnWave = new BatSpawnerSpawn(_batSpawner);
-            _death = new BatSpawnedDeath(_batSpawner, _collider);
+            _death = new EnemyDeath(_batSpawner, _rigidbody, _collider);
 
             stateMachine.AddTransition(_spawn, idle, () => _spawn.Ended);
             stateMachine.AddTransition(idle, telegraph, () => _batSpawner.SpawnedBats.Count == 0);

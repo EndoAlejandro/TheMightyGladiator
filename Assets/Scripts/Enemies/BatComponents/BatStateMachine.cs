@@ -18,7 +18,7 @@ namespace Enemies.BatComponents
         private EnemyStun _stun;
         private EnemyGetHit _getHit;
         private EnemyRecover _recover;
-        private BatDeath _death;
+        private EnemyDeath _death;
         private EnemySpawn _spawn;
 
         private float _distance;
@@ -33,11 +33,12 @@ namespace Enemies.BatComponents
             _recover = new EnemyRecover(_bat);
             _stun = new EnemyStun(_bat);
             _getHit = new EnemyGetHit(_bat);
-            _death = new BatDeath(_bat, _collider, _rigidbody);
+            _death = new EnemyDeath(_bat, _rigidbody, _collider);
 
             stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
 
-            stateMachine.AddTransition(_idle, telegraph, () => _idle.PlayerOnRange && _idle.CanSeePlayer);
+            stateMachine.AddTransition(_idle, telegraph,
+                () => _idle.PlayerOnRange && _idle.CanSeePlayer && _idle.PlayerInFront);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
             stateMachine.AddTransition(attack, _recover, () => attack.Ended);
             stateMachine.AddTransition(_recover, _idle, () => _recover.Ended);

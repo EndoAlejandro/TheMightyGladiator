@@ -13,6 +13,7 @@ public enum Vfx
     SpawnCircle,
     EnemySpawn,
     Explosion,
+    BombHit
 }
 
 public enum UpgradeType

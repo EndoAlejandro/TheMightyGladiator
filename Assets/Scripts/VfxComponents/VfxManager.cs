@@ -15,6 +15,7 @@ namespace VfxComponents
         [SerializeField] private PoolAfterSeconds swordCriticalHit;
         [SerializeField] private PoolAfterSeconds playerGetHit;
         [SerializeField] private PoolAfterSeconds explosion;
+        [SerializeField] private PoolAfterSeconds bombHitVfx;
         [SerializeField] private PooledMonoBehaviour hitPointPrediction;
 
         [FormerlySerializedAs("normalSpawn")] [SerializeField]
@@ -36,7 +37,8 @@ namespace VfxComponents
                 { Vfx.PlayerHit, playerGetHit },
                 { Vfx.SpawnCircle, normalSpawnCircle },
                 { Vfx.EnemySpawn, enemySpawn },
-                { Vfx.Explosion, explosion }
+                { Vfx.Explosion, explosion },
+                { Vfx.BombHit , bombHitVfx}
             };
         }
 
