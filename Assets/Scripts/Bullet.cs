@@ -1,8 +1,10 @@
+using CustomUtils;
 using Enemies;
 using Enemies.BlobComponents;
 using PlayerComponents;
 using Pooling;
 using UnityEngine;
+using VfxComponents;
 
 public class Bullet : PooledMonoBehaviour, IDealDamage
 {
@@ -10,9 +12,13 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 
     private float _damage;
     private float _speed;
+    private float _turnSpeed;
+
+    private Vector3 _playerDirection;
     private Vector3 _direction;
 
     private bool _reflected;
+    private bool _followPlayer;
 
     public int Damage { get; private set; }
 
@@ -20,14 +26,28 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 
     private void OnEnable() => ReturnToPool(10f);
 
-    public void Setup(Vector3 direction, float speed, int damage)
+    public void Setup(Vector3 direction, float speed, int damage, bool followPlayer = false, float turnSpeed = 1f)
     {
         _direction = direction;
         _speed = speed;
         Damage = damage;
+        _followPlayer = followPlayer;
+        _turnSpeed = turnSpeed;
     }
 
-    private void FixedUpdate() => _rigidbody.velocity = _direction * _speed;
+    private void FixedUpdate()
+    {
+        if (_followPlayer && Player.Instance != null)
+        {
+            _playerDirection = Utils.NormalizedFlatDirection(Player.Instance.transform.position, transform.position);
+            _rigidbody.velocity =
+                Vector3.Lerp(_rigidbody.velocity.normalized, _playerDirection, Time.deltaTime * _turnSpeed) * _speed;
+        }
+        else
+            _rigidbody.velocity = _direction * _speed;
+
+        transform.forward = _rigidbody.velocity.normalized;
+    }
 
     public void Parry()
     {
@@ -55,6 +75,7 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
             if (other.TryGetComponent(out Player player))
                 player.TryToGetDamageFromEnemy(this);
 
+            VfxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
             ReturnToPool();
         }
     }

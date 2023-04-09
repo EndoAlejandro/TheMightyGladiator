@@ -63,13 +63,13 @@ MonoBehaviour:
   acceleration: 10
   stoppingDistance: 8
   rotationSpeed: 100
-  attackRotationSpeed: 2
+  attackRotationSpeed: 0.5
   detectionDistance: 8
   damage: 1
   parryTimeWindow: 0.5
-  telegraphTime: 2
+  telegraphTime: 1.5
   recoverTime: 1
-  chaseTime: 5
+  chaseTime: 2
   aoeRadius: 1
   bulletPrefab: {fileID: 0}
   mortarPrefab: {fileID: 0}
@@ -77,7 +77,7 @@ MonoBehaviour:
   shootingAngle: 180
   bulletSpeed: 2
   shootRate: 1
-  bulletsPerRound: 6
+  bulletsPerRound: 7
   roundsAmount: 4
   stunTime: 1
   getHitTime: 1

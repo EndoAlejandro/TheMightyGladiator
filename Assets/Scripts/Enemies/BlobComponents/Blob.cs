@@ -20,15 +20,10 @@ namespace Enemies.BlobComponents
         [Range(1f, 360f)]
         [SerializeField] private float shotAngle = 180f;
 
-        [SerializeField] private Bullet bullet;
-        [SerializeField] private float bulletSpeed = 10f;
         [SerializeField] private float detectionRange = 10f;
-        public Bullet Bullet => bullet;
         public float MoveRate => moveRate;
         public LayerMask PlayerLayerMask => playerLayerMask;
-        public float BulletSpeed => bulletSpeed;
         public float DetectionRange => detectionRange;
-
 
         public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
         {
