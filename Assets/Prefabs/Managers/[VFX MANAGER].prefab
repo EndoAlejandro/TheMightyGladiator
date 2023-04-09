@@ -44,9 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a29aec3bcdaeba141be457f87a112c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatingText: {fileID: 579982764298065617, guid: 7113d7f266e206742af2473d94e9d9a3,
-    type: 3}
-  aoeFx: {fileID: 6716445832691833715, guid: 0fac01d6f30a851479af5de239f0a050, type: 3}
   swordHit: {fileID: 158150341614363626, guid: feeeb06c89e133148a84c5a2dce05f1d, type: 3}
   swordCriticalHit: {fileID: 6079090089231751116, guid: 6decc339d487e6f4f89181c5efd21818,
     type: 3}
@@ -60,9 +57,16 @@ MonoBehaviour:
     type: 3}
   splashJumpVfx: {fileID: 487841723200857935, guid: 95477067a7773f148a30687ebe954ee0,
     type: 3}
-  hitPointPrediction: {fileID: 4137804265680899392, guid: adc9f1eb3bf237047a3a1709d4cb4841,
-    type: 3}
   normalSpawnCircle: {fileID: 2561271797263224521, guid: 45f7a73e18440b84590e872996ce27ee,
     type: 3}
   enemySpawn: {fileID: 6971114046201472792, guid: fc2e139c4e026024185b7f0d2948e02d,
+    type: 3}
+  floatingText: {fileID: 579982764298065617, guid: 7113d7f266e206742af2473d94e9d9a3,
+    type: 3}
+  hitPointPrediction: {fileID: 4137804265680899392, guid: adc9f1eb3bf237047a3a1709d4cb4841,
+    type: 3}
+  aoeFx: {fileID: 6716445832691833715, guid: 0fac01d6f30a851479af5de239f0a050, type: 3}
+  telegraphLaserVfx: {fileID: 3231969890411331460, guid: 2583c521761cde249a88b58fc6576a71,
+    type: 3}
+  attackLaserVfx: {fileID: 805949628009729314, guid: b91d50a8e7596774e95f964da2f88fcf,
     type: 3}

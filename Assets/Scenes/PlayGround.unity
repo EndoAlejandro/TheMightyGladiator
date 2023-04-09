@@ -654,6 +654,95 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
+--- !u!1001 &1064843865
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4881709983888362604, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_Name
+      value: LaserDude
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881709983888362607, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5322186850165178263, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: chaseTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5322186850165178263, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: telegraphTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5322186850165178263, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: bulletsPerRound
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5322186850165178263, guid: bc80e952e5165e644af68846888f8e1c,
+        type: 3}
+      propertyPath: attackRotationSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc80e952e5165e644af68846888f8e1c, type: 3}
 --- !u!1001 &1424401971
 PrefabInstance:
   m_ObjectHideFlags: 0

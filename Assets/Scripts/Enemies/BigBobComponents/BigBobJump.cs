@@ -106,7 +106,7 @@ namespace Enemies.BigBobComponents
             _bigBob.transform.position += Vector3.down * Speed * Time.deltaTime;
 
             var size = Physics.OverlapSphereNonAlloc(_bigBob.transform.position + Vector3.up * _bigBob.YOffset,
-                _bigBob.AttackRange, _results);
+                _bigBob.AoeRadius, _results);
 
             for (int i = 0; i < size; i++)
             {

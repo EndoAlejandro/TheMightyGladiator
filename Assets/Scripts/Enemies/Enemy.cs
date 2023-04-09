@@ -27,18 +27,28 @@ namespace Enemies
 
         [SerializeField] private float detectionDistance = 5f;
 
-        [Header("Base Attack")]
+        [Header("Shared Attack")]
         [SerializeField] private int damage = 1;
-
-        [SerializeField] private Bullet bulletPrefab;
-        [SerializeField] private MortarBomb mortarPrefab;
 
         [SerializeField] private float parryTimeWindow = 0.5f;
         [SerializeField] private float telegraphTime = 1f;
         [SerializeField] private float recoverTime = 1f;
-        [SerializeField] private float accuracy = 1f;
+
+        [Header("Melee Attack")]
         [SerializeField] private float chaseTime = 5f;
+
         [SerializeField] private float aoeRadius = 1f;
+
+        [Header("Ranged Attack")]
+        [SerializeField] private Bullet bulletPrefab;
+
+        [SerializeField] private MortarBomb mortarPrefab;
+        [SerializeField] private float accuracy = 1f;
+        [Range(0f, 360f)] [SerializeField] private float shootingAngle = 180f;
+        [SerializeField] private float bulletSpeed = 2f;
+        [SerializeField] private float shootRate = 1f;
+        [SerializeField] private int bulletsPerRound = 6;
+        [SerializeField] private int roundsAmount = 4;
 
         [Header("Base Get Hit")]
         [SerializeField] private float stunTime = 1f;
@@ -54,6 +64,10 @@ namespace Enemies
         public float MaxHealth => maxHealth;
         public float TelegraphTime => telegraphTime;
         public float Speed => speed;
+        public float BulletSpeed => bulletSpeed;
+        public float ShootRate => shootRate;
+        public int BulletsPerRound => bulletsPerRound;
+        public int RoundsAmount => roundsAmount;
         public float Acceleration => acceleration;
         public float StoppingDistance => stoppingDistance;
         public float RotationSpeed => rotationSpeed;
@@ -61,6 +75,7 @@ namespace Enemies
         public float StunTime => stunTime;
         public float GetHitTime => getHitTime;
         public float RecoverTime => recoverTime;
+        public float ShootingAngle => shootingAngle;
         public float DeathTime => deathTime;
         public float DetectionDistance => detectionDistance;
         public float AoeRadius => aoeRadius;

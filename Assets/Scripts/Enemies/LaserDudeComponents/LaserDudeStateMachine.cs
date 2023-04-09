@@ -12,7 +12,6 @@ namespace Enemies.LaserDudeComponents
         private Rigidbody _rigidbody;
         private Collider _collider;
         private NavigationSteering _navigationSteering;
-        private LaserController _laserController;
 
         private EnemySpawn _spawn;
         private EnemyDeath _death;
@@ -23,7 +22,6 @@ namespace Enemies.LaserDudeComponents
             _laserDude = GetComponent<LaserDude>();
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
-            _laserController = GetComponentInChildren<LaserController>();
             _navigationSteering = GetComponent<NavigationSteering>();
         }
 
@@ -32,8 +30,8 @@ namespace Enemies.LaserDudeComponents
             _spawn = new EnemySpawn();
             var patrol = new EnemyPatrol(_laserDude, _rigidbody);
             _chaseWalking = new EnemyChaseWalking(_laserDude, _rigidbody, _navigationSteering);
-            var telegraph = new EnemyLaserTelegraph(_laserDude, _laserController);
-            var attack = new EnemyLaserAttack(_laserDude, _laserController);
+            var telegraph = new EnemyLaserTelegraph(_laserDude);
+            var attack = new EnemyLaserAttack(_laserDude);
             var recover = new EnemyRecover(_laserDude);
             _death = new EnemyDeath(_laserDude, _rigidbody, _collider);
 

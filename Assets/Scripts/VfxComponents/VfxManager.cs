@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CustomUtils;
+using Enemies;
 using Pooling;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,21 +10,25 @@ namespace VfxComponents
 {
     public class VfxManager : Singleton<VfxManager>
     {
-        [SerializeField] private FloatingText floatingText;
-        [SerializeField] private AoEFx aoeFx;
+        [Header("Normal Vfx")]
         [SerializeField] private PoolAfterSeconds swordHit;
+
         [SerializeField] private PoolAfterSeconds swordCriticalHit;
         [SerializeField] private PoolAfterSeconds playerGetHit;
         [SerializeField] private PoolAfterSeconds explosion;
         [SerializeField] private PoolAfterSeconds bombHitVfx;
         [SerializeField] private PoolAfterSeconds splashVfx;
         [SerializeField] private PoolAfterSeconds splashJumpVfx;
-        [SerializeField] private PooledMonoBehaviour hitPointPrediction;
-
-        [FormerlySerializedAs("normalSpawn")] [SerializeField]
-        private PoolAfterSeconds normalSpawnCircle;
-
+        [SerializeField] private PoolAfterSeconds normalSpawnCircle;
         [SerializeField] private PoolAfterSeconds enemySpawn;
+
+        [Header("Custom Vfx")]
+        [SerializeField] private FloatingText floatingText;
+
+        [SerializeField] private PooledMonoBehaviour hitPointPrediction;
+        [SerializeField] private AoEFx aoeFx;
+        [SerializeField] private LaserVfx telegraphLaserVfx;
+        [SerializeField] private LaserVfx attackLaserVfx;
 
         private Dictionary<Vfx, PoolAfterSeconds> _listedVfx;
 
@@ -40,9 +45,9 @@ namespace VfxComponents
                 { Vfx.SpawnCircle, normalSpawnCircle },
                 { Vfx.EnemySpawn, enemySpawn },
                 { Vfx.Explosion, explosion },
-                { Vfx.BombHit , bombHitVfx},
-                { Vfx.Splash , splashVfx},
-                { Vfx.SplashJump, splashJumpVfx}
+                { Vfx.BombHit, bombHitVfx },
+                { Vfx.Splash, splashVfx },
+                { Vfx.SplashJump, splashJumpVfx }
             };
         }
 
@@ -69,5 +74,8 @@ namespace VfxComponents
             var text = floatingText.Get<FloatingText>(position, Quaternion.identity);
             text.Setup(damage, isCritical);
         }
+
+        public LaserVfx GetLaserTelegraph() => telegraphLaserVfx;
+        public LaserVfx GetLaserAttack() => attackLaserVfx;
     }
 }
