@@ -23,6 +23,7 @@ namespace Enemies
         [SerializeField] private float acceleration = 10f;
         [SerializeField] private float stoppingDistance = 1f;
         [SerializeField] private float rotationSpeed = 100f;
+        [SerializeField] private float attackRotationSpeed = 5f;
 
         [SerializeField] private float detectionDistance = 5f;
 
@@ -56,6 +57,7 @@ namespace Enemies
         public float Acceleration => acceleration;
         public float StoppingDistance => stoppingDistance;
         public float RotationSpeed => rotationSpeed;
+        public float AttackRotationSpeed => attackRotationSpeed;
         public float StunTime => stunTime;
         public float GetHitTime => getHitTime;
         public float RecoverTime => recoverTime;

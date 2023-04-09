@@ -17,7 +17,12 @@ namespace Enemies.EnemiesSharedStates
             _collider = collider;
         }
 
-        public virtual void OnEnter() => timer = _enemy.DeathTime;
+        public virtual void OnEnter()
+        {
+            timer = _enemy.DeathTime;
+            _rigidbody.isKinematic = true;
+            _collider.enabled = false;
+        }
 
         public virtual void FixedTick()
         {
