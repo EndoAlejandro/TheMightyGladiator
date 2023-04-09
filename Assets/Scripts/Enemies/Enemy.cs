@@ -29,6 +29,9 @@ namespace Enemies
         [Header("Base Attack")]
         [SerializeField] private int damage = 1;
 
+        [SerializeField] private Bullet bulletPrefab;
+        [SerializeField] private MortarBomb mortarPrefab;
+
         [SerializeField] private float parryTimeWindow = 0.5f;
         [SerializeField] private float telegraphTime = 1f;
         [SerializeField] private float recoverTime = 1f;
@@ -40,6 +43,8 @@ namespace Enemies
         [SerializeField] private float deathTime = 1f;
 
         public BaseRoom Room { get; private set; }
+        public Bullet BulletPrefab => bulletPrefab;
+        public MortarBomb MortarPrefab => mortarPrefab;
 
         public float ParryTimeWindow => parryTimeWindow;
         public float MaxHealth => maxHealth;
