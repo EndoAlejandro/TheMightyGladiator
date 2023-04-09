@@ -9,14 +9,12 @@ namespace Enemies.BallShooter
         public override event Action<Enemy> OnDead;
         public override event Action<Vector3, float> OnHit;
 
-        [SerializeField] private Bullet bulletPrefab;
         [SerializeField] private int bulletsPerRound = 6;
         [SerializeField] private int roundsAmount = 4;
         [SerializeField] private float shootRate = 1f;
         [SerializeField] private float bulletSpeed = 2f;
         [Range(0f, 360f)] [SerializeField] private float shootingAngle = 180f;
 
-        public Bullet BulletPrefab => bulletPrefab;
         public int BulletsPerRound => bulletsPerRound;
         public int RoundsAmount => roundsAmount;
         public float ShootRate => shootRate;

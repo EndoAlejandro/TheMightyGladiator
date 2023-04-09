@@ -1,5 +1,6 @@
 ﻿using System;
 using CustomUtils;
+using Enemies.EnemiesSharedStates;
 using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
@@ -135,7 +136,6 @@ namespace Enemies.FatGuyComponents
     public class FatGuyAoEAttack : IState
     {
         private readonly FatGuy _fatGuy;
-
         private readonly Collider[] _results;
 
         public FatGuyAoEAttack(FatGuy fatGuy)

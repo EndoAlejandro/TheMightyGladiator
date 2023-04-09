@@ -1,5 +1,6 @@
 ﻿using System;
 using Enemies.BatComponents;
+using Enemies.EnemiesSharedStates;
 using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;

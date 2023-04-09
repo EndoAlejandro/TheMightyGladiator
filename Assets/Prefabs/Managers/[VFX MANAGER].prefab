@@ -56,6 +56,10 @@ MonoBehaviour:
     type: 3}
   bombHitVfx: {fileID: 8016212831241806459, guid: 0deaa5d0533b3a84dbac9ff33cefb6cb,
     type: 3}
+  splashVfx: {fileID: 5500816263830790871, guid: b65718ad41e2f9d469e48658212d2c3d,
+    type: 3}
+  splashJumpVfx: {fileID: 487841723200857935, guid: 95477067a7773f148a30687ebe954ee0,
+    type: 3}
   hitPointPrediction: {fileID: 4137804265680899392, guid: adc9f1eb3bf237047a3a1709d4cb4841,
     type: 3}
   normalSpawnCircle: {fileID: 2561271797263224521, guid: 45f7a73e18440b84590e872996ce27ee,

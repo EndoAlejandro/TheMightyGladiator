@@ -29,8 +29,6 @@ namespace Enemies.WormComponents
             Height = _collider.bounds.center.y;
         }
 
-        private void OnEnable() => _health = maxHealth;
-
         private void Start() => SetIsAttacking(false);
         
         public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)

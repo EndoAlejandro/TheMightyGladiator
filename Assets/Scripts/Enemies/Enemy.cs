@@ -35,6 +35,9 @@ namespace Enemies
         [SerializeField] private float parryTimeWindow = 0.5f;
         [SerializeField] private float telegraphTime = 1f;
         [SerializeField] private float recoverTime = 1f;
+        [SerializeField] private float accuracy = 1f;
+        [SerializeField] private float chaseTime = 5f;
+        [SerializeField] private float aoeRadius = 1f;
 
         [Header("Base Get Hit")]
         [SerializeField] private float stunTime = 1f;
@@ -58,21 +61,36 @@ namespace Enemies
         public float RecoverTime => recoverTime;
         public float DeathTime => deathTime;
         public float DetectionDistance => detectionDistance;
+        public float AoeRadius => aoeRadius;
+        public float Accuracy => accuracy;
         public float Health { get; protected set; }
         public bool IsAttacking { get; private set; }
         public bool CanBeParried { get; private set; }
         public bool IsStun { get; private set; }
+        public bool PlayerDetected { get; private set; }
         public bool IsAlive => Health > 0f;
         public int Damage => damage;
         public LayerMask IgnoreGroundLayerMask => ignoreGroundLayerMask;
-        protected virtual void OnEnable() => Health = MaxHealth;
+        public float ChaseTime => chaseTime;
+
         public abstract void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f);
         public abstract void Parry(Player player);
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;
         public void SetIsStun(bool isStun) => IsStun = isStun;
         public void Setup(BaseRoom room) => Room = room;
-        public virtual void PlayerOnRange() => OnPlayerOnRange?.Invoke();
+
+        protected virtual void OnEnable()
+        {
+            PlayerDetected = false;
+            Health = MaxHealth;
+        }
+
+        public virtual void PlayerOnRange()
+        {
+            PlayerDetected = true;
+            OnPlayerOnRange?.Invoke();
+        }
 
         public void DeSpawn()
         {
@@ -89,7 +107,9 @@ namespace Enemies
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, stoppingDistance);
+            Gizmos.DrawWireSphere(transform.position, StoppingDistance);
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, DetectionDistance);
         }
     }
 }

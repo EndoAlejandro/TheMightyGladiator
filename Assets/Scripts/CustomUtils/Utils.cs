@@ -8,6 +8,8 @@ namespace CustomUtils
     public static class Constants
     {
         public static float SPAWN_TIME = 1f;
+        public static float JUMP_HEIGHT = 25f;
+        public static float JUMP_SPEED = 100f;
     }
 
     public static class Utils

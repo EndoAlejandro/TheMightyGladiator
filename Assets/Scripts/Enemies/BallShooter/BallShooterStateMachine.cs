@@ -1,4 +1,5 @@
-﻿using NavigationSteeringComponents;
+﻿using Enemies.EnemiesSharedStates;
+using NavigationSteeringComponents;
 using StateMachineComponents;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Enemies.BallShooter
 
         private EnemySpawn _spawn;
         private EnemyDeath _death;
-        private EnemyIdle _idle;
+        private EnemyChaseWalking _chaseWalking;
 
         protected override void References()
         {
@@ -28,7 +29,7 @@ namespace Enemies.BallShooter
         {
             _spawn = new EnemySpawn();
             var patrol = new EnemyPatrol(_ballShooter, _rigidbody);
-            _idle = new EnemyIdle(_ballShooter, _rigidbody, _navigationSteering);
+            _chaseWalking = new EnemyChaseWalking(_ballShooter, _rigidbody, _navigationSteering);
             var telegraph = new EnemyTelegraph(_ballShooter);
             var attack = new BallShooterAttack(_ballShooter);
             var recover = new EnemyRecover(_ballShooter);
@@ -36,17 +37,17 @@ namespace Enemies.BallShooter
 
             stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
 
-            stateMachine.AddTransition(_idle, telegraph,
-                () => _idle.CanSeePlayer && _idle.PlayerOnRange && _idle.CanSeePlayer);
+            stateMachine.AddTransition(_chaseWalking, telegraph,
+                () => _chaseWalking.CanSeePlayer && _chaseWalking.PlayerOnRange && _chaseWalking.CanSeePlayer);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
             stateMachine.AddTransition(attack, recover, () => attack.Ended);
-            stateMachine.AddTransition(recover, _idle, () => recover.Ended);
+            stateMachine.AddTransition(recover, _chaseWalking, () => recover.Ended);
 
-            stateMachine.AddTransition(_death, _idle, () => _death.Ended);
+            stateMachine.AddTransition(_death, _chaseWalking, () => _death.Ended);
         }
 
         private void BallShooterOnDead(Enemy enemy) => stateMachine.SetState(_death);
-        private void BallShooterOnPlayerOnRange() => stateMachine.SetState(_idle);
+        private void BallShooterOnPlayerOnRange() => stateMachine.SetState(_chaseWalking);
 
         private void OnEnable()
         {

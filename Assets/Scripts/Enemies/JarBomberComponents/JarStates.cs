@@ -26,7 +26,7 @@ namespace Enemies.JarBomberComponents
             for (int i = 0; i < _jarBomber.BombsAmount; i++)
             {
                 var mortarBullet =
-                    _jarBomber.MortarBombPrefab.Get<MortarBomb>(
+                    _jarBomber.MortarPrefab.Get<MortarBomb>(
                         _jarBomber.transform.position.With(y: 1f),
                         Quaternion.identity);
                 var target = Player.Instance.transform.position +
@@ -34,7 +34,7 @@ namespace Enemies.JarBomberComponents
 
                 if (NavMesh.SamplePosition(target, out _navMeshHit, 2f, NavMesh.AllAreas))
                     target = _navMeshHit.position;
-                
+
                 mortarBullet.Setup(target, 70f);
             }
         }

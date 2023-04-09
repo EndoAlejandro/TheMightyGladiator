@@ -1,5 +1,6 @@
 using System;
 using CustomUtils;
+using Enemies.EnemiesSharedStates;
 using NavigationSteeringComponents;
 using PlayerComponents;
 using StateMachineComponents;
@@ -14,7 +15,7 @@ namespace Enemies.BatComponents
         private Collider _collider;
         private NavigationSteering _navigationSteering;
 
-        private EnemyIdle _idle;
+        private EnemyChaseWalking _chaseWalking;
         private EnemyStun _stun;
         private EnemyGetHit _getHit;
         private EnemyRecover _recover;
@@ -27,7 +28,7 @@ namespace Enemies.BatComponents
         {
             _spawn = new EnemySpawn();
             var patrol = new EnemyPatrol(_bat, _rigidbody);
-            _idle = new EnemyIdle(_bat, _rigidbody, _navigationSteering);
+            _chaseWalking = new EnemyChaseWalking(_bat, _rigidbody, _navigationSteering);
             var telegraph = new BatTelegraph(_bat);
             var attack = new BatAttack(_bat, _rigidbody);
             _recover = new EnemyRecover(_bat);
@@ -37,16 +38,16 @@ namespace Enemies.BatComponents
 
             stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
 
-            stateMachine.AddTransition(_idle, telegraph,
-                () => _idle.PlayerOnRange && _idle.CanSeePlayer && _idle.PlayerInFront);
+            stateMachine.AddTransition(_chaseWalking, telegraph,
+                () => _chaseWalking.PlayerOnRange && _chaseWalking.CanSeePlayer && _chaseWalking.PlayerInFront);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
             stateMachine.AddTransition(attack, _recover, () => attack.Ended);
-            stateMachine.AddTransition(_recover, _idle, () => _recover.Ended);
+            stateMachine.AddTransition(_recover, _chaseWalking, () => _recover.Ended);
 
-            stateMachine.AddTransition(_getHit, _idle, () => _getHit.Ended);
-            stateMachine.AddTransition(_stun, _idle, () => _stun.Ended);
+            stateMachine.AddTransition(_getHit, _chaseWalking, () => _getHit.Ended);
+            stateMachine.AddTransition(_stun, _chaseWalking, () => _stun.Ended);
 
-            stateMachine.AddTransition(_death, _idle, () => _death.Ended);
+            stateMachine.AddTransition(_death, _chaseWalking, () => _death.Ended);
         }
 
         private void OnEnable()
@@ -69,7 +70,7 @@ namespace Enemies.BatComponents
             _bat.OnPlayerOnRange -= BatOnPlayerOnRange;
         }
 
-        private void BatOnPlayerOnRange() => stateMachine.SetState(_idle);
+        private void BatOnPlayerOnRange() => stateMachine.SetState(_chaseWalking);
         private void BatOnDead(Enemy enemy) => stateMachine.SetState(_death);
 
         private void BatOnAttackCollision()
