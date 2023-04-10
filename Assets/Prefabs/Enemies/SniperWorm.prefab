@@ -1514,10 +1514,10 @@ MonoBehaviour:
   maxHealth: 20
   speed: 2
   acceleration: 10
-  stoppingDistance: 1
+  stoppingDistance: 9
   rotationSpeed: 100
   attackRotationSpeed: 5
-  detectionDistance: 8
+  detectionDistance: 9
   segmentsAmount: 10
   visionAngle: 360
   yOffset: 1

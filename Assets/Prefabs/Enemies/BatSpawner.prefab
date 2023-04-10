@@ -326,7 +326,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 479fc8593247b594bb4d1fa16375d3c1, type: 2}
+  - {fileID: 2100000, guid: 05923cf6e34d4b34bbfdf6270219c2db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1004,7 +1004,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c77307f625fec2548ae34c635d15000a, type: 2}
+  - {fileID: 2100000, guid: cd7a06c67fd26c54bb598aead8db0c6c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1305,9 +1305,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 5
-  ignoreGroundLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
   maxHealth: 5
   speed: 2
   acceleration: 10
@@ -1325,6 +1322,7 @@ MonoBehaviour:
   recoverTime: 1
   chaseTime: 5
   aoeRadius: 1
+  followPlayer: 0
   bulletPrefab: {fileID: 0}
   mortarPrefab: {fileID: 0}
   accuracy: 1

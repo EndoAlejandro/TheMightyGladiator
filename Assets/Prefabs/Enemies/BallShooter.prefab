@@ -2298,7 +2298,7 @@ MonoBehaviour:
   maxHealth: 20
   speed: 2
   acceleration: 10
-  stoppingDistance: 1
+  stoppingDistance: 5
   rotationSpeed: 100
   attackRotationSpeed: 5
   detectionDistance: 5

@@ -32,7 +32,6 @@ namespace StateMachineComponents
 
             _currentState?.OnExit();
             _currentState = state;
-            // Debug.Log($"Changed state to: {state}");
             _currentState.OnEnter();
             OnStateChanged?.Invoke(_currentState);
         }

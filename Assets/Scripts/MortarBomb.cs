@@ -1,4 +1,5 @@
 using CustomUtils;
+using Enemies;
 using PlayerComponents;
 using Pooling;
 using UnityEngine;
@@ -34,6 +35,7 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.transform.TryGetComponent(out Enemy enemy)) return;
         VfxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
         if (_hitPredictionFx != null) _hitPredictionFx.ReturnToPool();
 

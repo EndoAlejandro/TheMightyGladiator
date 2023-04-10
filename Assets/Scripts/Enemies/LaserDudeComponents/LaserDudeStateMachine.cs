@@ -40,7 +40,7 @@ namespace Enemies.LaserDudeComponents
             stateMachine.AddTransition(attack, recover, () => attack.Ended);
             stateMachine.AddTransition(recover, _chaseWalking, () => recover.Ended);
 
-            stateMachine.AddTransition(_death, _chaseWalking, () => _death.Ended);
+            stateMachine.AddTransition(_death, patrol, () => _death.Ended);
         }
 
         private void EnemyOnDead(Enemy enemy) => stateMachine.SetState(_death);

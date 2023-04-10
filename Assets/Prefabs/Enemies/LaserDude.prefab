@@ -1217,10 +1217,10 @@ MonoBehaviour:
   maxHealth: 20
   speed: 2
   acceleration: 10
-  stoppingDistance: 1
+  stoppingDistance: 8
   rotationSpeed: 100
-  attackRotationSpeed: 5
-  detectionDistance: 5
+  attackRotationSpeed: 2
+  detectionDistance: 8
   segmentsAmount: 10
   visionAngle: 360
   yOffset: 1
@@ -1232,8 +1232,10 @@ MonoBehaviour:
   chaseTime: 5
   aoeRadius: 1
   followPlayer: 0
-  bulletPrefab: {fileID: 0}
-  mortarPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 6316239716474771813, guid: e700f036a0a03114088a17838d8262e3,
+    type: 3}
+  mortarPrefab: {fileID: 3504919690102820189, guid: 1d787f31288a4694c817cff0b618f818,
+    type: 3}
   accuracy: 1
   shootingAngle: 180
   bulletSpeed: 2
