@@ -3,15 +3,17 @@ using PlayerComponents;
 using Pooling;
 using Rooms;
 using UnityEngine;
+using VfxComponents;
 
 namespace Enemies
 {
-    public abstract class Enemy : PooledMonoBehaviour, IDealDamage
+    public class Enemy : PooledMonoBehaviour, IDealDamage
     {
-        public abstract event Action<Enemy> OnDead;
+        public event Action<Enemy> OnDead;
         public event Action<Enemy> OnDeSpawn;
         public event Action OnPlayerOnRange;
-        public abstract event Action<Vector3, float> OnHit;
+        public event Action<Vector3, float> OnHit;
+        public event Action<Player> OnParry;
 
         [Header("Base Movement")]
         [SerializeField] private LayerMask ignoreGroundLayerMask;
@@ -101,8 +103,15 @@ namespace Enemies
         public LayerMask IgnoreGroundLayerMask => ignoreGroundLayerMask;
         public float ChaseTime => chaseTime;
 
-        public abstract void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0f);
-        public abstract void Parry(Player player);
+        public void TakeDamage(Vector3 hitPoint, float incomingDamage, float knockBack = 0f)
+        {
+            Health -= incomingDamage;
+            OnHit?.Invoke(hitPoint, knockBack);
+            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
+            if (!IsAlive) OnDead?.Invoke(this);
+        }
+
+        public virtual void Parry(Player player) => OnParry?.Invoke(player);
         public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;
         public void SetIsStun(bool isStun) => IsStun = isStun;

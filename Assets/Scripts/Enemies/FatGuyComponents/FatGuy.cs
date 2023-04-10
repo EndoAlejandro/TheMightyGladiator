@@ -7,8 +7,6 @@ namespace Enemies.FatGuyComponents
 {
     public class FatGuy : Enemy
     {
-        public override event Action<Enemy> OnDead;
-        public override event Action<Vector3, float> OnHit;
         public event Action OnAttackCollision;
 
         [SerializeField] private float aoeTime = 2f;
@@ -18,13 +16,6 @@ namespace Enemies.FatGuyComponents
         public float NormalizedHealth => Health / MaxHealth;
         public int BulletsAmount => bulletsAmount;
 
-        public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
-        {
-            Health -= damage;
-            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
-            OnHit?.Invoke(hitPoint, knockBack);
-            if (!IsAlive) OnDead?.Invoke(this);
-        }
 
         public override void Parry(Player player)
         {

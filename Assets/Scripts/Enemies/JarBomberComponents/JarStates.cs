@@ -23,7 +23,7 @@ namespace Enemies.JarBomberComponents
             Ended = false;
             base.OnEnter();
 
-            for (int i = 0; i < _jarBomber.BombsAmount; i++)
+            for (int i = 0; i < _jarBomber.RoundsAmount; i++)
             {
                 var mortarBullet =
                     _jarBomber.MortarPrefab.Get<MortarBomb>(

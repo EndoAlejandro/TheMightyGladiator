@@ -7,10 +7,6 @@ namespace Enemies.WormComponents
 {
     public class Worm : Enemy
     {
-        public override event Action<Enemy> OnDead;
-        public override event Action<Vector3, float> OnHit;
-        public event Action<Player> OnParry;
-
         [SerializeField] private float idleTime;
         [SerializeField] private float attackRadius = 0.65f;
 
@@ -30,18 +26,6 @@ namespace Enemies.WormComponents
         }
 
         private void Start() => SetIsAttacking(false);
-        
-        public override void TakeDamage(Vector3 hitPoint, float damage, float knockBack = 0)
-        {
-            _health -= damage;
-            OnHit?.Invoke(hitPoint, damage);
-
-            if (_health <= 0)
-            {
-                OnDead?.Invoke(this);
-                ReturnToPool();
-            }
-        }
 
         public void SetColliderState(bool state)
         {
@@ -53,7 +37,7 @@ namespace Enemies.WormComponents
         {
             var direction = Utils.NormalizedFlatDirection(transform.position, player.transform.position);
             _rigidbody.AddForce(direction * 10f, ForceMode.VelocityChange);
-            OnParry?.Invoke(player);
+            base.Parry(player);
         }
     }
 }
