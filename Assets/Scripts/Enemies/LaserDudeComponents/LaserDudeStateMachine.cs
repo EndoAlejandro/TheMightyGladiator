@@ -6,7 +6,7 @@ namespace Enemies.LaserDudeComponents
 {
     public class LaserDudeStateMachine : FiniteStateBehaviour
     {
-        private LaserDude _laserDude;
+        private Enemy _enemy;
         private Rigidbody _rigidbody;
         private Collider _collider;
 
@@ -16,7 +16,7 @@ namespace Enemies.LaserDudeComponents
 
         protected override void References()
         {
-            _laserDude = GetComponent<LaserDude>();
+            _enemy = GetComponent<Enemy>();
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
         }
@@ -24,15 +24,15 @@ namespace Enemies.LaserDudeComponents
         protected override void StateMachine()
         {
             _spawn = new EnemySpawn();
-            var patrol = new EnemyPatrol(_laserDude, _rigidbody);
-            _chaseWalking = new EnemyChaseWalking(_laserDude, _rigidbody);
-            var telegraph = new EnemyLaserTelegraph(_laserDude);
-            var attack = new EnemyLaserAttack(_laserDude);
-            var recover = new EnemyRecover(_laserDude);
-            _death = new EnemyDeath(_laserDude, _rigidbody, _collider);
+            var patrol = new EnemyPatrol(_enemy, _rigidbody);
+            _chaseWalking = new EnemyChaseWalking(_enemy, _rigidbody);
+            var telegraph = new EnemyLaserTelegraph(_enemy);
+            var attack = new EnemyLaserAttack(_enemy);
+            var recover = new EnemyRecover(_enemy);
+            _death = new EnemyDeath(_enemy, _rigidbody, _collider);
 
             stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
-            stateMachine.AddTransition(patrol, _chaseWalking, () => _laserDude.PlayerDetected);
+            stateMachine.AddTransition(patrol, _chaseWalking, () => _enemy.PlayerDetected);
 
             stateMachine.AddTransition(_chaseWalking, telegraph,
                 () => _chaseWalking.CanSeePlayer && _chaseWalking.PlayerOnRange && _chaseWalking.PlayerInFront);
@@ -43,14 +43,14 @@ namespace Enemies.LaserDudeComponents
             stateMachine.AddTransition(_death, _chaseWalking, () => _death.Ended);
         }
 
-        private void LaserDudeOnDead(Enemy enemy) => stateMachine.SetState(_death);
+        private void EnemyOnDead(Enemy enemy) => stateMachine.SetState(_death);
 
         private void OnEnable()
         {
-            _laserDude.OnDead += LaserDudeOnDead;
+            _enemy.OnDead += EnemyOnDead;
             stateMachine.SetState(_spawn);
         }
 
-        private void OnDisable() => _laserDude.OnDead -= LaserDudeOnDead;
+        private void OnDisable() => _enemy.OnDead -= EnemyOnDead;
     }
 }

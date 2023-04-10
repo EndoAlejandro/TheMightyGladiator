@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8054334271364170771}
   - component: {fileID: 5112208402077970992}
   m_Layer: 13
-  m_Name: MortarBomb
+  m_Name: _MortarBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

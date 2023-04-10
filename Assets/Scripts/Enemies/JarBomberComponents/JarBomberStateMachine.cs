@@ -1,6 +1,4 @@
-using System;
 using Enemies.EnemiesSharedStates;
-using NavigationSteeringComponents;
 using StateMachineComponents;
 using UnityEngine;
 
@@ -8,7 +6,7 @@ namespace Enemies.JarBomberComponents
 {
     public class JarBomberStateMachine : FiniteStateBehaviour
     {
-        private JarBomber _jarBomber;
+        private Enemy _enemy;
         private Rigidbody _rigidbody;
 
         private EnemySpawn _spawn;
@@ -18,7 +16,7 @@ namespace Enemies.JarBomberComponents
 
         protected override void References()
         {
-            _jarBomber = GetComponent<JarBomber>();
+            _enemy = GetComponent<Enemy>();
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
         }
@@ -26,15 +24,15 @@ namespace Enemies.JarBomberComponents
         protected override void StateMachine()
         {
             _spawn = new EnemySpawn();
-            var patrol = new EnemyPatrol(_jarBomber, _rigidbody);
-            _chaseWalking = new EnemyChaseWalking(_jarBomber, _rigidbody);
-            var telegraph = new EnemyTelegraph(_jarBomber);
-            var attack = new JarBomberAttack(_jarBomber);
-            var recover = new EnemyRecover(_jarBomber);
-            _death = new EnemyDeath(_jarBomber, _rigidbody, _collider);
+            var patrol = new EnemyPatrol(_enemy, _rigidbody);
+            _chaseWalking = new EnemyChaseWalking(_enemy, _rigidbody);
+            var telegraph = new EnemyTelegraph(_enemy);
+            var attack = new JarBomberAttack(_enemy);
+            var recover = new EnemyRecover(_enemy);
+            _death = new EnemyDeath(_enemy, _rigidbody, _collider);
 
             stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
-            stateMachine.AddTransition(patrol, _chaseWalking, () => _jarBomber.PlayerDetected);
+            stateMachine.AddTransition(patrol, _chaseWalking, () => _enemy.PlayerDetected);
 
             stateMachine.AddTransition(_chaseWalking, telegraph, () => _chaseWalking.PlayerOnRange);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
@@ -44,15 +42,14 @@ namespace Enemies.JarBomberComponents
             stateMachine.AddTransition(_death, _chaseWalking, () => _death.Ended);
         }
 
-        private void JarBomberOnDead(Enemy enemy) => stateMachine.SetState(_death);
+        private void EnemyOnDead(Enemy enemy) => stateMachine.SetState(_death);
 
         private void OnEnable()
         {
-            _jarBomber.OnDead += JarBomberOnDead;
+            _enemy.OnDead += EnemyOnDead;
             stateMachine.SetState(_spawn);
         }
 
-
-        private void OnDisable() => _jarBomber.OnDead -= JarBomberOnDead;
+        private void OnDisable() => _enemy.OnDead -= EnemyOnDead;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Enemies.EnemiesSharedStates;
-using NavigationSteeringComponents;
 using StateMachineComponents;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ namespace Enemies.BallShooter
 {
     public class BallShooterStateMachine : FiniteStateBehaviour
     {
-        private BallShooter _ballShooter;
+        private Enemy _enemy;
         private Rigidbody _rigidbody;
         private Collider _collider;
 
@@ -17,7 +16,7 @@ namespace Enemies.BallShooter
 
         protected override void References()
         {
-            _ballShooter = GetComponent<BallShooter>();
+            _enemy = GetComponent<Enemy>();
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
         }
@@ -25,16 +24,16 @@ namespace Enemies.BallShooter
         protected override void StateMachine()
         {
             _spawn = new EnemySpawn();
-            var patrol = new EnemyPatrol(_ballShooter, _rigidbody);
-            _chaseWalking = new EnemyChaseWalking(_ballShooter, _rigidbody);
-            var telegraph = new EnemyTelegraph(_ballShooter);
-            var attack = new BallShooterAttack(_ballShooter);
-            var recover = new EnemyRecover(_ballShooter);
-            _death = new EnemyDeath(_ballShooter, _rigidbody, _collider);
+            var patrol = new EnemyPatrol(_enemy, _rigidbody);
+            _chaseWalking = new EnemyChaseWalking(_enemy, _rigidbody);
+            var telegraph = new EnemyTelegraph(_enemy);
+            var attack = new EnemyShootBullet(_enemy);
+            var recover = new EnemyRecover(_enemy);
+            _death = new EnemyDeath(_enemy, _rigidbody, _collider);
 
             stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
 
-            stateMachine.AddTransition(patrol, _chaseWalking, () => _ballShooter.PlayerDetected);
+            stateMachine.AddTransition(patrol, _chaseWalking, () => _enemy.PlayerDetected);
             stateMachine.AddTransition(_chaseWalking, telegraph,
                 () => _chaseWalking.CanSeePlayer && _chaseWalking.PlayerOnRange && _chaseWalking.CanSeePlayer);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
@@ -44,15 +43,15 @@ namespace Enemies.BallShooter
             stateMachine.AddTransition(_death, _chaseWalking, () => _death.Ended);
         }
 
-        private void BallShooterOnDead(Enemy enemy) => stateMachine.SetState(_death);
+        private void EnemyOnDead(Enemy enemy) => stateMachine.SetState(_death);
 
         private void OnEnable()
         {
-            _ballShooter.OnDead += BallShooterOnDead;
+            _enemy.OnDead += EnemyOnDead;
             stateMachine.SetState(_spawn);
         }
 
 
-        private void OnDisable() => _ballShooter.OnDead -= BallShooterOnDead;
+        private void OnDisable() => _enemy.OnDead -= EnemyOnDead;
     }
 }

@@ -69,7 +69,7 @@ namespace Enemies.LaserDudeComponents
 
     public class EnemyLaserAttack : StateTimer, IState
     {
-        private readonly LaserDude _laserDude;
+        private readonly Enemy _enemy;
         private readonly LaserVfx[] _lasers;
 
         private Vector3[] _directions;
@@ -77,11 +77,11 @@ namespace Enemies.LaserDudeComponents
         private RaycastHit _hit;
         private float _hitTimer;
 
-        public EnemyLaserAttack(LaserDude laserDude)
+        public EnemyLaserAttack(Enemy enemy)
         {
-            _laserDude = laserDude;
-            _directions = new Vector3[_laserDude.BulletsPerRound];
-            _lasers = new LaserVfx[_laserDude.BulletsPerRound];
+            _enemy = enemy;
+            _directions = new Vector3[_enemy.BulletsPerRound];
+            _lasers = new LaserVfx[_enemy.BulletsPerRound];
         }
 
         public override void Tick()
@@ -89,31 +89,31 @@ namespace Enemies.LaserDudeComponents
             _hitTimer -= Time.deltaTime;
             base.Tick();
 
-            _directions = Utils.GetFanPatternDirections(_laserDude.transform, _laserDude.BulletsPerRound,
-                _laserDude.ShootingAngle);
+            _directions = Utils.GetFanPatternDirections(_enemy.transform, _enemy.BulletsPerRound,
+                _enemy.ShootingAngle);
 
             _playerDirection =
-                Utils.NormalizedFlatDirection(Player.Instance.transform.position, _laserDude.transform.position);
+                Utils.NormalizedFlatDirection(Player.Instance.transform.position, _enemy.transform.position);
 
-            _laserDude.transform.forward = Vector3.Lerp(_laserDude.transform.forward, _playerDirection,
-                Time.deltaTime * _laserDude.AttackRotationSpeed);
+            _enemy.transform.forward = Vector3.Lerp(_enemy.transform.forward, _playerDirection,
+                Time.deltaTime * _enemy.AttackRotationSpeed);
 
             for (int i = 0; i < _directions.Length; i++)
             {
                 var direction = _directions[i];
                 var laser = _lasers[i];
-                if (Physics.Raycast(_laserDude.transform.position + Vector3.up, direction, out _hit,
-                        _laserDude.DetectionDistance))
+                if (Physics.Raycast(_enemy.transform.position + Vector3.up, direction, out _hit,
+                        _enemy.DetectionDistance))
                 {
                     laser.SetPosition(1, _hit.point);
                     if (!_hit.transform.TryGetComponent(out Player player) || !(_hitTimer <= 0f)) continue;
                     _hitTimer = 0.5f;
-                    player.TryToGetDamageFromEnemy(_laserDude);
+                    player.TryToGetDamageFromEnemy(_enemy);
                 }
                 else
                 {
                     laser.SetPosition(1,
-                        direction * _laserDude.DetectionDistance + _laserDude.transform.position +
+                        direction * _enemy.DetectionDistance + _enemy.transform.position +
                         Vector3.up);
                 }
             }
@@ -129,7 +129,7 @@ namespace Enemies.LaserDudeComponents
             for (var i = 0; i < _lasers.Length; i++)
             {
                 _lasers[i] = VfxManager.Instance.GetLaserAttack().Get<LaserVfx>();
-                _lasers[i].SetPosition(0, _laserDude.transform.position + Vector3.up);
+                _lasers[i].SetPosition(0, _enemy.transform.position + Vector3.up);
             }
         }
 

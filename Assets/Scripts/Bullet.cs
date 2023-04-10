@@ -18,6 +18,7 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 
     private bool _reflected;
     private bool _followPlayer;
+    private float _timer;
 
     public int Damage { get; private set; }
 
@@ -27,6 +28,7 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 
     public void Setup(Vector3 direction, float speed, int damage, bool followPlayer = false, float turnSpeed = 1f)
     {
+        _timer = 1f;
         _direction = direction;
         _speed = speed;
         Damage = damage;
@@ -36,7 +38,8 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 
     private void FixedUpdate()
     {
-        if (_followPlayer && Player.Instance != null && !_reflected)
+        if (_timer > 0f) _timer -= Time.deltaTime;
+        if (_followPlayer && Player.Instance != null && !_reflected && _timer <= 0f)
         {
             _playerDirection = Utils.NormalizedFlatDirection(Player.Instance.transform.position, transform.position);
             _rigidbody.velocity =

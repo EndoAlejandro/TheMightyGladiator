@@ -16,9 +16,7 @@ namespace Enemies
         public event Action<Player> OnParry;
 
         [Header("Base Movement")]
-        [SerializeField] private LayerMask ignoreGroundLayerMask;
-
-        [SerializeField] protected float maxHealth;
+        [SerializeField] protected float maxHealth = 20;
 
         [SerializeField] private float speed = 2f;
 
@@ -49,6 +47,8 @@ namespace Enemies
         [SerializeField] private float aoeRadius = 1f;
 
         [Header("Ranged Attack")]
+        [SerializeField] private bool followPlayer;
+
         [SerializeField] private Bullet bulletPrefab;
 
         [SerializeField] private MortarBomb mortarPrefab;
@@ -99,8 +99,8 @@ namespace Enemies
         public bool IsStun { get; private set; }
         public bool PlayerDetected { get; private set; }
         public bool IsAlive => Health > 0f;
+        public bool FollowPlayer => followPlayer;
         public int Damage => damage;
-        public LayerMask IgnoreGroundLayerMask => ignoreGroundLayerMask;
         public float ChaseTime => chaseTime;
 
         public void TakeDamage(Vector3 hitPoint, float incomingDamage, float knockBack = 0f)

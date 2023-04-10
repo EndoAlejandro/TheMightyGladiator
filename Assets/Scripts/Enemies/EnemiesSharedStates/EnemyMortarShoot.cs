@@ -7,11 +7,11 @@ namespace Enemies.JarBomberComponents
 {
     public class JarBomberAttack : EnemyAttack
     {
-        private readonly JarBomber _jarBomber;
+        private readonly Enemy _enemy;
         private NavMeshHit _navMeshHit;
         public bool Ended { get; private set; }
 
-        public JarBomberAttack(JarBomber jarBomber) : base(jarBomber) => _jarBomber = jarBomber;
+        public JarBomberAttack(Enemy enemy) : base(enemy) => _enemy = enemy;
 
         public override void FixedTick() => Ended = true;
 
@@ -20,14 +20,14 @@ namespace Enemies.JarBomberComponents
             Ended = false;
             base.OnEnter();
 
-            for (int i = 0; i < _jarBomber.RoundsAmount; i++)
+            for (int i = 0; i < _enemy.RoundsAmount; i++)
             {
                 var mortarBullet =
-                    _jarBomber.MortarPrefab.Get<MortarBomb>(
-                        _jarBomber.transform.position.With(y: 1f),
+                    _enemy.MortarPrefab.Get<MortarBomb>(
+                        _enemy.transform.position.With(y: 1f),
                         Quaternion.identity);
                 var target = Player.Instance.transform.position +
-                             Random.insideUnitSphere.With(y: 0f).normalized * Random.Range(1f, _jarBomber.Accuracy);
+                             Random.insideUnitSphere.With(y: 0f).normalized * Random.Range(1f, _enemy.Accuracy);
 
                 if (NavMesh.SamplePosition(target, out _navMeshHit, 2f, NavMesh.AllAreas))
                     target = _navMeshHit.position;

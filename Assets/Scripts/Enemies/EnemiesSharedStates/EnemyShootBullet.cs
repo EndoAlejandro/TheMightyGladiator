@@ -1,17 +1,17 @@
 ﻿using CustomUtils;
 using UnityEngine;
 
-namespace Enemies.BallShooter
+namespace Enemies.EnemiesSharedStates
 {
-    public class BallShooterAttack : EnemyAttack
+    public class EnemyShootBullet : EnemyAttack
     {
-        private readonly BallShooter _ballShooter;
+        private readonly Enemy _enemy;
         private int _rounds;
         private float _timer;
 
         public bool Ended { get; private set; }
 
-        public BallShooterAttack(BallShooter ballShooter) : base(ballShooter) => _ballShooter = ballShooter;
+        public EnemyShootBullet(Enemy enemy) : base(enemy) => _enemy = enemy;
 
         public override void Tick()
         {
@@ -29,23 +29,23 @@ namespace Enemies.BallShooter
         {
             base.OnEnter();
             Ended = false;
-            _rounds = _ballShooter.RoundsAmount;
+            _rounds = _enemy.RoundsAmount;
             Shoot();
         }
 
         private void Shoot()
         {
-            _timer = _ballShooter.ShootRate;
+            _timer = _enemy.ShootRate;
             _rounds--;
 
-            var directions = Utils.GetFanPatternDirections(_ballShooter.transform, _ballShooter.BulletsPerRound,
-                _ballShooter.ShootingAngle);
+            var directions = Utils.GetFanPatternDirections(_enemy.transform, _enemy.BulletsPerRound,
+                _enemy.ShootingAngle);
 
             foreach (var direction in directions)
             {
-                var bullet = _ballShooter.BulletPrefab.Get<Bullet>(_ballShooter.transform.position + Vector3.up * 0.5f,
+                var bullet = _enemy.BulletPrefab.Get<Bullet>(_enemy.transform.position + Vector3.up * 0.5f,
                     Quaternion.identity);
-                bullet.Setup(direction, _ballShooter.BulletSpeed, _ballShooter.Damage);
+                bullet.Setup(direction, _enemy.BulletSpeed, _enemy.Damage);
             }
 
             if (_rounds <= 0) Ended = true;

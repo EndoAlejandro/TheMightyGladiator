@@ -8,7 +8,7 @@ namespace Enemies.JumperBomberComponents
 {
     public class JumperBomberStateMachine : FiniteStateBehaviour
     {
-        private JumperBomber _jumperBomber;
+        private Enemy _jumperBomber;
         private Rigidbody _rigidbody;
         private Collider _collider;
 
@@ -19,7 +19,7 @@ namespace Enemies.JumperBomberComponents
 
         protected override void References()
         {
-            _jumperBomber = GetComponent<JumperBomber>();
+            _jumperBomber = GetComponent<Enemy>();
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
         }
@@ -57,9 +57,6 @@ namespace Enemies.JumperBomberComponents
             stateMachine.SetState(_spawn);
         }
 
-        private void OnDisable()
-        {
-            _jumperBomber.OnDead += JumperBomberOnDead;
-        }
+        private void OnDisable() => _jumperBomber.OnDead += JumperBomberOnDead;
     }
 }

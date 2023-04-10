@@ -1,7 +1,5 @@
 ﻿using System;
-using PlayerComponents;
 using UnityEngine;
-using VfxComponents;
 
 namespace Enemies.BatComponents
 {
@@ -10,15 +8,11 @@ namespace Enemies.BatComponents
         public event Action OnAttackCollision;
 
         [Header("Health")]
-        [SerializeField] private float idleTime = 2f;
 
         [SerializeField] private float attackSpeed = 10f;
-        [SerializeField] private float distanceTolerance = 2f;
         [SerializeField] private float attackTime = 0.5f;
         
         public float AttackSpeed => attackSpeed;
-        public float IdleTime => idleTime;
-        public float DistanceTolerance => distanceTolerance;
         public float AttackTime => attackTime;
 
         protected override void OnCollisionEnter(Collision collision)
