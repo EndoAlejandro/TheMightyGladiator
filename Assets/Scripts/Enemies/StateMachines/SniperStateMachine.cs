@@ -1,4 +1,5 @@
 ﻿using System;
+using Enemies.AttackStates;
 using Enemies.EnemiesSharedStates;
 using Enemies.LaserDudeComponents;
 using StateMachineComponents;
@@ -29,7 +30,7 @@ namespace Enemies.SniperComponents
             var wormPush = new EnemyWormPush(_enemy, _rigidbody);
             var wormRecover = new EnemyWormRecover(_enemy);
             var telegraph = new EnemyLaserTelegraph(_enemy);
-            var sniperShot = new SniperShot(_enemy, _rigidbody);
+            var sniperShot = new EnemySniperShot(_enemy, _rigidbody);
             var recover = new EnemyRecover(_enemy);
             _death = new EnemyDeath(_enemy, _rigidbody, _collider);
 

@@ -33,7 +33,7 @@ namespace Enemies.EnemiesSharedStates
         {
             _noise += Time.deltaTime * 0.15f;
 
-            _enemy.transform.forward = Vector3.Lerp(_enemy.transform.forward, _rigidbody.velocity,
+            _enemy.transform.forward = Vector3.Lerp(_enemy.transform.forward, _direction,
                 Time.deltaTime * _enemy.RotationSpeed);
 
             if (_initialPosition == Vector3.zero) _initialPosition = _enemy.transform.position;

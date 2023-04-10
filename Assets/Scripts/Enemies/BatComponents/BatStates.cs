@@ -6,61 +6,6 @@ using UnityEngine;
 
 namespace Enemies.BatComponents
 {
-    /*public class BatIdle : EnemyIdle
-    {
-        private readonly Bat _bat;
-        private readonly Rigidbody _rigidbody;
-        private readonly NavigationSteering _navigationSteering;
-
-        private Vector3 _direction;
-        private float _timer;
-
-        public bool PlayerOnRange { get; private set; }
-        public bool CanSeePlayer { get; private set; }
-        public bool Ended => _timer <= 0f;
-
-        public BatIdle(Bat bat, Rigidbody rigidbody, NavigationSteering navigationSteering)
-        {
-            _bat = bat;
-            _rigidbody = rigidbody;
-            _navigationSteering = navigationSteering;
-        }
-
-        public override void Tick()
-        {
-            _timer -= Time.deltaTime;
-            _direction = _navigationSteering.BestDirection.direction;
-            _bat.transform.forward =
-                Vector3.Lerp(_bat.transform.forward, _direction, _bat.RotationSpeed * Time.deltaTime);
-        }
-
-        public override void FixedTick()
-        {
-            var batPosition = _bat.transform.position;
-            var playerPosition = Player.Instance.transform.position;
-
-            var distance = Vector3.Distance(batPosition, playerPosition);
-            CanSeePlayer = !Physics.Linecast(batPosition, playerPosition);
-            PlayerOnRange = distance <= _bat.StoppingDistance;
-
-            if (!PlayerOnRange)
-                _rigidbody.AddForce(_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Acceleration);
-            else if (distance <= _bat.StoppingDistance - _bat.DistanceTolerance)
-                _rigidbody.AddForce(-_direction * (_bat.Speed * _bat.Acceleration), ForceMode.Acceleration);
-        }
-
-        public override void OnEnter()
-        {
-            _timer = _bat.IdleTime;
-            CanSeePlayer = false;
-            PlayerOnRange = false;
-        }
-
-        public override void OnExit()
-        {
-        }
-    }*/
-
     public class BatAttack : EnemyAttack
     {
         private readonly Bat _bat;
@@ -79,7 +24,6 @@ namespace Enemies.BatComponents
         {
             _bat = bat;
             _rigidbody = rigidbody;
-
             _results = new Collider[10];
         }
 

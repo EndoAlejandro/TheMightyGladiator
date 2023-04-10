@@ -1,6 +1,5 @@
 ﻿using System;
 using Enemies;
-using Enemies.BigBobComponents;
 using Rooms;
 using UnityEngine;
 using UnityEngine.Serialization;

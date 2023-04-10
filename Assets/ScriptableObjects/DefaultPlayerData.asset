@@ -21,7 +21,7 @@ MonoBehaviour:
   dodgeRate: 0.25
   dodgeSpeed: 12
   dodgeDistance: 3
-  damage: 1
+  damage: 10
   criticalProbability: 0.05
   criticalDamage: 1.2
   attackRate: 0.25

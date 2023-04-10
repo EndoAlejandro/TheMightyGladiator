@@ -1,14 +1,14 @@
 ﻿using StateMachineComponents;
 using UnityEngine;
 
-namespace Enemies.SniperComponents
+namespace Enemies.AttackStates
 {
-    public class SniperShot : IState
+    public class EnemySniperShot : IState
     {
         private readonly Enemy _enemy;
         private readonly Rigidbody _rigidbody;
 
-        public SniperShot(Enemy enemy, Rigidbody rigidbody)
+        public EnemySniperShot(Enemy enemy, Rigidbody rigidbody)
         {
             _enemy = enemy;
             _rigidbody = rigidbody;

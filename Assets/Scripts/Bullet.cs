@@ -1,6 +1,5 @@
 using CustomUtils;
 using Enemies;
-using Enemies.BlobComponents;
 using PlayerComponents;
 using Pooling;
 using UnityEngine;
