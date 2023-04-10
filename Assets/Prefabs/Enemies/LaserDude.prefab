@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4881709983888362607}
   - component: {fileID: 5322186850165178263}
   - component: {fileID: 5322186850165178260}
-  - component: {fileID: 4881709983888362602}
   - component: {fileID: 5322186850165178262}
   - component: {fileID: 4881709983888362606}
   - component: {fileID: 4881709983888362600}
@@ -65,6 +64,10 @@ MonoBehaviour:
   rotationSpeed: 100
   attackRotationSpeed: 0.5
   detectionDistance: 8
+  segmentsAmount: 10
+  visionAngle: 360
+  yOffset: 1
+  navigationDetectionRange: 2
   damage: 1
   parryTimeWindow: 0.5
   telegraphTime: 1.5
@@ -94,25 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54af4d1543e04845bc254f7253878143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4881709983888362602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4881709983888362604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cebe84b14a44be89e3cb4678e4180b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visionAngle: 360
-  segmentsAmount: 20
-  detectionRange: 2
-  yOffset: 0.25
-  obstacleLayerMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
 --- !u!95 &5322186850165178262
 Animator:
   serializedVersion: 4

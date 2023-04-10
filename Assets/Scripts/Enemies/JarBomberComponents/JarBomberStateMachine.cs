@@ -10,7 +10,6 @@ namespace Enemies.JarBomberComponents
     {
         private JarBomber _jarBomber;
         private Rigidbody _rigidbody;
-        private NavigationSteering _navigationSteering;
 
         private EnemySpawn _spawn;
         private EnemyChaseWalking _chaseWalking;
@@ -22,14 +21,13 @@ namespace Enemies.JarBomberComponents
             _jarBomber = GetComponent<JarBomber>();
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
-            _navigationSteering = GetComponent<NavigationSteering>();
         }
 
         protected override void StateMachine()
         {
             _spawn = new EnemySpawn();
             var patrol = new EnemyPatrol(_jarBomber, _rigidbody);
-            _chaseWalking = new EnemyChaseWalking(_jarBomber, _rigidbody, _navigationSteering);
+            _chaseWalking = new EnemyChaseWalking(_jarBomber, _rigidbody);
             var telegraph = new EnemyTelegraph(_jarBomber);
             var attack = new JarBomberAttack(_jarBomber);
             var recover = new EnemyRecover(_jarBomber);

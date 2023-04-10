@@ -5,13 +5,11 @@ using UnityEngine;
 
 namespace Enemies.BallShooter
 {
-    [RequireComponent(typeof(NavigationSteering))]
     public class BallShooterStateMachine : FiniteStateBehaviour
     {
         private BallShooter _ballShooter;
         private Rigidbody _rigidbody;
         private Collider _collider;
-        private NavigationSteering _navigationSteering;
 
         private EnemySpawn _spawn;
         private EnemyDeath _death;
@@ -22,14 +20,13 @@ namespace Enemies.BallShooter
             _ballShooter = GetComponent<BallShooter>();
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
-            _navigationSteering = GetComponent<NavigationSteering>();
         }
 
         protected override void StateMachine()
         {
             _spawn = new EnemySpawn();
             var patrol = new EnemyPatrol(_ballShooter, _rigidbody);
-            _chaseWalking = new EnemyChaseWalking(_ballShooter, _rigidbody, _navigationSteering);
+            _chaseWalking = new EnemyChaseWalking(_ballShooter, _rigidbody);
             var telegraph = new EnemyTelegraph(_ballShooter);
             var attack = new BallShooterAttack(_ballShooter);
             var recover = new EnemyRecover(_ballShooter);

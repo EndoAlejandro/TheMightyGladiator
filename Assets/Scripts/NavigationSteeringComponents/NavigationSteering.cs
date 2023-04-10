@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NavigationSteeringComponents
 {
-    public class NavigationSteering : MonoBehaviour
+    /*public class NavigationSteering : MonoBehaviour
     {
         [Range(1f, 360f)]
         [SerializeField] private float visionAngle = 360f;
@@ -84,5 +84,5 @@ namespace NavigationSteeringComponents
             Gizmos.color = Color.green;
             Gizmos.DrawLine(originPos, originPos + BestDirection.direction * BestDirection.weight);
         }
-    }
+    }*/
 }

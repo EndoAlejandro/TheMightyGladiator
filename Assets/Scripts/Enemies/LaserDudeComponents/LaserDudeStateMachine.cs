@@ -1,6 +1,4 @@
-﻿using System;
-using Enemies.EnemiesSharedStates;
-using NavigationSteeringComponents;
+﻿using Enemies.EnemiesSharedStates;
 using StateMachineComponents;
 using UnityEngine;
 
@@ -11,7 +9,6 @@ namespace Enemies.LaserDudeComponents
         private LaserDude _laserDude;
         private Rigidbody _rigidbody;
         private Collider _collider;
-        private NavigationSteering _navigationSteering;
 
         private EnemySpawn _spawn;
         private EnemyDeath _death;
@@ -22,14 +19,13 @@ namespace Enemies.LaserDudeComponents
             _laserDude = GetComponent<LaserDude>();
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
-            _navigationSteering = GetComponent<NavigationSteering>();
         }
 
         protected override void StateMachine()
         {
             _spawn = new EnemySpawn();
             var patrol = new EnemyPatrol(_laserDude, _rigidbody);
-            _chaseWalking = new EnemyChaseWalking(_laserDude, _rigidbody, _navigationSteering);
+            _chaseWalking = new EnemyChaseWalking(_laserDude, _rigidbody);
             var telegraph = new EnemyLaserTelegraph(_laserDude);
             var attack = new EnemyLaserAttack(_laserDude);
             var recover = new EnemyRecover(_laserDude);

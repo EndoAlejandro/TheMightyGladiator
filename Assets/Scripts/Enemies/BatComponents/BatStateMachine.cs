@@ -13,7 +13,7 @@ namespace Enemies.BatComponents
         private Bat _bat;
         private Rigidbody _rigidbody;
         private Collider _collider;
-        private NavigationSteering _navigationSteering;
+        // private NavigationSteering _navigationSteering;
 
         private EnemyChaseWalking _chaseWalking;
         private EnemyStun _stun;
@@ -28,7 +28,7 @@ namespace Enemies.BatComponents
         {
             _spawn = new EnemySpawn();
             var patrol = new EnemyPatrol(_bat, _rigidbody);
-            _chaseWalking = new EnemyChaseWalking(_bat, _rigidbody, _navigationSteering);
+            _chaseWalking = new EnemyChaseWalking(_bat, _rigidbody);
             var telegraph = new BatTelegraph(_bat);
             var attack = new BatAttack(_bat, _rigidbody);
             _recover = new EnemyRecover(_bat);
@@ -101,7 +101,7 @@ namespace Enemies.BatComponents
         {
             _rigidbody = GetComponent<Rigidbody>();
             _bat = GetComponent<Bat>();
-            _navigationSteering = GetComponent<NavigationSteering>();
+            // _navigationSteering = GetComponent<NavigationSteering>();
             _collider = GetComponent<Collider>();
         }
     }

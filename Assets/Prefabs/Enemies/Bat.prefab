@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4172247088674783530}
   - component: {fileID: 4172247088674783528}
   - component: {fileID: -8896318584299551998}
-  - component: {fileID: 4172247088674783531}
   - component: {fileID: 3712559832740606679}
   - component: {fileID: 4172247088674783535}
   - component: {fileID: 4172247088674783529}
@@ -55,15 +54,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 1
+  ignoreGroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   maxHealth: 10
   speed: 2
   acceleration: 10
   stoppingDistance: 3
   rotationSpeed: 10
+  attackRotationSpeed: 5
+  detectionDistance: 5
+  segmentsAmount: 10
+  visionAngle: 360
+  yOffset: 1
+  navigationDetectionRange: 2
   damage: 1
   parryTimeWindow: 2
   telegraphTime: 1
   recoverTime: 1
+  chaseTime: 5
+  aoeRadius: 1
+  bulletPrefab: {fileID: 0}
+  mortarPrefab: {fileID: 0}
+  accuracy: 1
+  shootingAngle: 180
+  bulletSpeed: 2
+  shootRate: 1
+  bulletsPerRound: 6
+  roundsAmount: 4
   stunTime: 5
   getHitTime: 0.5
   deathTime: 2
@@ -71,7 +89,6 @@ MonoBehaviour:
   attackSpeed: 15
   distanceTolerance: 1.5
   attackTime: 0.2
-  detectionDistance: 5
 --- !u!114 &4172247088674783528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,25 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b883120e57ec457d8cc1c3298795bfc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4172247088674783531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4172247088674783533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cebe84b14a44be89e3cb4678e4180b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visionAngle: 360
-  segmentsAmount: 20
-  detectionRange: 2
-  yOffset: 0.25
-  obstacleLayerMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
 --- !u!95 &3712559832740606679
 Animator:
   serializedVersion: 4

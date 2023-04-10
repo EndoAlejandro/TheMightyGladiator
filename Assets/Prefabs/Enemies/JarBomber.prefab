@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5511189233948069032}
   - component: {fileID: 5511189233948069036}
   - component: {fileID: 5511189233948069035}
-  - component: {fileID: 5511189233948069037}
   - component: {fileID: 5511189233948069033}
   - component: {fileID: 5511189233948069034}
   m_Layer: 7
@@ -60,18 +59,30 @@ MonoBehaviour:
   acceleration: 10
   stoppingDistance: 8
   rotationSpeed: 100
+  attackRotationSpeed: 5
   detectionDistance: 8
+  segmentsAmount: 10
+  visionAngle: 360
+  yOffset: 1
+  navigationDetectionRange: 2
   damage: 1
   parryTimeWindow: 0.5
   telegraphTime: 1
   recoverTime: 1
+  chaseTime: 5
+  aoeRadius: 1
+  bulletPrefab: {fileID: 0}
+  mortarPrefab: {fileID: 0}
+  accuracy: 2
+  shootingAngle: 180
+  bulletSpeed: 2
+  shootRate: 1
+  bulletsPerRound: 6
+  roundsAmount: 4
   stunTime: 1
   getHitTime: 1
   deathTime: 1
   bombsAmount: 2
-  mortarBombPrefab: {fileID: 3504919690102820189, guid: 1d787f31288a4694c817cff0b618f818,
-    type: 3}
-  accuracy: 2
 --- !u!114 &5511189233948069035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,25 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d73b20c62744dd4383a1719b806c19f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5511189233948069037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5511189233948069079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cebe84b14a44be89e3cb4678e4180b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visionAngle: 360
-  segmentsAmount: 20
-  detectionRange: 2
-  yOffset: 0.25
-  obstacleLayerMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
 --- !u!136 &5511189233948069033
 CapsuleCollider:
   m_ObjectHideFlags: 0

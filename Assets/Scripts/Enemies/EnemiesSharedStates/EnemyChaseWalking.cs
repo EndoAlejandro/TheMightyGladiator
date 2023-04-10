@@ -10,7 +10,7 @@ namespace Enemies.EnemiesSharedStates
     {
         private readonly Enemy _enemy;
         private readonly Rigidbody _rigidbody;
-        private readonly NavigationSteering _navigationSteering;
+        // private readonly NavigationSteering _navigationSteering;
 
         private Vector3 _direction;
         private float _angleVision;
@@ -19,11 +19,13 @@ namespace Enemies.EnemiesSharedStates
         public bool CanSeePlayer { get; private set; }
         public bool PlayerInFront { get; private set; }
 
-        public EnemyChaseWalking(Enemy enemy, Rigidbody rigidbody, NavigationSteering navigationSteering)
+        public EnemyChaseWalking(Enemy enemy, Rigidbody rigidbody
+            // , NavigationSteering navigationSteering
+            )
         {
             _enemy = enemy;
             _rigidbody = rigidbody;
-            _navigationSteering = navigationSteering;
+            // _navigationSteering = navigationSteering;
         }
 
         public void Tick()
