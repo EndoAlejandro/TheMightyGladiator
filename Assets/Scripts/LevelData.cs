@@ -9,6 +9,9 @@ using UnityEngine.Serialization;
 public struct LevelData
 {
     [Header("Enemies")]
+    [SerializeField] private int enemiesPerWave;
+
+    [SerializeField] private int waves;
     [SerializeField] private Enemy[] enemies;
 
     [SerializeField] private Enemy boss;
@@ -17,9 +20,16 @@ public struct LevelData
     [SerializeField] private Biome biome;
 
     [SerializeField] private int floors;
-    [FormerlySerializedAs("initialBaseRoom")] [SerializeField] private InitialRoom initialRoom;
-    [FormerlySerializedAs("bossBaseRoom")] [SerializeField] private BossRoom bossRoom;
+
+    [FormerlySerializedAs("initialBaseRoom")] [SerializeField]
+    private InitialRoom initialRoom;
+
+    [FormerlySerializedAs("bossBaseRoom")] [SerializeField]
+    private BossRoom bossRoom;
+
     [SerializeField] private Room[] rooms;
+    public int EnemiesPerWave => enemiesPerWave;
+    public int Waves => waves;
     public int Floors => floors + 1;
     public InitialRoom InitialRoom => initialRoom;
     public BossRoom BossRoom => bossRoom;

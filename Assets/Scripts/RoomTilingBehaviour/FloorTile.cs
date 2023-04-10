@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Rooms;
+using UnityEngine;
 
 namespace RoomTilingBehaviour
 {
@@ -7,11 +8,22 @@ namespace RoomTilingBehaviour
         [SerializeField] private RandomizeFloorTile floorTilePrefab;
         [SerializeField] private SpikeHazard spikePrefab;
 
+        private BaseRoom _room;
+
         private void Awake()
         {
-            var noise = Mathf.PerlinNoise(transform.position.x, transform.position.y);
-            if (noise > 0.75f) Instantiate(spikePrefab, transform);
-            else Instantiate(floorTilePrefab, transform);
+            _room = GetComponentInParent<BaseRoom>();
+
+            if (_room is Room)
+            {
+                var noise = Mathf.PerlinNoise(transform.position.x, transform.position.y);
+                if (noise > 0.75f) Instantiate(spikePrefab, transform);
+                else Instantiate(floorTilePrefab, transform);
+            }
+            else
+            {
+                Instantiate(floorTilePrefab, transform);
+            }
         }
     }
 }

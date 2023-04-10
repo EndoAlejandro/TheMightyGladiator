@@ -54,8 +54,16 @@ MonoBehaviour:
   - {fileID: 569462598716781592, guid: 42c09ccfee2f5144eb016034090b811c, type: 3}
   - {fileID: 2953447951795480837, guid: 86c1105e175ac3144aef8b3161c7485a, type: 3}
   levels:
-  - enemies:
+  - enemiesPerWave: 8
+    waves: 3
+    enemies:
+    - {fileID: 2059322825249844429, guid: 28ec9696c52ba10439ca228e562fdc52, type: 3}
+    - {fileID: 7530001112276235161, guid: e5d2d02d9c14bcc448b309f4b1ac42db, type: 3}
     - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
+    - {fileID: 5511189233948069036, guid: 597ca0b6e07bba943878bcb8d6a130b2, type: 3}
+    - {fileID: 4938938494537808131, guid: ba58c67a18c935048aa677a2b56ee9e0, type: 3}
+    - {fileID: 5322186850165178263, guid: bc80e952e5165e644af68846888f8e1c, type: 3}
+    - {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48, type: 3}
     boss: {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
     biome: 0
     floors: 4
@@ -64,18 +72,23 @@ MonoBehaviour:
     bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,
       type: 3}
     rooms:
-    - {fileID: 5206439076357889521, guid: c7517cdb763354944826ff28e1dcaefd, type: 3}
-    - {fileID: 5206439076357889521, guid: cfdd4bfdfc94f38498e1b57ef83fd319, type: 3}
-  - enemies:
+    - {fileID: 5206439076357889521, guid: 6e594560649ed034f82362e85190b691, type: 3}
+  - enemiesPerWave: 8
+    waves: 3
+    enemies:
+    - {fileID: 2059322825249844429, guid: 28ec9696c52ba10439ca228e562fdc52, type: 3}
+    - {fileID: 7530001112276235161, guid: e5d2d02d9c14bcc448b309f4b1ac42db, type: 3}
     - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
-    - {fileID: 7500587482687819955, guid: 5082e44f3469edd41bb590a09f5310c2, type: 3}
+    - {fileID: 5511189233948069036, guid: 597ca0b6e07bba943878bcb8d6a130b2, type: 3}
+    - {fileID: 4938938494537808131, guid: ba58c67a18c935048aa677a2b56ee9e0, type: 3}
+    - {fileID: 5322186850165178263, guid: bc80e952e5165e644af68846888f8e1c, type: 3}
+    - {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48, type: 3}
     boss: {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
     biome: 0
-    floors: 1
+    floors: 4
     initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
       type: 3}
     bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,
       type: 3}
     rooms:
-    - {fileID: 5206439076357889521, guid: c7517cdb763354944826ff28e1dcaefd, type: 3}
-    - {fileID: 5206439076357889521, guid: cfdd4bfdfc94f38498e1b57ef83fd319, type: 3}
+    - {fileID: 5206439076357889521, guid: 6e594560649ed034f82362e85190b691, type: 3}

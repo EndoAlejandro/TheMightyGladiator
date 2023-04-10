@@ -34,29 +34,25 @@ namespace Enemies.JarBomberComponents
             _death = new EnemyDeath(_jarBomber, _rigidbody, _collider);
 
             stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
+            stateMachine.AddTransition(patrol, _chaseWalking, () => _jarBomber.PlayerDetected);
+
             stateMachine.AddTransition(_chaseWalking, telegraph, () => _chaseWalking.PlayerOnRange);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
             stateMachine.AddTransition(attack, recover, () => attack.Ended);
             stateMachine.AddTransition(recover, _chaseWalking, () => recover.Ended);
-            
+
             stateMachine.AddTransition(_death, _chaseWalking, () => _death.Ended);
         }
 
-        private void JarBomberOnPlayerOnRange() => stateMachine.SetState(_chaseWalking);
         private void JarBomberOnDead(Enemy enemy) => stateMachine.SetState(_death);
 
         private void OnEnable()
         {
-            _jarBomber.OnPlayerOnRange += JarBomberOnPlayerOnRange;
             _jarBomber.OnDead += JarBomberOnDead;
             stateMachine.SetState(_spawn);
         }
 
 
-        private void OnDisable()
-        {
-            _jarBomber.OnPlayerOnRange -= JarBomberOnPlayerOnRange;
-            _jarBomber.OnDead -= JarBomberOnDead;
-        }
+        private void OnDisable() => _jarBomber.OnDead -= JarBomberOnDead;
     }
 }

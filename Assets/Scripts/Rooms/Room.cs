@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using CustomUtils;
 using Enemies;
 using PlayerComponents;
-using Unity.AI.Navigation;
 using UnityEngine;
 using Upgrades;
 
@@ -10,14 +9,13 @@ namespace Rooms
 {
     public class Room : BaseRoom
     {
-        [SerializeField] private int maxEnemies = 2;
-        [SerializeField] private int waves = 2;
         [SerializeField] private Portal portal;
         [SerializeField] private Transform[] upgradePositions;
 
         private List<Enemy> _spawnedEnemies;
         private SpawnPoint[] _spawnPoints;
-        
+
+        private int _waves;
         private float _timer;
         private List<Upgrade> _upgrades;
 
@@ -33,16 +31,17 @@ namespace Rooms
         public override void Setup(LevelData levelData, Player player)
         {
             base.Setup(levelData, player);
+            _waves = levelData.Waves;
             NavMeshSurface.BuildNavMesh();
             SpawnEnemy();
         }
 
         private void SpawnEnemy()
         {
-            waves--;
+            _waves--;
             var spawnPointIndex = 0;
             _spawnPoints.Shuffle();
-            for (int i = 0; i < maxEnemies; i++)
+            for (int i = 0; i < LevelData.EnemiesPerWave; i++)
             {
                 int enemyIndex = Random.Range(0, LevelData.Enemies.Length);
                 StartCoroutine(
@@ -65,7 +64,7 @@ namespace Rooms
 
             if (_spawnedEnemies.Count == 0)
             {
-                if (waves > 0) SpawnEnemy();
+                if (_waves > 0) SpawnEnemy();
                 else SpawnUpgrades();
             }
         }

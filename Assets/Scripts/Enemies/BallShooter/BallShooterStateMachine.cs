@@ -34,6 +34,7 @@ namespace Enemies.BallShooter
 
             stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
 
+            stateMachine.AddTransition(patrol, _chaseWalking, () => _ballShooter.PlayerDetected);
             stateMachine.AddTransition(_chaseWalking, telegraph,
                 () => _chaseWalking.CanSeePlayer && _chaseWalking.PlayerOnRange && _chaseWalking.CanSeePlayer);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
@@ -44,20 +45,14 @@ namespace Enemies.BallShooter
         }
 
         private void BallShooterOnDead(Enemy enemy) => stateMachine.SetState(_death);
-        private void BallShooterOnPlayerOnRange() => stateMachine.SetState(_chaseWalking);
 
         private void OnEnable()
         {
             _ballShooter.OnDead += BallShooterOnDead;
-            _ballShooter.OnPlayerOnRange += BallShooterOnPlayerOnRange;
             stateMachine.SetState(_spawn);
         }
 
 
-        private void OnDisable()
-        {
-            _ballShooter.OnPlayerOnRange -= BallShooterOnPlayerOnRange;
-            _ballShooter.OnDead -= BallShooterOnDead;
-        }
+        private void OnDisable() => _ballShooter.OnDead -= BallShooterOnDead;
     }
 }

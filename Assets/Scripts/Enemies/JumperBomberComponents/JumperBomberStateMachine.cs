@@ -51,21 +51,14 @@ namespace Enemies.JumperBomberComponents
 
         private void JumperBomberOnDead(Enemy enemy) => stateMachine.SetState(_death);
 
-        private void JumperBomberOnPlayerOnRange()
-        {
-            // stateMachine.SetState(_initialJump);
-        }
-
         private void OnEnable()
         {
-            _jumperBomber.OnPlayerOnRange += JumperBomberOnPlayerOnRange;
             _jumperBomber.OnDead += JumperBomberOnDead;
             stateMachine.SetState(_spawn);
         }
 
         private void OnDisable()
         {
-            _jumperBomber.OnPlayerOnRange += JumperBomberOnPlayerOnRange;
             _jumperBomber.OnDead += JumperBomberOnDead;
         }
     }
