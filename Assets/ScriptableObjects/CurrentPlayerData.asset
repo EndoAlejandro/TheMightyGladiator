@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7add5e72ebf245259ee4571189a180ba, type: 3}
   m_Name: CurrentPlayerData
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  health: 10
+  maxHealth: 200
+  health: 200
   immunityTime: 0.25
   walkSpeed: 6
   acceleration: 10
