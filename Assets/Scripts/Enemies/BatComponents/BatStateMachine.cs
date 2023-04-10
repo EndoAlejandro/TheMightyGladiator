@@ -57,7 +57,6 @@ namespace Enemies.BatComponents
             _bat.OnParry += BatOnParry;
             _bat.OnAttackCollision += BatOnAttackCollision;
             _bat.OnDead += BatOnDead;
-            _bat.OnPlayerOnRange += BatOnPlayerOnRange;
 
             stateMachine.SetState(_spawn);
         }
@@ -68,12 +67,6 @@ namespace Enemies.BatComponents
             _bat.OnParry -= BatOnParry;
             _bat.OnAttackCollision -= BatOnAttackCollision;
             _bat.OnDead -= BatOnDead;
-            _bat.OnPlayerOnRange -= BatOnPlayerOnRange;
-        }
-
-        private void BatOnPlayerOnRange()
-        {
-            // stateMachine.SetState(_chaseWalking);
         }
 
         private void BatOnDead(Enemy enemy) => stateMachine.SetState(_death);

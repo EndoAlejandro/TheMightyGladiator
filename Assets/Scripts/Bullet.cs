@@ -10,7 +10,6 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 {
     private Rigidbody _rigidbody;
 
-    private float _damage;
     private float _speed;
     private float _turnSpeed;
 
@@ -37,7 +36,7 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 
     private void FixedUpdate()
     {
-        if (_followPlayer && Player.Instance != null)
+        if (_followPlayer && Player.Instance != null && !_reflected)
         {
             _playerDirection = Utils.NormalizedFlatDirection(Player.Instance.transform.position, transform.position);
             _rigidbody.velocity =
@@ -64,9 +63,9 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
             if (other.TryGetComponent(out Player player)) return;
 
             if (other.TryGetComponent(out Enemy enemy))
-                enemy.TakeDamage(other.ClosestPoint(transform.position), _damage);
+                enemy.TakeDamage(other.ClosestPoint(transform.position), Damage);
 
-            ReturnToPool();
+            OnHit();
         }
         else
         {
@@ -75,9 +74,14 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
             if (other.TryGetComponent(out Player player))
                 player.TryToGetDamageFromEnemy(this);
 
-            VfxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
-            ReturnToPool();
+            OnHit();
         }
+    }
+
+    private void OnHit()
+    {
+        VfxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
+        ReturnToPool();
     }
 
     protected override void OnDisable()

@@ -27,10 +27,6 @@ namespace Enemies.SpawnerComponents
             SpawnedBats = new List<Bat>();
         }
 
-        public override void Parry(Player player)
-        {
-        }
-
         public void SpawnBat(Vector3 position) => StartCoroutine(SpawnEnemyAfterSeconds(position));
 
         private IEnumerator SpawnEnemyAfterSeconds(Vector3 spawnPosition)

@@ -13,10 +13,7 @@ namespace Enemies.JarBomberComponents
 
         public JarBomberAttack(JarBomber jarBomber) : base(jarBomber) => _jarBomber = jarBomber;
 
-        public override void FixedTick()
-        {
-            Ended = true;
-        }
+        public override void FixedTick() => Ended = true;
 
         public override void OnEnter()
         {
