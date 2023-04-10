@@ -33,17 +33,11 @@ namespace Enemies.BlobComponents
         private void Attack()
         {
             Ended = true;
-            _directions = _blob.GetFanPatternDirections();
 
             var bullet = _blob.BulletPrefab.Get<Bullet>(_blob.transform.position + Vector3.up * 0.5f,
                 Quaternion.LookRotation(_blob.transform.forward));
             bullet.Setup(_blob.transform.forward, _blob.BulletSpeed, _blob.Damage, true, 10f);
-            /*foreach (var direction in _directions)
-            {
-                var bullet = _blob.BulletPrefab.Get<Bullet>(_blob.transform.position + Vector3.up * 0.5f,
-                    Quaternion.LookRotation(direction));
-                bullet.Setup(direction, _blob.BulletSpeed, _blob.Damage, true, 10f);
-            }*/
+
         }
 
         public void OnExit()

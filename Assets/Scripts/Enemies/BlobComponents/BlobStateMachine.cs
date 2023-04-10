@@ -11,12 +11,12 @@ namespace Enemies.BlobComponents
     {
         private Blob _blob;
         private Rigidbody _rigidbody;
-        private Player _player;
+        private Collider _collider;
 
         protected override void StateMachine()
         {
-            var idle = new BlobIdle(_blob, _rigidbody, _player);
-            var move = new BlobMove(_blob, _rigidbody, _player);
+            var idle = new BlobIdle(_blob, _rigidbody);
+            var move = new BlobMove(_blob, _rigidbody);
             var attack = new BlobAttack(_blob);
 
             stateMachine.SetState(idle);
@@ -32,7 +32,7 @@ namespace Enemies.BlobComponents
         {
             _blob = GetComponent<Blob>();
             _rigidbody = GetComponent<Rigidbody>();
-            _player = FindObjectOfType<Player>();
+            _collider = GetComponent<Collider>();
         }
     }
 
@@ -47,11 +47,10 @@ namespace Enemies.BlobComponents
 
         public bool Ended { get; private set; }
 
-        public BlobMove(Blob blob, Rigidbody rigidbody, Player player)
+        public BlobMove(Blob blob, Rigidbody rigidbody)
         {
             _blob = blob;
             _rigidbody = rigidbody;
-            _player = player;
             _path = new NavMeshPath();
         }
 

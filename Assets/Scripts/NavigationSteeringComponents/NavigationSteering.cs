@@ -28,6 +28,8 @@ namespace NavigationSteeringComponents
         private void OnEnable() => StartCoroutine(FindPath());
         private void OnDisable() => StopAllCoroutines();
 
+        
+
         private IEnumerator FindPath()
         {
             _playerDirection = Player.Instance == null

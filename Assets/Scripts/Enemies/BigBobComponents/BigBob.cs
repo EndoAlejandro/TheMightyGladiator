@@ -10,10 +10,6 @@ namespace Enemies.BigBobComponents
         public override event Action<Enemy> OnDead;
         public override event Action<Vector3, float> OnHit;
 
-        [SerializeField] private float yOffset = 0.5f;
-
-        public float YOffset => yOffset;
-
         private Collider _collider;
 
         private void Awake() => _collider = GetComponent<Collider>();

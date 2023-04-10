@@ -27,6 +27,13 @@ namespace Enemies
 
         [SerializeField] private float detectionDistance = 5f;
 
+        [Header("Navigation Steering")]
+        [SerializeField] private int segmentsAmount = 10;
+
+        [Range(0f, 360f)] [SerializeField] private float visionAngle = 360f;
+        [SerializeField] private float yOffset = 1f;
+        [SerializeField] private float navigationDetectionRange = 2f;
+
         [Header("Shared Attack")]
         [SerializeField] private int damage = 1;
 
@@ -66,6 +73,10 @@ namespace Enemies
         public float Speed => speed;
         public float BulletSpeed => bulletSpeed;
         public float ShootRate => shootRate;
+        public int SegmentsAmount => segmentsAmount;
+        public float VisionAngle => visionAngle;
+        public float YOffset => yOffset;
+        public float NavigationDetectionRange => navigationDetectionRange;
         public int BulletsPerRound => bulletsPerRound;
         public int RoundsAmount => roundsAmount;
         public float Acceleration => acceleration;

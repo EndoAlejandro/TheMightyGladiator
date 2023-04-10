@@ -37,6 +37,7 @@ namespace Enemies.BatComponents
             _death = new EnemyDeath(_bat, _rigidbody, _collider);
 
             stateMachine.AddTransition(_spawn, patrol, () => _spawn.Ended);
+            stateMachine.AddTransition(patrol, _chaseWalking, ()=> _bat.PlayerDetected);
 
             stateMachine.AddTransition(_chaseWalking, telegraph,
                 () => _chaseWalking.PlayerOnRange && _chaseWalking.CanSeePlayer && _chaseWalking.PlayerInFront);
@@ -70,7 +71,11 @@ namespace Enemies.BatComponents
             _bat.OnPlayerOnRange -= BatOnPlayerOnRange;
         }
 
-        private void BatOnPlayerOnRange() => stateMachine.SetState(_chaseWalking);
+        private void BatOnPlayerOnRange()
+        {
+            // stateMachine.SetState(_chaseWalking);
+        }
+
         private void BatOnDead(Enemy enemy) => stateMachine.SetState(_death);
 
         private void BatOnAttackCollision()

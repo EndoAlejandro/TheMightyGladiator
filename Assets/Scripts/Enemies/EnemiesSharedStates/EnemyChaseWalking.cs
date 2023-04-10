@@ -28,7 +28,7 @@ namespace Enemies.EnemiesSharedStates
 
         public void Tick()
         {
-            _direction = _navigationSteering.BestDirection.direction;
+            _direction = Utils.FindBestDirection(_enemy).direction; //_navigationSteering.BestDirection.direction;
             _enemy.transform.forward =
                 Vector3.Lerp(_enemy.transform.forward, _direction, _enemy.RotationSpeed * Time.deltaTime);
 

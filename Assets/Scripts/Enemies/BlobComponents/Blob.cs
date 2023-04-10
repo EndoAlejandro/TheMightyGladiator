@@ -14,8 +14,6 @@ namespace Enemies.BlobComponents
         [SerializeField] private float moveRate = 1.5f;
 
         [Header("Attack pattern")]
-        [Range(1, 20)]
-        [SerializeField] private int shotsAmount = 4;
 
         [Range(1f, 360f)]
         [SerializeField] private float shotAngle = 180f;
@@ -35,9 +33,6 @@ namespace Enemies.BlobComponents
 
         public override void Parry(Player player)
         {
-            // TODO: Implement parry behaviour.
         }
-
-        public Vector3[] GetFanPatternDirections() => Utils.GetFanPatternDirections(transform, shotsAmount, shotAngle);
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections;
+using Enemies;
+using NavigationSteeringComponents;
+using PlayerComponents;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -47,6 +50,48 @@ namespace CustomUtils
             return positions;
         }
 
+        public static DirectionWeight FindBestDirection(Enemy sourceEnemy)
+        {
+            var playerDirection = Player.Instance == null
+                ? sourceEnemy.transform.forward
+                : NormalizedFlatDirection(Player.Instance.transform.position, sourceEnemy.transform.position);
+            var directions = Utils.GetFanPatternDirections(sourceEnemy.transform, sourceEnemy.SegmentsAmount, sourceEnemy.VisionAngle);
+            var sample = new DirectionWeight[directions.Length];
+            var w = 0f;
+            
+            for (int i = 0; i < directions.Length; i++)
+            {
+                var result = Physics.Raycast(sourceEnemy.transform.position.Plus(y: sourceEnemy.YOffset), directions[i],
+                    out RaycastHit hit,
+                    sourceEnemy.NavigationDetectionRange/*, sourceEnemy.ObstacleLayerMask*/);
+
+                if (result)
+                {
+                    if (hit.transform.TryGetComponent(out Player player))
+                        w = 10;
+                    else if (hit.transform.TryGetComponent(out Enemy enemy))
+                        w = -1f;
+                }
+                else
+                {
+                    w = Utils.NormalizedDotProduct(directions[i], playerDirection) +
+                        Utils.NormalizedDotProduct(directions[i], sourceEnemy.transform.forward) + 1;
+                }
+
+                sample[i] = new DirectionWeight(directions[i], w);
+            }
+
+
+            var bestDirection = new DirectionWeight(directions[0], 0f);
+            foreach (var direction in sample)
+            {
+                if (direction.weight > bestDirection.weight)
+                    bestDirection = direction;
+            }
+
+            return bestDirection;
+        }
+        
         public static Vector3 FlatDirection(Vector3 to, Vector3 from)
         {
             to.y = 0f;

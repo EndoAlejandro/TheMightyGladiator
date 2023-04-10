@@ -21,11 +21,10 @@ namespace Enemies.BlobComponents
         public bool Ended => _timer <= 0f;
         public bool CanSeePlayer { get; private set; }
 
-        public BlobIdle(Blob blob, Rigidbody rigidbody, Player player)
+        public BlobIdle(Blob blob, Rigidbody rigidbody)
         {
             _blob = blob;
             _rigidbody = rigidbody;
-            _player = player;
             _path = new NavMeshPath();
         }
 
