@@ -1,4 +1,5 @@
-﻿using StateMachineComponents;
+﻿using FxComponents;
+using StateMachineComponents;
 using UnityEngine;
 
 namespace Enemies.AttackStates
@@ -30,6 +31,7 @@ namespace Enemies.AttackStates
             var bullet = _enemy.BulletPrefab.Get<Bullet>(_enemy.transform.position + Vector3.up, Quaternion.identity);
             bullet.Setup(_enemy.transform.forward, _enemy.BulletSpeed, 1);
             _rigidbody.AddForce(-_enemy.transform.forward, ForceMode.VelocityChange);
+            SfxManager.Instance.PlayFx(Sfx.BulletShot, _enemy.transform.position);
         }
 
         public void OnExit()

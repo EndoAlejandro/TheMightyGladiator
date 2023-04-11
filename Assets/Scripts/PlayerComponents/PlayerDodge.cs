@@ -1,4 +1,5 @@
-﻿using Inputs;
+﻿using FxComponents;
+using Inputs;
 using StateMachineComponents;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace PlayerComponents
 {
     public class PlayerDodge : IState
     {
-        private const float ExitDodgeTime = 0.5f;
+        private const float ExitDodgeTime = 0.25f;
 
         private readonly Player _player;
         private readonly Rigidbody _rigidbody;
@@ -38,8 +39,6 @@ namespace PlayerComponents
         public void FixedTick()
         {
             _currentDistance = GetDistance();
-            if (_currentDistance > _lastDistance) Ended = true;
-
             _rigidbody.AddForce(_direction * _player.DodgeSpeed * _player.Acceleration, ForceMode.Acceleration);
             _lastDistance = GetDistance();
         }
@@ -57,6 +56,7 @@ namespace PlayerComponents
 
             _targetPosition = _direction * _player.DodgeDistance + _player.transform.position;
             _lastDistance = GetDistance();
+            SfxManager.Instance.PlayFx(Sfx.Dash, _player.transform.position);
         }
 
         public void OnExit() => _player.SetDodgeState(false);
@@ -85,6 +85,7 @@ namespace PlayerComponents
         {
             _rigidbody.isKinematic = true;
             _collider.enabled = false;
+            SfxManager.Instance.PlayFx(Sfx.PlayerDeath, _collider.transform.position);
         }
 
         public void OnExit()

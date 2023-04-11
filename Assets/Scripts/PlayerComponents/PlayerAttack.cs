@@ -48,12 +48,13 @@ namespace PlayerComponents
                 _results,
                 _player.AttackLayerMask);
 
+            SfxManager.Instance.PlayFx(Sfx.SwordSlash, _player.transform.position);
             Vase closestVase = null;
             for (int i = 0; i < size; i++)
             {
                 var result = _results[i];
                 if (result == null) continue;
-                if (result.TryGetComponent(out Enemy enemy)) 
+                if (result.TryGetComponent(out Enemy enemy))
                     AttackEnemy(enemy, result);
 
                 if (result.TryGetComponent(out Vase vase))

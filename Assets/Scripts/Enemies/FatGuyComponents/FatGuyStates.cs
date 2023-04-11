@@ -131,6 +131,13 @@ namespace Enemies.FatGuyComponents
             base.OnEnter();
             Ended = false;
             _timer = 0.25f;
+            SfxManager.Instance.PlayFx(Sfx.JumpStart, _fatGuy.transform.position);
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            SfxManager.Instance.PlayFx(Sfx.JumpEnd, _fatGuy.transform.position);
         }
     }
 
@@ -157,6 +164,7 @@ namespace Enemies.FatGuyComponents
         {
             var position = _fatGuy.transform.position + Vector3.up * 1.5f;
             VfxManager.Instance.PlayFx(Vfx.Explosion, position);
+            SfxManager.Instance.PlayFx(Sfx.MortarShot, position);
             MainCamera.Instance.Shake(2f);
 
             var size = Physics.OverlapSphereNonAlloc(position, _fatGuy.StoppingDistance, _results);
@@ -190,6 +198,7 @@ namespace Enemies.FatGuyComponents
         public void OnEnter()
         {
             _directions = Utils.GetFanPatternDirections(_fatGuy.transform, _fatGuy.BulletsAmount, 360f);
+            SfxManager.Instance.PlayFx(Sfx.MortarShot, _fatGuy.transform.position);
 
             foreach (var direction in _directions)
             {

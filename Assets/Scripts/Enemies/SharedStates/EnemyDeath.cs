@@ -1,4 +1,5 @@
-﻿using StateMachineComponents;
+﻿using FxComponents;
+using StateMachineComponents;
 using UnityEngine;
 
 namespace Enemies.EnemiesSharedStates
@@ -22,6 +23,7 @@ namespace Enemies.EnemiesSharedStates
             timer = _enemy.DeathTime;
             _rigidbody.isKinematic = true;
             _collider.enabled = false;
+            SfxManager.Instance.PlayFx(Sfx.EnemyDeath, _enemy.transform.position);
         }
 
         public virtual void FixedTick()
@@ -33,6 +35,7 @@ namespace Enemies.EnemiesSharedStates
             base.OnExit();
             _rigidbody.isKinematic = false;
             _collider.enabled = true;
+            VfxManager.Instance.PlayFx(Vfx.EnemySpawn, _enemy.transform.position);
             _enemy.DeSpawn();
         }
     }

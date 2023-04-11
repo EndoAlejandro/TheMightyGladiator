@@ -19,9 +19,10 @@ namespace FxComponents
         [SerializeField] private AudioSource musicSource;
 
         [SerializeField] private AudioSource fxSource;
-        
+
         [Header("Audio Clips")]
         [SerializeField] private AudioClip swordSlashClip;
+
         [SerializeField] private AudioClip shieldHitClip;
         [SerializeField] private AudioClip dashClip;
         [SerializeField] private AudioClip playerHitClip;
@@ -91,7 +92,7 @@ namespace FxComponents
 
         private static float FromNormalizedToLog(float value) => Mathf.Log10(value / 10) * 20;
 
-        public void PlayClip(Sfx sfx, Vector3 position)
+        public void PlayFx(Sfx sfx, Vector3 position)
         {
             var sound = pooledSoundPrefab.Get<PooledSoundFx>(position, Quaternion.identity);
             sound.Setup(_listedSfx[sfx]);

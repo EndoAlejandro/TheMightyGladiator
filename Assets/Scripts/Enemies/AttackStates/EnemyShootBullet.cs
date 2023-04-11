@@ -1,4 +1,5 @@
 ﻿using CustomUtils;
+using FxComponents;
 using UnityEngine;
 
 namespace Enemies.EnemiesSharedStates
@@ -48,6 +49,7 @@ namespace Enemies.EnemiesSharedStates
                 bullet.Setup(direction, _enemy.BulletSpeed, _enemy.Damage);
             }
 
+            SfxManager.Instance.PlayFx(Sfx.BulletShot, _enemy.transform.position);
             if (_rounds <= 0) Ended = true;
         }
     }

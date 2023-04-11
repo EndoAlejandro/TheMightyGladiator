@@ -47,6 +47,7 @@ namespace PlayerComponents
                     if (!enemy.IsAttacking || !enemy.CanBeParried) continue;
                     enemy.Parry(_player);
                     PlayerParry();
+                    SfxManager.Instance.PlayFx(Sfx.ShieldHit, _player.transform.position);
                     VfxManager.Instance.PlayFx(Vfx.SwordCritical,
                         _player.transform.position + Vector3.up + _player.transform.forward * 0.5f);
                 }
@@ -54,6 +55,7 @@ namespace PlayerComponents
                 {
                     bullet.Parry();
                     PlayerParry();
+                    SfxManager.Instance.PlayFx(Sfx.ShieldHit, _player.transform.position);
                     VfxManager.Instance.PlayFx(Vfx.SwordCritical,
                         _player.transform.position + Vector3.up + _player.transform.forward * 0.5f);
                 }

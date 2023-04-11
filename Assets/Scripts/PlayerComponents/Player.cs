@@ -98,6 +98,7 @@ namespace PlayerComponents
 
         public void ShieldHit()
         {
+            SfxManager.Instance.PlayFx(Sfx.ShieldHit, transform.position);
             VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
             OnShieldHit?.Invoke();
         }
@@ -105,21 +106,21 @@ namespace PlayerComponents
         private void TakeDamage(Vector3 direction, int damageAmount)
         {
             Health -= damageAmount;
-            if (Health <= 0f)
-            {
-                OnDead?.Invoke();
-                VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(".#"),
-                    false);
-                VfxManager.Instance.PlayFx(Vfx.SwordCritical, transform.position + Vector3.up);
-                return;
-            }
 
+            SfxManager.Instance.PlayFx(Sfx.PlayerHit, transform.position);
             VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
             _immunityTimer = ImmunityTime;
 
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(direction * 15f, ForceMode.VelocityChange);
             OnHit?.Invoke();
+
+            if (!(Health <= 0f)) return;
+            
+            OnDead?.Invoke();
+            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(),
+                false);
+            VfxManager.Instance.PlayFx(Vfx.SwordCritical, transform.position + Vector3.up);
         }
 
         public void SetShieldActive(bool value) => _shieldActive = value;

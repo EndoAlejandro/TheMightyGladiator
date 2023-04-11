@@ -1,4 +1,5 @@
 ﻿using CustomUtils;
+using FxComponents;
 using PlayerComponents;
 using UnityEngine;
 using UnityEngine.AI;
@@ -34,6 +35,7 @@ namespace Enemies.JarBomberComponents
 
                 mortarBullet.Setup(target, 70f);
             }
+            SfxManager.Instance.PlayFx(Sfx.MortarShot, _enemy.transform.position);
         }
     }
 }

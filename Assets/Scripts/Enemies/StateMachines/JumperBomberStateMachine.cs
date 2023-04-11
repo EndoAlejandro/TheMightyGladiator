@@ -1,5 +1,6 @@
 using System;
 using Enemies.EnemiesSharedStates;
+using Enemies.MovementStates;
 using NavigationSteeringComponents;
 using StateMachineComponents;
 using UnityEngine;

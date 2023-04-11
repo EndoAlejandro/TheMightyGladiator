@@ -59,6 +59,7 @@ namespace Enemies.LaserDudeComponents
                 _lasers[i] = VfxManager.Instance.GetLaserTelegraph().Get<LaserVfx>();
                 _lasers[i].SetPosition(0, _enemy.transform.position + Vector3.up);
             }
+            SfxManager.Instance.PlayFx(Sfx.Laser, _enemy.transform.position);
         }
 
         public override void OnExit()

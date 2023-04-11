@@ -33,7 +33,7 @@ public enum Sfx
     EnemyDeath,
     JumpStart,
     JumpEnd,
-    Laser
+    Laser,
 }
 
 public enum UpgradeType

@@ -1,5 +1,6 @@
 ﻿using CustomUtils;
 using Enemies.EnemiesSharedStates;
+using FxComponents;
 using NavigationSteeringComponents;
 using PlayerComponents;
 using UnityEngine;
@@ -57,12 +58,14 @@ namespace Enemies.BatComponents
             _bat.SetIsAttacking(true);
             Ended = false;
             _timer = _bat.AttackTime;
+            SfxManager.Instance.PlayFx(Sfx.JumpStart, _bat.transform.position);
         }
 
         public override void OnExit()
         {
             _bat.SetIsAttacking(false);
             _rigidbody.velocity = Vector3.zero;
+            SfxManager.Instance.PlayFx(Sfx.JumpEnd, _bat.transform.position);
         }
     }
 
