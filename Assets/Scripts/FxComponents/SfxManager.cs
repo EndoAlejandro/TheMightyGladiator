@@ -36,6 +36,7 @@ namespace FxComponents
         [SerializeField] private AudioClip jumpStartClip;
         [SerializeField] private AudioClip jumpEndClip;
         [SerializeField] private AudioClip laserClip;
+        [SerializeField] private AudioClip uiClick;
 
         private Dictionary<Sfx, AudioClip> _listedSfx;
 
@@ -98,6 +99,8 @@ namespace FxComponents
             sound.Setup(_listedSfx[sfx]);
         }
 
+        public void PlayUI() => fxSource.PlayOneShot(uiClick);
+        
         public void PlayMusic(AudioClip clip)
         {
             musicSource.Stop();

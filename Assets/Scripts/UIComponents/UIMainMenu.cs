@@ -30,9 +30,7 @@ namespace UIComponents
 
         [SerializeField] private Button creditsReturnButton;
 
-
         private Animator _animator;
-
         private GameObject _activeMenu;
         private GameObject _nextMenu;
 
@@ -71,11 +69,16 @@ namespace UIComponents
             fxSlider.value = SaveSystem.GetVolume(SaveSystem.PrefsField.Fx);
         }
 
-        private void OnStartGameButtonPressed() => GameManager.Instance.LoadLobby();
+        private void OnStartGameButtonPressed()
+        {
+            SfxManager.Instance.PlayUI();
+            GameManager.Instance.LoadLobby();
+        }
 
         private void TriggerMenuChange(GameObject next)
         {
             _animator.SetTrigger(ChangeMenu);
+            SfxManager.Instance.PlayUI();
             _nextMenu = next;
         }
 
