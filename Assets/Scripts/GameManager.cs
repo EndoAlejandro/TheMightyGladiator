@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 public class GameManager : Singleton<GameManager>
 {
     public event Action OnGameOver;
+    public event Action<bool> OnGamePaused;
 
     [SerializeField] private Player playerPrefab;
 
@@ -26,6 +27,7 @@ public class GameManager : Singleton<GameManager>
 
     private LevelData _currentLevelData;
     public PlayerData DefaultPlayerData => defaultPlayerData;
+    private bool _isPaused;
 
     protected override void Awake()
     {
@@ -70,7 +72,11 @@ public class GameManager : Singleton<GameManager>
         LoadNextGameScene();
     }
 
-    public void LoadMainMenu() => StartCoroutine(LoadSceneAsync("MainMenu"));
+    public void LoadMainMenu()
+    {
+        Time.timeScale = 1f;
+        StartCoroutine(LoadSceneAsync("MainMenu"));
+    }
 
     public void StartDungeonPortalActivated()
     {
@@ -114,5 +120,16 @@ public class GameManager : Singleton<GameManager>
         return result.Take(amount).ToList();
     }
 
-    public void GameOver() => OnGameOver?.Invoke();
+    public void GameOver()
+    {
+        OnGameOver?.Invoke();
+        Time.timeScale = 0f;
+    }
+
+    public void PauseToggle()
+    {
+        _isPaused = !_isPaused;
+        Time.timeScale = _isPaused ? 0f : 1f;
+        OnGamePaused?.Invoke(_isPaused);
+    }
 }

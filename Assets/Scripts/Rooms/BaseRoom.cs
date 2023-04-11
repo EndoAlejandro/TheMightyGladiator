@@ -2,6 +2,7 @@
 using System.Collections;
 using Enemies;
 using FxComponents;
+using Inputs;
 using PlayerComponents;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -26,6 +27,11 @@ namespace Rooms
         }
 
         public abstract void RegisterEnemy(Enemy enemy);
+
+        private void Update()
+        {
+            if (InputReader.Instance.Pause) GameManager.Instance.PauseToggle();
+        }
 
         public virtual void Setup(LevelData levelData, Player player)
         {
