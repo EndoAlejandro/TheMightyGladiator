@@ -1,5 +1,6 @@
 using CustomUtils;
 using Enemies;
+using FxComponents;
 using PlayerComponents;
 using Pooling;
 using UnityEngine;
@@ -82,7 +83,7 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 
     private void OnHit()
     {
-        FxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
+        VfxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
         ReturnToPool();
     }
 

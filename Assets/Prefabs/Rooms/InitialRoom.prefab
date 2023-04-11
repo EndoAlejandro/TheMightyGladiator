@@ -483,6 +483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpawnPoint: {fileID: 5873530853359953872}
   spawnTime: 1
+  music: {fileID: 8300000, guid: b442123a67071894ca2beeb4a6185aae, type: 3}
 --- !u!114 &7028133579419018348
 MonoBehaviour:
   m_ObjectHideFlags: 0

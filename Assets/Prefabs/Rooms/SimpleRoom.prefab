@@ -1151,6 +1151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpawnPoint: {fileID: 5206439076723739095}
   spawnTime: 1
+  music: {fileID: 8300000, guid: d721df7dc685e7c46a01fd7f763d713f, type: 3}
   portal: {fileID: 767090981823085054}
   upgradePositions:
   - {fileID: 2714895118666873054}

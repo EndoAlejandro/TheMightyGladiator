@@ -1,5 +1,6 @@
 ﻿using System;
 using Enemies.EnemiesSharedStates;
+using FxComponents;
 using StateMachineComponents;
 using UnityEngine;
 using VfxComponents;
@@ -59,7 +60,7 @@ namespace Enemies.FatGuyComponents
 
         private void AoEFx()
         {
-            FxManager.Instance.PlayAoEFx(_fatGuy.transform.position, _fatGuy.TelegraphTime * 1.25f,
+            VfxManager.Instance.PlayAoEFx(_fatGuy.transform.position, _fatGuy.TelegraphTime * 1.25f,
                 _fatGuy.StoppingDistance);
         }
 

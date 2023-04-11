@@ -1,6 +1,7 @@
 ﻿using System;
 using CustomUtils;
 using Enemies.EnemiesSharedStates;
+using FxComponents;
 using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
@@ -155,7 +156,7 @@ namespace Enemies.FatGuyComponents
         public void OnEnter()
         {
             var position = _fatGuy.transform.position + Vector3.up * 1.5f;
-            FxManager.Instance.PlayFx(Vfx.Explosion, position);
+            VfxManager.Instance.PlayFx(Vfx.Explosion, position);
             MainCamera.Instance.Shake(2f);
 
             var size = Physics.OverlapSphereNonAlloc(position, _fatGuy.StoppingDistance, _results);

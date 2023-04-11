@@ -4898,6 +4898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialPoolSize: 10
   delay: 1
+  clip: {fileID: 8300000, guid: 2bd37df2fb96f4d978c1f706701ce87f, type: 3}
 --- !u!1001 &8426122317647540173
 PrefabInstance:
   m_ObjectHideFlags: 0

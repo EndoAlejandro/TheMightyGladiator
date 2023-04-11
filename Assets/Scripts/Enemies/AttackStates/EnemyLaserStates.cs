@@ -1,5 +1,6 @@
 ﻿using CustomUtils;
 using Enemies.EnemiesSharedStates;
+using FxComponents;
 using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
@@ -55,7 +56,7 @@ namespace Enemies.LaserDudeComponents
             base.OnEnter();
             for (var i = 0; i < _lasers.Length; i++)
             {
-                _lasers[i] = FxManager.Instance.GetLaserTelegraph().Get<LaserVfx>();
+                _lasers[i] = VfxManager.Instance.GetLaserTelegraph().Get<LaserVfx>();
                 _lasers[i].SetPosition(0, _enemy.transform.position + Vector3.up);
             }
         }
@@ -128,7 +129,7 @@ namespace Enemies.LaserDudeComponents
             timer = 10f;
             for (var i = 0; i < _lasers.Length; i++)
             {
-                _lasers[i] = FxManager.Instance.GetLaserAttack().Get<LaserVfx>();
+                _lasers[i] = VfxManager.Instance.GetLaserAttack().Get<LaserVfx>();
                 _lasers[i].SetPosition(0, _enemy.transform.position + Vector3.up);
             }
         }

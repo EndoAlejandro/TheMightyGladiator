@@ -18,6 +18,24 @@ public enum Vfx
     SplashJump
 }
 
+public enum Sfx
+{
+    SwordSlash,
+    ShieldHit,
+    Dash,
+    PlayerHit,
+    PlayerDeath,
+    EnemyHit,
+    BulletShot,
+    BulletHit,
+    MortarShot,
+    MortarHit,
+    EnemyDeath,
+    JumpStart,
+    JumpEnd,
+    Laser
+}
+
 public enum UpgradeType
 {
     Heal,

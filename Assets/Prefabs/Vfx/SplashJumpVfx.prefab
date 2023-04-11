@@ -4921,6 +4921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialPoolSize: 10
   delay: 1
+  clip: {fileID: 8300000, guid: a58e438b7cfa445498120af0e6169082, type: 3}
 --- !u!1 &8293582917491559948
 GameObject:
   m_ObjectHideFlags: 0

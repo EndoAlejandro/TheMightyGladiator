@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using CustomUtils;
+using FxComponents;
 using JetBrains.Annotations;
 using UnityEngine;
 using VfxComponents;
@@ -97,7 +98,7 @@ namespace PlayerComponents
 
         public void ShieldHit()
         {
-            FxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
+            VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
             OnShieldHit?.Invoke();
         }
 
@@ -107,13 +108,13 @@ namespace PlayerComponents
             if (Health <= 0f)
             {
                 OnDead?.Invoke();
-                FxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(".#"),
+                VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(".#"),
                     false);
-                FxManager.Instance.PlayFx(Vfx.SwordCritical, transform.position + Vector3.up);
+                VfxManager.Instance.PlayFx(Vfx.SwordCritical, transform.position + Vector3.up);
                 return;
             }
 
-            FxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
+            VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
             _immunityTimer = ImmunityTime;
 
             _rigidbody.velocity = Vector3.zero;

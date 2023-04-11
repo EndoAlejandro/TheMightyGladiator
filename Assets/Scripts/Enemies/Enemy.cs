@@ -1,4 +1,5 @@
 ﻿using System;
+using FxComponents;
 using PlayerComponents;
 using Pooling;
 using Rooms;
@@ -107,7 +108,7 @@ namespace Enemies
         {
             Health -= incomingDamage;
             OnHit?.Invoke(hitPoint, knockBack);
-            FxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
+            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
             if (!IsAlive) OnDead?.Invoke(this);
         }
 

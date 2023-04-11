@@ -1,6 +1,7 @@
 ﻿using CustomUtils;
 using Enemies;
 using Enemies.BatComponents;
+using FxComponents;
 using StateMachineComponents;
 using UnityEngine;
 using VfxComponents;
@@ -46,14 +47,14 @@ namespace PlayerComponents
                     if (!enemy.IsAttacking || !enemy.CanBeParried) continue;
                     enemy.Parry(_player);
                     PlayerParry();
-                    FxManager.Instance.PlayFx(Vfx.SwordCritical,
+                    VfxManager.Instance.PlayFx(Vfx.SwordCritical,
                         _player.transform.position + Vector3.up + _player.transform.forward * 0.5f);
                 }
                 else if (result.TryGetComponent(out Bullet bullet))
                 {
                     bullet.Parry();
                     PlayerParry();
-                    FxManager.Instance.PlayFx(Vfx.SwordCritical,
+                    VfxManager.Instance.PlayFx(Vfx.SwordCritical,
                         _player.transform.position + Vector3.up + _player.transform.forward * 0.5f);
                 }
             }

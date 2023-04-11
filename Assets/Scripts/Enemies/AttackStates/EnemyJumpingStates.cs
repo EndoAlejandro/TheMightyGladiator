@@ -1,4 +1,5 @@
 ﻿using CustomUtils;
+using FxComponents;
 using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
@@ -36,7 +37,7 @@ namespace Enemies.EnemiesSharedStates
             _rigidbody.isKinematic = true;
             Ended = false;
             _collider.enabled = false;
-            FxManager.Instance.PlayFx(Vfx.SplashJump, _enemy.transform.position);
+            VfxManager.Instance.PlayFx(Vfx.SplashJump, _enemy.transform.position);
         }
 
         public void OnExit() => _enemy.transform.position = _enemy.transform.position.With(y: Constants.JUMP_HEIGHT);

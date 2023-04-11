@@ -135,7 +135,6 @@ GameObject:
   m_Component:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
-  - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
   m_Layer: 0
@@ -145,14 +144,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &330585544
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
 --- !u!20 &330585545
 Camera:
   m_ObjectHideFlags: 0
@@ -943,7 +934,9 @@ MonoBehaviour:
   defaultPlayerData: {fileID: 0}
   upgrades: []
   levels:
-  - enemies:
+  - enemiesPerWave: 0
+    waves: 0
+    enemies:
     - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
     boss: {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
     biome: 0

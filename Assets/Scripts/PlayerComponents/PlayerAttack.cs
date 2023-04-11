@@ -1,5 +1,6 @@
 ﻿using CustomUtils;
 using Enemies;
+using FxComponents;
 using StateMachineComponents;
 using UnityEngine;
 using VfxComponents;
@@ -71,7 +72,7 @@ namespace PlayerComponents
 
             if (closestVase == null) return;
             closestVase.TakeDamage(1f);
-            FxManager.Instance.PlayFx(Vfx.Sword, closestVase.transform.position);
+            VfxManager.Instance.PlayFx(Vfx.Sword, closestVase.transform.position);
         }
 
         private void AttackEnemy(Enemy enemy, Collider result)
@@ -91,7 +92,7 @@ namespace PlayerComponents
 
             enemy.TakeDamage(result.ClosestPoint(_player.transform.position), _player.Damage * multiplier,
                 _player.KnockBackForce);
-            FxManager.Instance.PlayFx(fx, point);
+            VfxManager.Instance.PlayFx(fx, point);
             MainCamera.Instance.Shake(isCritical ? 1 : 0.5f);
         }
 

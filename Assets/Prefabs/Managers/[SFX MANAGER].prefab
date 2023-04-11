@@ -46,12 +46,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571657b24cb66d04fac72aeb25fde9bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pooledSoundPrefab: {fileID: 1224285292697731393, guid: 34501a3601471fc44b8c5a0f11446eb4,
+    type: 3}
   masterGroup: {fileID: 24300002, guid: b3fe0fb530545e74d8e6b39c7a818210, type: 2}
   musicGroup: {fileID: 5710897261623580369, guid: b3fe0fb530545e74d8e6b39c7a818210,
     type: 2}
   fXGroup: {fileID: 7600607432457303840, guid: b3fe0fb530545e74d8e6b39c7a818210, type: 2}
   musicSource: {fileID: 943645415}
   fxSource: {fileID: 943645414}
+  swordSlashClip: {fileID: 8300000, guid: 01999991d21504b5abb7a554bba05227, type: 3}
+  shieldHitClip: {fileID: 8300000, guid: 06c64f23c57574a3baa74cfd01f6b940, type: 3}
+  dashClip: {fileID: 8300000, guid: 1785fff83652f42399d9b2017b05656c, type: 3}
+  playerHitClip: {fileID: 8300000, guid: 90115a0fe3e8b4e098b1111cc014a9cc, type: 3}
+  playerDeathClip: {fileID: 8300000, guid: 68a4d3b8869e442398b2fae15bc7c50b, type: 3}
+  enemyHitClip: {fileID: 8300000, guid: e1c46311240d04071ad00f2e40cc164e, type: 3}
+  bulletShotClip: {fileID: 8300000, guid: a15c0f3fe74004cf89b51cfd5604f582, type: 3}
+  bulletHitClip: {fileID: 8300000, guid: 89001e92ca492453599bb2bc49326e85, type: 3}
+  mortarShotClip: {fileID: 8300000, guid: cbabab23c893648bda632823ccbe5d31, type: 3}
+  mortarHitClip: {fileID: 8300000, guid: 670023a95d5524aa79ad7583b1534d22, type: 3}
+  enemyDeathClip: {fileID: 8300000, guid: 3db1284c00dd04218991196e8edbee63, type: 3}
+  jumpStartClip: {fileID: 8300000, guid: 076c674d9627d49d7bc9428ecb754613, type: 3}
+  jumpEndClip: {fileID: 8300000, guid: cdfae31f0b58546d3ac1015effc38f01, type: 3}
+  laserClip: {fileID: 8300000, guid: a15c0f3fe74004cf89b51cfd5604f582, type: 3}
 --- !u!82 &943645415
 AudioSource:
   m_ObjectHideFlags: 0
@@ -65,7 +81,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -162,7 +178,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0

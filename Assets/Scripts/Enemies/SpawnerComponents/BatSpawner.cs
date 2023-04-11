@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Enemies.BatComponents;
+using FxComponents;
 using PlayerComponents;
 using UnityEngine;
 using VfxComponents;
@@ -31,14 +32,14 @@ namespace Enemies.SpawnerComponents
 
         private IEnumerator SpawnEnemyAfterSeconds(Vector3 spawnPosition)
         {
-            FxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition);
+            VfxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition);
             yield return new WaitForSeconds(1f);
 
             var spawnedBat = batPrefab.Get<Bat>(spawnPosition, Quaternion.identity);
             Room.RegisterEnemy(spawnedBat);
             spawnedBat.OnDead += SpawnedBatOnDead;
             SpawnedBats.Add(spawnedBat);
-            FxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
+            VfxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
         }
 
         private void SpawnedBatOnDead(Enemy enemy)

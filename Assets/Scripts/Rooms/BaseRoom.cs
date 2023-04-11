@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Enemies;
+using FxComponents;
 using PlayerComponents;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Rooms
     {
         [SerializeField] private Transform playerSpawnPoint;
         [SerializeField] private float spawnTime = 1f;
+        [SerializeField] private AudioClip music;
         protected Player Player { get; private set; }
         protected LevelData LevelData { get; private set; }
         public NavMeshSurface NavMeshSurface { get; private set; }
@@ -30,16 +32,17 @@ namespace Rooms
             LevelData = levelData;
             Player = Instantiate(player, playerSpawnPoint.position, Quaternion.identity);
             MainCamera.Instance.SetTarget(Player.transform);
+            SfxManager.Instance.PlayMusic(music);
         }
 
         protected IEnumerator SpawnEnemyAfterSeconds(Enemy enemyPrefab, Vector3 spawnPosition,
             float spawnCircleSize = 1f)
         {
-            FxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition, spawnCircleSize);
+            VfxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition, spawnCircleSize);
             yield return new WaitForSeconds(spawnTime);
             var enemy = enemyPrefab.Get<Enemy>(spawnPosition, Quaternion.identity);
             RegisterEnemy(enemy);
-            FxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
+            VfxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
         }
     }
 }

@@ -4894,3 +4894,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialPoolSize: 10
   delay: 1
+  clip: {fileID: 8300000, guid: 0d5dab2d9e8a04cb8a1b06c583193e55, type: 3}

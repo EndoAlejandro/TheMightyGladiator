@@ -14671,7 +14671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialPoolSize: 5
   delay: 1
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: af66162561d2eed40ad49268cab318bb, type: 3}
 --- !u!198 &8205777393493567994
 ParticleSystem:
   m_ObjectHideFlags: 0
