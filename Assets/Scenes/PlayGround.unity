@@ -204,7 +204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: -15.22, y: 11.45, z: -10.57}
+  m_LocalPosition: {x: 2.58, y: 11.45, z: -16.869999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -507,7 +507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631661442}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: -15.22, y: 11.45, z: -10.57}
+  m_LocalPosition: {x: 2.58, y: 11.45, z: -16.869999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -738,7 +738,7 @@ PrefabInstance:
     - target: {fileID: 907134496875557506, guid: 2153ec18300e5e44a974b1d2a7368bae,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.22
+      value: 2.58
       objectReference: {fileID: 0}
     - target: {fileID: 907134496875557506, guid: 2153ec18300e5e44a974b1d2a7368bae,
         type: 3}
@@ -748,7 +748,7 @@ PrefabInstance:
     - target: {fileID: 907134496875557506, guid: 2153ec18300e5e44a974b1d2a7368bae,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.88
+      value: -5.42
       objectReference: {fileID: 0}
     - target: {fileID: 907134496875557506, guid: 2153ec18300e5e44a974b1d2a7368bae,
         type: 3}
@@ -789,31 +789,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: _Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3489703674722451430, guid: 2153ec18300e5e44a974b1d2a7368bae,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3838a4856db7a9d4a8a09fa41c27ad64, type: 2}
-    - target: {fileID: 5952847815449807445, guid: 2153ec18300e5e44a974b1d2a7368bae,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 430711291ebbf8d459141b141327d8bb, type: 2}
-    - target: {fileID: 5952847815449807445, guid: 2153ec18300e5e44a974b1d2a7368bae,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 430711291ebbf8d459141b141327d8bb, type: 2}
-    - target: {fileID: 6337411940836450472, guid: 2153ec18300e5e44a974b1d2a7368bae,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3838a4856db7a9d4a8a09fa41c27ad64, type: 2}
-    - target: {fileID: 7332038479754769241, guid: 2153ec18300e5e44a974b1d2a7368bae,
-        type: 3}
-      propertyPath: looping
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2153ec18300e5e44a974b1d2a7368bae, type: 3}
@@ -1092,7 +1067,9 @@ MonoBehaviour:
   defaultPlayerData: {fileID: 0}
   upgrades: []
   levels:
-  - enemies:
+  - enemiesPerWave: 0
+    waves: 0
+    enemies:
     - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
     boss: {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
     biome: 0
