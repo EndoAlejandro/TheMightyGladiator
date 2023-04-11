@@ -59,7 +59,7 @@ MonoBehaviour:
     type: 3}
   normalSpawnCircle: {fileID: 2561271797263224521, guid: 45f7a73e18440b84590e872996ce27ee,
     type: 3}
-  enemySpawn: {fileID: 6971114046201472792, guid: fc2e139c4e026024185b7f0d2948e02d,
+  enemySpawn: {fileID: 8345324034223925108, guid: a87cdaa3cea88bb478fa9a9f5d26b3a6,
     type: 3}
   floatingText: {fileID: 579982764298065617, guid: 7113d7f266e206742af2473d94e9d9a3,
     type: 3}

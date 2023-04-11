@@ -5,6 +5,11 @@ namespace Pooling
     public sealed class PoolAfterSeconds : PooledMonoBehaviour
     {
         [SerializeField] private float delay;
-        private void OnEnable() => ReturnToPool(delay);
+        [SerializeField] private AudioClip clip;
+        private void OnEnable()
+        {
+            if (clip != null) SfxManager.Instance.PlayClip(clip);
+            ReturnToPool(delay);
+        }
     }
 }

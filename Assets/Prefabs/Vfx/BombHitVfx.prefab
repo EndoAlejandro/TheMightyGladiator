@@ -14628,9 +14628,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6151810227874578336}
+  - component: {fileID: 8016212831241806459}
   - component: {fileID: 8205777393493567994}
   - component: {fileID: 484998521558405137}
-  - component: {fileID: 8016212831241806459}
   m_Layer: 0
   m_Name: BombHitVfx
   m_TagString: Untagged
@@ -14657,6 +14657,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8016212831241806459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8016212831241806456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d720c45ae88ac8b46838344435137ef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialPoolSize: 5
+  delay: 1
+  clip: {fileID: 0}
 --- !u!198 &8205777393493567994
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -19504,20 +19519,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &8016212831241806459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8016212831241806456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d720c45ae88ac8b46838344435137ef5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialPoolSize: 5
-  delay: 1
 --- !u!1 &8464862106273879400
 GameObject:
   m_ObjectHideFlags: 0

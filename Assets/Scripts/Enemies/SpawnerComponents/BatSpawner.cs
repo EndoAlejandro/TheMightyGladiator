@@ -31,14 +31,14 @@ namespace Enemies.SpawnerComponents
 
         private IEnumerator SpawnEnemyAfterSeconds(Vector3 spawnPosition)
         {
-            VfxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition);
+            FxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition);
             yield return new WaitForSeconds(1f);
 
             var spawnedBat = batPrefab.Get<Bat>(spawnPosition, Quaternion.identity);
             Room.RegisterEnemy(spawnedBat);
             spawnedBat.OnDead += SpawnedBatOnDead;
             SpawnedBats.Add(spawnedBat);
-            VfxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
+            FxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
         }
 
         private void SpawnedBatOnDead(Enemy enemy)

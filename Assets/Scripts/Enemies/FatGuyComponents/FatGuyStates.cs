@@ -155,7 +155,7 @@ namespace Enemies.FatGuyComponents
         public void OnEnter()
         {
             var position = _fatGuy.transform.position + Vector3.up * 1.5f;
-            VfxManager.Instance.PlayFx(Vfx.Explosion, position);
+            FxManager.Instance.PlayFx(Vfx.Explosion, position);
             MainCamera.Instance.Shake(2f);
 
             var size = Physics.OverlapSphereNonAlloc(position, _fatGuy.StoppingDistance, _results);

@@ -59,7 +59,7 @@ namespace Enemies.FatGuyComponents
 
         private void AoEFx()
         {
-            VfxManager.Instance.PlayAoEFx(_fatGuy.transform.position, _fatGuy.TelegraphTime * 1.25f,
+            FxManager.Instance.PlayAoEFx(_fatGuy.transform.position, _fatGuy.TelegraphTime * 1.25f,
                 _fatGuy.StoppingDistance);
         }
 

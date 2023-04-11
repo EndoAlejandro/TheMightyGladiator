@@ -107,7 +107,7 @@ namespace Enemies
         {
             Health -= incomingDamage;
             OnHit?.Invoke(hitPoint, knockBack);
-            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
+            FxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
             if (!IsAlive) OnDead?.Invoke(this);
         }
 

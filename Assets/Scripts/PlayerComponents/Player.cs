@@ -97,7 +97,7 @@ namespace PlayerComponents
 
         public void ShieldHit()
         {
-            VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
+            FxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
             OnShieldHit?.Invoke();
         }
 
@@ -107,13 +107,13 @@ namespace PlayerComponents
             if (Health <= 0f)
             {
                 OnDead?.Invoke();
-                VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(".#"),
+                FxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(".#"),
                     false);
-                VfxManager.Instance.PlayFx(Vfx.SwordCritical, transform.position + Vector3.up);
+                FxManager.Instance.PlayFx(Vfx.SwordCritical, transform.position + Vector3.up);
                 return;
             }
 
-            VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
+            FxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
             _immunityTimer = ImmunityTime;
 
             _rigidbody.velocity = Vector3.zero;

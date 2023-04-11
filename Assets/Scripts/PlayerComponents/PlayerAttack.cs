@@ -71,7 +71,7 @@ namespace PlayerComponents
 
             if (closestVase == null) return;
             closestVase.TakeDamage(1f);
-            VfxManager.Instance.PlayFx(Vfx.Sword, closestVase.transform.position);
+            FxManager.Instance.PlayFx(Vfx.Sword, closestVase.transform.position);
         }
 
         private void AttackEnemy(Enemy enemy, Collider result)
@@ -91,7 +91,7 @@ namespace PlayerComponents
 
             enemy.TakeDamage(result.ClosestPoint(_player.transform.position), _player.Damage * multiplier,
                 _player.KnockBackForce);
-            VfxManager.Instance.PlayFx(fx, point);
+            FxManager.Instance.PlayFx(fx, point);
             MainCamera.Instance.Shake(isCritical ? 1 : 0.5f);
         }
 

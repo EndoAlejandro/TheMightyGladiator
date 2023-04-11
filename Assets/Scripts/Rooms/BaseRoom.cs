@@ -35,11 +35,11 @@ namespace Rooms
         protected IEnumerator SpawnEnemyAfterSeconds(Enemy enemyPrefab, Vector3 spawnPosition,
             float spawnCircleSize = 1f)
         {
-            VfxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition, spawnCircleSize);
+            FxManager.Instance.PlayFx(Vfx.SpawnCircle, spawnPosition, spawnCircleSize);
             yield return new WaitForSeconds(spawnTime);
             var enemy = enemyPrefab.Get<Enemy>(spawnPosition, Quaternion.identity);
             RegisterEnemy(enemy);
-            VfxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
+            FxManager.Instance.PlayFx(Vfx.EnemySpawn, spawnPosition + Vector3.up);
         }
     }
 }

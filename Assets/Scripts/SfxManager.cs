@@ -49,4 +49,10 @@ public class SfxManager : Singleton<SfxManager>
         group.audioMixer.SetFloat(group.name + "Volume", FromNormalizedToLog(value));
 
     private static float FromNormalizedToLog(float value) => Mathf.Log10(value / 10) * 20;
+
+    public void PlayClip(AudioClip clip)
+    {
+        fxSource.Stop();
+        fxSource.PlayOneShot(clip);
+    }
 }

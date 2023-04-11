@@ -36,7 +36,7 @@ namespace Enemies.EnemiesSharedStates
             _rigidbody.isKinematic = true;
             Ended = false;
             _collider.enabled = false;
-            VfxManager.Instance.PlayFx(Vfx.SplashJump, _enemy.transform.position);
+            FxManager.Instance.PlayFx(Vfx.SplashJump, _enemy.transform.position);
         }
 
         public void OnExit() => _enemy.transform.position = _enemy.transform.position.With(y: Constants.JUMP_HEIGHT);

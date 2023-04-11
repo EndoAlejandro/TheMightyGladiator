@@ -36,7 +36,7 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.transform.TryGetComponent(out Enemy enemy)) return;
-        VfxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
+        FxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
         if (_hitPredictionFx != null) _hitPredictionFx.ReturnToPool();
 
         var size = Physics.OverlapSphereNonAlloc(transform.position, 1f, _results);
@@ -65,7 +65,7 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
     public void Setup(Vector3 target, float angle)
     {
         var velocity = Utils.BallisticVelocity(transform.position, target, angle);
-        _hitPredictionFx = VfxManager.Instance.PlayHitPointPredictionFx(target);
+        _hitPredictionFx = FxManager.Instance.PlayHitPointPredictionFx(target);
         _rigidbody.velocity = velocity;
     }
 

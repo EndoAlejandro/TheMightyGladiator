@@ -82,7 +82,7 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 
     private void OnHit()
     {
-        VfxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
+        FxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
         ReturnToPool();
     }
 

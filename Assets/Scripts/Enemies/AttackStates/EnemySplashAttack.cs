@@ -26,7 +26,7 @@ namespace Enemies
         public void OnEnter()
         {
             Ended = false;
-            VfxManager.Instance.PlayFx(Vfx.Splash, _enemy.transform.position);
+            FxManager.Instance.PlayFx(Vfx.Splash, _enemy.transform.position);
             var size =Physics.OverlapSphereNonAlloc(_enemy.transform.position, _enemy.AoeRadius, _results);
 
             for (int i = 0; i < size; i++)
