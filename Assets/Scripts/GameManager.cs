@@ -66,12 +66,18 @@ public class GameManager : Singleton<GameManager>
 
             if (CurrentLevel >= levels.Length)
             {
-                LoadMainMenu();
+                LoadGameFinished();
                 return;
             }
         }
 
         LoadNextGameScene();
+    }
+
+    private void LoadGameFinished()
+    {
+        SaveSystem.SetProgress(new Vector2Int());
+        StartCoroutine(LoadSceneAsync("GameOver"));
     }
 
     public void LoadMainMenu()
@@ -108,21 +114,6 @@ public class GameManager : Singleton<GameManager>
     {
         yield return SceneManager.LoadSceneAsync(sceneName);
         callback?.Invoke();
-    }
-
-    public List<Upgrade> GetUpgrades(int amount)
-    {
-        var upgradesList = upgrades.ToList();
-        var result = new List<Upgrade>(upgradesList);
-        if (Player.Instance.CanBeHealed)
-            foreach (var upgrade in upgradesList.Where(upgrade => upgrade.UpgradeType == UpgradeType.Heal))
-            {
-                result.Remove(upgrade);
-                break;
-            }
-
-        result.Shuffle();
-        return result.Take(amount).ToList();
     }
 
     public void GameOver()

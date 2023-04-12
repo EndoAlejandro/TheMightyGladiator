@@ -6,14 +6,14 @@ using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.VFX;
-using VfxComponents;
 using Random = UnityEngine.Random;
 
 namespace Enemies.FatGuyComponents
 {
     public class BossIdle : IState
     {
+        public override string ToString() => "Idle";
+
         private readonly BossEnemy _bossEnemy;
         private readonly Rigidbody _rigidbody;
 
@@ -145,6 +145,8 @@ namespace Enemies.FatGuyComponents
 
     public class BossAoeAttack : IState
     {
+        public override string ToString() => "Attack";
+
         private readonly BossEnemy _bossEnemy;
         private readonly Collider[] _results;
 

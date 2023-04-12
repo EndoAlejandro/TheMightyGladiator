@@ -17,6 +17,7 @@ namespace UIComponents
         [SerializeField] private TMP_Text startGameText;
         [SerializeField] private Button startGameButton;
         [SerializeField] private Button optionsButton;
+        [SerializeField] private Button controlsButton;
         [SerializeField] private Button creditsButton;
         [SerializeField] private Button exitGameButton;
 
@@ -28,6 +29,10 @@ namespace UIComponents
         [SerializeField] private Slider fxSlider;
         [SerializeField] private Button optionsReturnButton;
 
+        [Header("Controls")]
+        [SerializeField] private GameObject controlsMenuContainer;
+        [SerializeField] private Button controlsReturnButton;
+        
         [Header("Credits")]
         [SerializeField] private GameObject creditsMenuContainer;
 
@@ -42,11 +47,13 @@ namespace UIComponents
             _animator = GetComponent<Animator>();
             mainMenuContainer.SetActive(false);
             optionsMenuContainer.SetActive(false);
+            controlsMenuContainer.SetActive(false);
             creditsMenuContainer.SetActive(false);
 
             // Main Menu
             startGameButton.onClick.AddListener(OnStartGameButtonPressed);
             optionsButton.onClick.AddListener(() => TriggerMenuChange(optionsMenuContainer));
+            controlsButton.onClick.AddListener(() => TriggerMenuChange(controlsMenuContainer));
             creditsButton.onClick.AddListener(() => TriggerMenuChange(creditsMenuContainer));
             exitGameButton.onClick.AddListener(Application.Quit);
 
@@ -59,6 +66,9 @@ namespace UIComponents
             fxSlider.onValueChanged.AddListener(
                 (value) => SfxManager.Instance.SetMixerGroupVolume(SaveSystem.PrefsField.Fx, value));
 
+            // Controls
+            controlsReturnButton.onClick.AddListener(() => TriggerMenuChange(mainMenuContainer));
+            
             // Credits
             creditsReturnButton.onClick.AddListener(() => TriggerMenuChange(mainMenuContainer));
         }
