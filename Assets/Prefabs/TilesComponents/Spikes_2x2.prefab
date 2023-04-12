@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4cfc19ae6a4ce9a217288a93ce9b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activationTime: 2
-  activeTime: 4
+  activationTime: 1
+  activeTime: 2
   damage: 1
   spikes:
   - {fileID: 7692357461792391448}

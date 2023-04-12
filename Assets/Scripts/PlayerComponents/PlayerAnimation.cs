@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using FxComponents;
 using Pooling;
 using StateMachineComponents;
 using UnityEngine;
@@ -44,6 +46,7 @@ namespace PlayerComponents
         private Rigidbody _rigidbody;
 
         private IState _state;
+        private static readonly int Teleport = Animator.StringToHash("Teleport");
 
         private void Awake()
         {
@@ -58,23 +61,32 @@ namespace PlayerComponents
             _shieldTargetScale = Vector3.one * shieldIdleScale;
 
             _player.OnHit += PlayerOnHit;
-            _player.OnDealDamage += PlayerOnDealDamage;
             _player.OnParry += PlayerOnParry;
             _player.OnShieldHit += PlayerOnShieldHit;
+            _player.OnTeleport += PlayerOnTeleport;
             _playerStateMachine.OnEntityStateChanged += PlayerStateMachineOnEntityStateChanged;
         }
 
-        private void PlayerOnDealDamage(Vector3 hitPoint) => hitFx.Get<PoolAfterSeconds>(hitPoint, Quaternion.identity);
+        private void OnDestroy()
+        {
+            _player.OnHit -= PlayerOnHit;
+            _player.OnParry -= PlayerOnParry;
+            _player.OnShieldHit -= PlayerOnShieldHit;
+            _player.OnTeleport -= PlayerOnTeleport;
+            _playerStateMachine.OnEntityStateChanged -= PlayerStateMachineOnEntityStateChanged;
+        }
+
+        private void PlayerOnTeleport()
+        {
+            _animator.SetLayerWeight(1, 0f);
+            _animator.SetTrigger(Teleport);
+        }
 
         private void PlayerOnShieldHit()
         {
             _animator.SetTrigger(ShieldHit);
             if (_state is PlayerShield)
                 shieldTransform.localScale = Vector3.one * 2;
-        }
-
-        private void OnParryEvent()
-        {
         }
 
         private IEnumerator SlowTime()
@@ -143,6 +155,12 @@ namespace PlayerComponents
             if (Vector3.Distance(shieldTransform.localScale, _shieldTargetScale) > 0.1f)
                 shieldTransform.localScale = Vector3.Lerp(shieldTransform.localScale, _shieldTargetScale,
                     Time.deltaTime * shieldSizeAnimationSpeed);
+        }
+
+        private void OnTeleportAnimation()
+        {
+            VfxManager.Instance.PlayFx(Vfx.UpgradeSpawn, transform.position);
+            SfxManager.Instance.PlayFx(Sfx.UpgradeSpawn, transform.position);
         }
 
         private void Walking()

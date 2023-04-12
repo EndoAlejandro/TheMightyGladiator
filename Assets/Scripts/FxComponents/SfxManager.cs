@@ -21,8 +21,9 @@ namespace FxComponents
         [SerializeField] private AudioSource fxSource;
 
         [Header("Audio Clips")]
-        [SerializeField] private AudioClip swordSlashClip;
+        [SerializeField] private AudioClip uiClick;
 
+        [SerializeField] private AudioClip swordSlashClip;
         [SerializeField] private AudioClip shieldHitClip;
         [SerializeField] private AudioClip dashClip;
         [SerializeField] private AudioClip playerHitClip;
@@ -39,7 +40,10 @@ namespace FxComponents
         [SerializeField] private AudioClip healClip;
         [SerializeField] private AudioClip upgradeClip;
         [SerializeField] private AudioClip upgradeSpawnClip;
-        [SerializeField] private AudioClip uiClick;
+        [SerializeField] private AudioClip portalActiveClip;
+        [SerializeField] private AudioClip roomCleared;
+        [SerializeField] private AudioClip spikesPrepareClip;
+        [SerializeField] private AudioClip spikesUpClip;
 
         private Dictionary<Sfx, AudioClip> _listedSfx;
 
@@ -67,6 +71,10 @@ namespace FxComponents
                 { Sfx.Heal, healClip },
                 { Sfx.Upgrade, upgradeClip },
                 { Sfx.UpgradeSpawn, upgradeSpawnClip },
+                { Sfx.PortalActive, portalActiveClip },
+                { Sfx.RoomCleared, roomCleared },
+                { Sfx.SpikesPrepare, spikesPrepareClip },
+                { Sfx.SpikesUp, spikesUpClip },
             };
         }
 

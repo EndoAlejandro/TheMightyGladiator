@@ -17,11 +17,13 @@ namespace Rooms
         protected Player Player { get; private set; }
         public LevelData LevelData { get; private set; }
         public NavMeshSurface NavMeshSurface { get; private set; }
-
+        public float RandomSeed { get; private set; }
+        
         protected virtual void Awake()
         {
             NavMeshSurface = GetComponent<NavMeshSurface>();
             NavMeshSurface.BuildNavMesh();
+            RandomSeed = Random.Range(0f, 100f);
         }
 
         public abstract void RegisterEnemy(Enemy enemy);

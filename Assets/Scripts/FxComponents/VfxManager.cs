@@ -22,6 +22,8 @@ namespace FxComponents
         [SerializeField] private PoolAfterSeconds heal;
         [SerializeField] private PoolAfterSeconds upgrade;
         [SerializeField] private PoolAfterSeconds upgradeSpawn;
+        [SerializeField] private PoolAfterSeconds spikesPrepare;
+        [SerializeField] private PoolAfterSeconds spikesUp;
 
         [Header("Custom Vfx")]
         [SerializeField] private FloatingText floatingText;
@@ -52,6 +54,8 @@ namespace FxComponents
                 { Vfx.Heal, heal },
                 { Vfx.Upgrade, upgrade },
                 { Vfx.UpgradeSpawn, upgradeSpawn },
+                { Vfx.SpikesPrepare, spikesPrepare },
+                { Vfx.SpikesUp, spikesUp },
             };
         }
 

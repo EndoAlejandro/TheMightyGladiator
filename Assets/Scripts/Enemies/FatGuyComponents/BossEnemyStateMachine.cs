@@ -74,7 +74,6 @@ namespace Enemies.FatGuyComponents
                 _ => 1
             };
             _patternIndex = Random.Range(0, limit);
-            Debug.Log($"Limit:{limit}:Index:{_patternIndex}");
         }
 
         private void OnEnable()

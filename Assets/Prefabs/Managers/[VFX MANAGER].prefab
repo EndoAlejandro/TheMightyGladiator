@@ -65,6 +65,9 @@ MonoBehaviour:
   upgrade: {fileID: 4208329522927737851, guid: 09af6cd581818914b991b3b6ecb4c8cf, type: 3}
   upgradeSpawn: {fileID: 5342487889578488672, guid: db51fe32097539f4898a39eda868181a,
     type: 3}
+  spikesPrepare: {fileID: 9115436360899518126, guid: 8b0ba165398de064bbc80c293c35dbdc,
+    type: 3}
+  spikesUp: {fileID: 589803450516090148, guid: 01fe7029af7f9ed4d916e8a5a18a41b9, type: 3}
   floatingText: {fileID: 579982764298065617, guid: 7113d7f266e206742af2473d94e9d9a3,
     type: 3}
   hitPointPrediction: {fileID: 4137804265680899392, guid: adc9f1eb3bf237047a3a1709d4cb4841,

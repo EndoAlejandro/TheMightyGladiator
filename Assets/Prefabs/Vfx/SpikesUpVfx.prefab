@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.6153696, b: 0.2235294, a: 0.34901962}
+      maxColor: {r: 0.92549026, g: 0.10980393, b: 0.69803923, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4892,7 +4892,7 @@ GameObject:
   - component: {fileID: 8776528188934999399}
   - component: {fileID: 589803450516090148}
   m_Layer: 0
-  m_Name: Stones hit
+  m_Name: SpikesUpVfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5106,7 +5106,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.12156863, g: 0.10980392, b: 0.09803922, a: 1}
+      maxColor: {r: 0.92549026, g: 0.10980393, b: 0.69803923, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9776,7 +9776,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialPoolSize: 5
   delay: 1.5
-  clip: {fileID: 8300000, guid: d2a19d08754f24ad682d7ee54af1c8ce, type: 3}
 --- !u!1 &2627579836826510489
 GameObject:
   m_ObjectHideFlags: 0
@@ -9794,7 +9793,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2950759650068639100
 Transform:
   m_ObjectHideFlags: 0
@@ -10000,7 +9999,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.1509434, g: 0.11280883, b: 0.07760769, a: 1}
+      maxColor: {r: 0.92549026, g: 0.10980393, b: 0.69803923, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -14763,8 +14762,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.1
+      scalar: 0.2
+      minScalar: 0.05
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14870,7 +14869,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.45707202, b: 0.13679248, a: 1}
+      maxColor: {r: 0.92549026, g: 0.10980393, b: 0.69803923, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -15308,7 +15307,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 4
     angle: 0
     length: 1
     boxThickness: {x: 0, y: 0, z: 0}
@@ -15395,7 +15394,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.0001
+      value: 1
       mode: 0
       spread: 0
       speed:

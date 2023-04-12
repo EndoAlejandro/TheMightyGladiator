@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using FxComponents;
 using PlayerComponents;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace RoomTilingBehaviour
 
         private void Awake() => _collider = GetComponent<Collider>();
         private void Start() => SetSpikeActivationState(false);
+
         private void OnTriggerEnter(Collider other)
         {
             if (!other.TryGetComponent(out Player player)) return;
@@ -27,10 +29,14 @@ namespace RoomTilingBehaviour
         private IEnumerator ActivateSpikes()
         {
             _collider.enabled = false;
+            VfxManager.Instance.PlayFx(Vfx.SpikesPrepare, transform.position);
+            SfxManager.Instance.PlayFx(Sfx.SpikesPrepare, transform.position);
             yield return new WaitForSeconds(activationTime);
             _isActive = true;
             _collider.enabled = true;
             SetSpikeActivationState(true);
+            VfxManager.Instance.PlayFx(Vfx.SpikesUp, transform.position);
+            SfxManager.Instance.PlayFx(Sfx.SpikesUp, transform.position);
             StartCoroutine(DeactivateSpikes());
         }
 
@@ -40,7 +46,7 @@ namespace RoomTilingBehaviour
             _isActive = false;
             SetSpikeActivationState(false);
         }
-        
+
         private void SetSpikeActivationState(bool isActive)
         {
             foreach (var spike in spikes) spike.SetActive(isActive);

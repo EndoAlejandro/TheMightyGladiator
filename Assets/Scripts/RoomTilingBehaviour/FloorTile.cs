@@ -16,7 +16,8 @@ namespace RoomTilingBehaviour
 
             if (_room is Room)
             {
-                var noise = Mathf.PerlinNoise(transform.position.x, transform.position.y);
+                var noise = Mathf.PerlinNoise(transform.position.x * _room.RandomSeed,
+                    transform.position.z * _room.RandomSeed);
                 if (noise > 0.75f) Instantiate(spikePrefab, transform);
                 else Instantiate(floorTilePrefab, transform);
             }

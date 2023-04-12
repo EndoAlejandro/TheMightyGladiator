@@ -1,11 +1,4 @@
-﻿public enum Biome
-{
-    First,
-    Second,
-    Third,
-}
-
-public enum Vfx
+﻿public enum Vfx
 {
     Sword,
     SwordCritical,
@@ -18,7 +11,9 @@ public enum Vfx
     SplashJump,
     Upgrade,
     UpgradeSpawn,
-    Heal
+    Heal,
+    SpikesPrepare,
+    SpikesUp
 }
 
 public enum Sfx
@@ -39,7 +34,11 @@ public enum Sfx
     Laser,
     Upgrade,
     Heal,
-    UpgradeSpawn
+    UpgradeSpawn,
+    PortalActive,
+    RoomCleared,
+    SpikesPrepare,
+    SpikesUp
 }
 
 public enum UpgradeType

@@ -10,12 +10,12 @@ namespace PlayerComponents
 {
     public class Player : Singleton<Player>
     {
-        public event Action<Vector3> OnDealDamage;
         public event Action OnHit;
         public event Action OnParry;
         public event Action OnShieldHit;
         public event Action OnUpgrade;
         public event Action OnDead;
+        public event Action OnTeleport;
 
         [SerializeField] private PlayerData currentPlayerData;
         [SerializeField] private LayerMask attackLayerMask;
@@ -116,7 +116,7 @@ namespace PlayerComponents
             OnHit?.Invoke();
 
             if (!(Health <= 0f)) return;
-            
+
             OnDead?.Invoke();
             VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(),
                 false);
@@ -153,18 +153,14 @@ namespace PlayerComponents
             Gizmos.DrawWireSphere(transform.position + (Vector3.up * Height), hitBoxSize);
         }
 
-        public void Sleep(float time) => StartCoroutine(SleepUntilTimeEnded(time));
+        public void Teleport(float time) => StartCoroutine(SleepUntilTimeEnded(time));
 
         private IEnumerator SleepUntilTimeEnded(float time)
         {
             CanMove = false;
+            OnTeleport?.Invoke();
             yield return new WaitForSecondsRealtime(time);
             CanMove = true;
-        }
-
-        public void Teleport()
-        {
-            //TODO: Teleport event and stop moving from input.
         }
 
         public void IncreaseDamage(float value)

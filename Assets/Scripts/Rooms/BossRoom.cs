@@ -1,5 +1,6 @@
 ﻿using System;
 using Enemies;
+using FxComponents;
 using PlayerComponents;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace Rooms
 
         private Enemy _boss;
 
-        protected virtual void Awake()
+        protected override void Awake()
         {
             base.Awake();
             portal.gameObject.SetActive(false);
@@ -31,6 +32,7 @@ namespace Rooms
         private void BossOnDead(Enemy boss)
         {
             _boss.OnDead -= BossOnDead;
+            SfxManager.Instance.PlayFx(Sfx.RoomCleared, Player.Instance.transform.position);
             portal.gameObject.SetActive(true);
         }
     }

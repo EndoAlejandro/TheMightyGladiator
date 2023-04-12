@@ -54,6 +54,7 @@ MonoBehaviour:
   fXGroup: {fileID: 7600607432457303840, guid: b3fe0fb530545e74d8e6b39c7a818210, type: 2}
   musicSource: {fileID: 943645415}
   fxSource: {fileID: 943645414}
+  uiClick: {fileID: 8300000, guid: f0e561914ddd74b36b07b7040b6126d4, type: 3}
   swordSlashClip: {fileID: 8300000, guid: 8bd18ee79d79043aebebadafe742f378, type: 3}
   shieldHitClip: {fileID: 8300000, guid: 06c64f23c57574a3baa74cfd01f6b940, type: 3}
   dashClip: {fileID: 8300000, guid: 1785fff83652f42399d9b2017b05656c, type: 3}
@@ -71,7 +72,10 @@ MonoBehaviour:
   healClip: {fileID: 8300000, guid: dddde2397affa4973880bcc238b6ad30, type: 3}
   upgradeClip: {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}
   upgradeSpawnClip: {fileID: 8300000, guid: 87a2e502ddd174591af0e35f76e448a2, type: 3}
-  uiClick: {fileID: 8300000, guid: f0e561914ddd74b36b07b7040b6126d4, type: 3}
+  portalActiveClip: {fileID: 8300000, guid: 113a0f1929ad74dcba20169a2eaa5e57, type: 3}
+  roomCleared: {fileID: 8300000, guid: 304d546b80cae47fb872be812b98b2c8, type: 3}
+  spikesPrepareClip: {fileID: 8300000, guid: 2bd37df2fb96f4d978c1f706701ce87f, type: 3}
+  spikesUpClip: {fileID: 8300000, guid: 26e9b0607a7504b8ca6ae8b0b885ab08, type: 3}
 --- !u!82 &943645415
 AudioSource:
   m_ObjectHideFlags: 0

@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.12156863, g: 0.10980392, b: 0.09803922, a: 1}
+      maxColor: {r: 0.92549026, g: 0.10980393, b: 0.69803923, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4950,7 +4950,7 @@ GameObject:
   - component: {fileID: 3259090379112555782}
   - component: {fileID: 9115436360899518126}
   m_Layer: 0
-  m_Name: StonesFromGround_Fx
+  m_Name: SpikesPrepareVfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5162,7 +5162,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.122641504, g: 0.1107823, b: 0.0989231, a: 1}
+      maxColor: {r: 0.24523973, g: 0, b: 0.4245283, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5806,7 +5806,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 50
       minScalar: 10
       maxCurve:
         serializedVersion: 2

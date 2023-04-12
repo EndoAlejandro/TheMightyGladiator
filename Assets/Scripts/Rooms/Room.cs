@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CustomUtils;
 using Enemies;
+using FxComponents;
 using PlayerComponents;
 using UnityEngine;
 using Upgrades;
@@ -63,33 +64,13 @@ namespace Rooms
             enemy.OnDead -= EnemyOnDead;
 
             if (_spawnedEnemies.Count > 0) return;
-            
+
             if (_waves > 0) SpawnEnemy();
-            else portal.gameObject.SetActive(true);
-            //SpawnUpgrades();
+            else
+            {
+                SfxManager.Instance.PlayFx(Sfx.RoomCleared, Player.Instance.transform.position);
+                portal.gameObject.SetActive(true);
+            }
         }
-
-        /*private void SpawnUpgrades()
-        {
-            _upgrades = new List<Upgrade>();
-            var upgrades = GameManager.Instance.GetUpgrades(upgradePositions.Length);
-            for (int i = 0; i < upgrades.Count; i++)
-            {
-                var upgrade = Instantiate(upgrades[i], upgradePositions[i].position, Quaternion.identity);
-                upgrade.OnUpgradeSelected += UpgradeOnUpgradeSelected;
-                _upgrades.Add(upgrade);
-            }
-        }*/
-
-        /*private void UpgradeOnUpgradeSelected(UpgradeType upgradeType)
-        {
-            foreach (var upgrade in _upgrades)
-            {
-                upgrade.OnUpgradeSelected -= UpgradeOnUpgradeSelected;
-                Destroy(upgrade.gameObject);
-            }
-
-            portal.gameObject.SetActive(true);
-        }*/
     }
 }
