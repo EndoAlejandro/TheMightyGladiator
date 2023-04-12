@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CurrentPlayerData
   m_EditorClassIdentifier: 
   maxHealth: 50
-  health: 46
+  health: 50
   immunityTime: 0.25
   walkSpeed: 6
   acceleration: 10
@@ -23,7 +23,7 @@ MonoBehaviour:
   dodgeDistance: 3
   damage: 10
   criticalProbability: 0.05
-  criticalDamage: 1.3000001
+  criticalDamage: 2
   attackRate: 0.25
   defendRate: 1
   parryTime: 0.15

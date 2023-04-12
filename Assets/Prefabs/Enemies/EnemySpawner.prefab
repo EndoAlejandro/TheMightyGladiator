@@ -1265,8 +1265,10 @@ GameObject:
   - component: {fileID: 7530001112276235162}
   - component: {fileID: 7530001112276235159}
   - component: {fileID: 647712195}
+  - component: {fileID: 6359973667011412699}
+  - component: {fileID: 2717978495039787025}
   m_Layer: 0
-  m_Name: BatSpawner
+  m_Name: EnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1305,7 +1307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 5
-  maxHealth: 5
+  maxHealth: 250
   speed: 2
   acceleration: 10
   stoppingDistance: 1
@@ -1334,9 +1336,7 @@ MonoBehaviour:
   stunTime: 1
   getHitTime: 1
   deathTime: 1
-  batPrefab: {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c,
-    type: 3}
-  spawnAmount: 5
+  spawnAmount: 3
 --- !u!114 &7530001112276235162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1372,13 +1372,45 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7530001112276235164}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3d329c03aaeaf5f498a837b298d82563, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1.4
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!95 &6359973667011412699
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530001112276235164}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2fb865ab237ede64ba66147e8c4cb4e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2717978495039787025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530001112276235164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b883120e57ec457d8cc1c3298795bfc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &14590987
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -888,7 +888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 5
-  maxHealth: 20
+  maxHealth: 100
   speed: 2
   acceleration: 10
   stoppingDistance: 3
@@ -955,7 +955,7 @@ Animator:
   m_GameObject: {fileID: 4172247088674783533}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 9462e4007615758489178b6c9ba3600d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2fb865ab237ede64ba66147e8c4cb4e1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

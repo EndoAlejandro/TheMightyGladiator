@@ -51,12 +51,6 @@ namespace Enemies
                 case EnemyTelegraph telegraph:
                     StartCoroutine(AttackAnimation());
                     break;
-                case EnemyStun stun:
-                    visuals.SetText("stun");
-                    visuals.color = initialColor;
-                    visuals.gameObject.SetActive(true);
-                    _isOn = true;
-                    break;
                 default:
                     if (!_isOn) return;
                     _isOn = false;

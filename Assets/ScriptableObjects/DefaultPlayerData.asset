@@ -23,7 +23,7 @@ MonoBehaviour:
   dodgeDistance: 3
   damage: 10
   criticalProbability: 0.05
-  criticalDamage: 1.2
+  criticalDamage: 2
   attackRate: 0.25
   defendRate: 1
   parryTime: 0.15

@@ -4,7 +4,7 @@ using PlayerComponents;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Enemies.JarBomberComponents
+namespace Enemies.AttackStates
 {
     public class JarBomberAttack : EnemyAttack
     {
@@ -21,7 +21,7 @@ namespace Enemies.JarBomberComponents
             Ended = false;
             base.OnEnter();
 
-            for (int i = 0; i < _enemy.RoundsAmount; i++)
+            for (int i = 0; i < _enemy.BulletsPerRound; i++)
             {
                 var mortarBullet =
                     _enemy.MortarPrefab.Get<MortarBomb>(

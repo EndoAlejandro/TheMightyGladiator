@@ -1,3 +1,4 @@
+using System;
 using CustomUtils;
 using Enemies;
 using FxComponents;
@@ -9,7 +10,7 @@ using VfxComponents;
 public class MortarBomb : PooledMonoBehaviour, IDealDamage
 {
     public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.velocity;
-    
+
     [SerializeField] private int damage = 1;
 
     [Header("Branching")]
@@ -35,12 +36,17 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
         transform.forward = _rigidbody.velocity;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void DestroyMortar()
     {
-        if (collision.transform.TryGetComponent(out Enemy enemy)) return;
         VfxManager.Instance.PlayFx(Vfx.BombHit, transform.position + Vector3.up * 0.5f);
         SfxManager.Instance.PlayFx(Sfx.MortarHit, transform.position);
         if (_hitPredictionFx != null) _hitPredictionFx.ReturnToPool();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.TryGetComponent(out Enemy enemy)) return;
+        DestroyMortar();
 
         var size = Physics.OverlapSphereNonAlloc(transform.position, 1f, _results);
         for (int i = 0; i < size; i++)
@@ -68,8 +74,16 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
     public void Setup(Vector3 target, float angle)
     {
         var velocity = Utils.BallisticVelocity(transform.position, target, angle);
-        _hitPredictionFx = VfxManager.Instance.PlayHitPointPredictionFx(target);
-        _rigidbody.velocity = velocity;
+        if (float.IsNaN(velocity.x))
+        {
+            DestroyMortar();
+            ReturnToPool();
+        }
+        else
+        {
+            _hitPredictionFx = VfxManager.Instance.PlayHitPointPredictionFx(target);
+            _rigidbody.velocity = velocity;
+        }
     }
 
     protected override void OnDisable()

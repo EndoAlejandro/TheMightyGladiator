@@ -46,5 +46,7 @@ namespace Enemies.SpawnerComponents
             base.OnExit();
             _spawnedEnemies.Clear();
         }
+
+        public override string ToString() => "Attack";
     }
 }

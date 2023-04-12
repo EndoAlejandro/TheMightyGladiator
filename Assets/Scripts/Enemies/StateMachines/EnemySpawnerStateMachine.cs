@@ -1,13 +1,14 @@
 using Enemies.EnemiesSharedStates;
 using Enemies.SharedStates;
+using Enemies.SpawnerComponents;
 using StateMachineComponents;
 using UnityEngine;
 
-namespace Enemies.SpawnerComponents
+namespace Enemies.StateMachines
 {
-    public class BatSpawnerStateMachine : FiniteStateBehaviour
+    public class EnemySpawnerStateMachine : FiniteStateBehaviour
     {
-        private EnemySpawner _enemySpawner;
+        private SpawnerComponents.EnemySpawner _enemySpawner;
         private Rigidbody _rigidbody;
         private Collider _collider;
 
@@ -16,7 +17,7 @@ namespace Enemies.SpawnerComponents
 
         protected override void References()
         {
-            _enemySpawner = GetComponent<EnemySpawner>();
+            _enemySpawner = GetComponent<SpawnerComponents.EnemySpawner>();
             _collider = GetComponent<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
         }
