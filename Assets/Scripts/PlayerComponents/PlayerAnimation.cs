@@ -101,14 +101,29 @@ namespace PlayerComponents
 
             switch (_state)
             {
+                case PlayerIdle playerIdle:
+                    _animator.SetLayerWeight(1, 1f);
+                    break;
+
                 case PlayerAttack playerAttack:
+                    _animator.SetLayerWeight(1, 1f);
                     slashParticle.Play();
                     _animator.SetTrigger(Attack);
                     _animator.SetInteger(AttackIndex, (_animator.GetInteger(AttackIndex) + 1) % 2);
                     break;
+
+                case PlayerShield playerShield:
+                    _animator.SetLayerWeight(1, 1f);
+                    break;
+
                 case PlayerDeath playerDeath:
+                    _animator.SetLayerWeight(1, 0f);
                     _animator.SetTrigger(Death);
                     StartCoroutine(SlowTime());
+                    break;
+
+                case PlayerDodge:
+                    _animator.SetLayerWeight(1, 0f);
                     break;
             }
 
