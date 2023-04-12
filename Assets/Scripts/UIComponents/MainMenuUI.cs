@@ -75,7 +75,7 @@ namespace UIComponents
         private void OnStartGameButtonPressed()
         {
             SfxManager.Instance.PlayUI();
-            GameManager.Instance.LoadLobby();
+            GameManager.Instance.StartDungeonPortalActivated();
         }
 
         private void TriggerMenuChange(GameObject next)

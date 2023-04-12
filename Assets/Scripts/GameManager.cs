@@ -35,6 +35,8 @@ public class GameManager : Singleton<GameManager>
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start() => LoadProgress();
+
     private void SpawnNewLevel()
     {
         _currentLevelData = levels[CurrentLevel];
@@ -75,10 +77,15 @@ public class GameManager : Singleton<GameManager>
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
+        LoadProgress();
+        StartCoroutine(LoadSceneAsync("MainMenu"));
+    }
+
+    private void LoadProgress()
+    {
         var progress = SaveSystem.GetProgress();
         CurrentLevel = progress.x;
         CurrentSubLevel = progress.y;
-        StartCoroutine(LoadSceneAsync("MainMenu"));
     }
 
     public void FromGameToMenu()
@@ -89,7 +96,7 @@ public class GameManager : Singleton<GameManager>
 
     public void StartDungeonPortalActivated()
     {
-        Player.Instance.SetPlayerData(DefaultPlayerData);
+        // Player.Instance.SetPlayerData(DefaultPlayerData);
         LoadNextGameScene();
     }
 
@@ -100,13 +107,6 @@ public class GameManager : Singleton<GameManager>
     }
 
     private void LoadNextGameScene() => StartCoroutine(LoadSceneAsync("Dungeon", SpawnNewLevel));
-
-    public void LoadLobby()
-    {
-        CurrentLevel = 0;
-        CurrentSubLevel = 0;
-        StartCoroutine(LoadSceneAsync("Lobby"));
-    }
 
     private IEnumerator LoadSceneAsync(string sceneName, Action callback = null)
     {
@@ -132,6 +132,7 @@ public class GameManager : Singleton<GameManager>
     public void GameOver()
     {
         OnGameOver?.Invoke();
+        Player.Instance.SetPlayerData(DefaultPlayerData);
         SaveSystem.SetProgress(new Vector2Int());
         Time.timeScale = 0f;
     }
