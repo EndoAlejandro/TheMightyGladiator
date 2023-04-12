@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FxComponents;
+using UnityEngine;
 
 public class Vase : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Vase : MonoBehaviour
         if (_health <= 0)
         {
             CanBreak = true;
+            VfxManager.Instance.PlayFx(Vfx.SwordCritical, transform.position + Vector3.up * 0.5f);
             Destroy(gameObject);
         }
     }
