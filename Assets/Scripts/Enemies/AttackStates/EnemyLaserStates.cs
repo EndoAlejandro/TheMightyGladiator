@@ -59,6 +59,7 @@ namespace Enemies.LaserDudeComponents
                 _lasers[i] = VfxManager.Instance.GetLaserTelegraph().Get<LaserVfx>();
                 _lasers[i].SetPosition(0, _enemy.transform.position + Vector3.up);
             }
+
             SfxManager.Instance.PlayFx(Sfx.Laser, _enemy.transform.position);
         }
 
@@ -71,13 +72,15 @@ namespace Enemies.LaserDudeComponents
 
     public class EnemyLaserAttack : StateTimer, IState
     {
+        public override string ToString() => "Attack";
+
         private readonly Enemy _enemy;
         private readonly LaserVfx[] _lasers;
 
         private Vector3[] _directions;
         private Vector3 _playerDirection;
         private RaycastHit _hit;
-        private float _hitTimer;
+        private bool _canDealDamage;
 
         public EnemyLaserAttack(Enemy enemy)
         {
@@ -88,7 +91,6 @@ namespace Enemies.LaserDudeComponents
 
         public override void Tick()
         {
-            _hitTimer -= Time.deltaTime;
             base.Tick();
 
             _directions = Utils.GetFanPatternDirections(_enemy.transform, _enemy.BulletsPerRound,
@@ -105,17 +107,17 @@ namespace Enemies.LaserDudeComponents
                 var direction = _directions[i];
                 var laser = _lasers[i];
                 if (Physics.Raycast(_enemy.transform.position + Vector3.up, direction, out _hit,
-                        _enemy.DetectionDistance))
+                        _enemy.DetectionDistance * 2))
                 {
                     laser.SetPosition(1, _hit.point);
-                    if (!_hit.transform.TryGetComponent(out Player player) || !(_hitTimer <= 0f)) continue;
-                    _hitTimer = 0.5f;
+                    if (!_hit.transform.TryGetComponent(out Player player) || !_canDealDamage) continue;
                     player.TryToGetDamageFromEnemy(_enemy);
+                    _canDealDamage = false;
                 }
                 else
                 {
                     laser.SetPosition(1,
-                        direction * _enemy.DetectionDistance + _enemy.transform.position +
+                        direction * _enemy.DetectionDistance * 2 + _enemy.transform.position +
                         Vector3.up);
                 }
             }
@@ -127,7 +129,8 @@ namespace Enemies.LaserDudeComponents
 
         public void OnEnter()
         {
-            timer = 10f;
+            _canDealDamage = true;
+            timer = .25f;
             for (var i = 0; i < _lasers.Length; i++)
             {
                 _lasers[i] = VfxManager.Instance.GetLaserAttack().Get<LaserVfx>();

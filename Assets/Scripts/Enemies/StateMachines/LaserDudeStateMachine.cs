@@ -1,10 +1,11 @@
 ﻿using Enemies.EnemiesSharedStates;
+using Enemies.LaserDudeComponents;
 using Enemies.MovementStates;
 using Enemies.SharedStates;
 using StateMachineComponents;
 using UnityEngine;
 
-namespace Enemies.LaserDudeComponents
+namespace Enemies.StateMachines
 {
     public class LaserDudeStateMachine : FiniteStateBehaviour
     {

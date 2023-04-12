@@ -1174,6 +1174,7 @@ GameObject:
   - component: {fileID: 5322186850165178262}
   - component: {fileID: 4881709983888362606}
   - component: {fileID: 127209532}
+  - component: {fileID: 3722862436240483238}
   m_Layer: 7
   m_Name: LaserDude
   m_TagString: Untagged
@@ -1214,21 +1215,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 5
-  maxHealth: 20
+  maxHealth: 150
   speed: 2
   acceleration: 10
   stoppingDistance: 8
   rotationSpeed: 100
-  attackRotationSpeed: 2
-  detectionDistance: 8
+  attackRotationSpeed: 100
+  detectionDistance: 10
   segmentsAmount: 10
   visionAngle: 360
   yOffset: 1
   navigationDetectionRange: 2
   damage: 1
   parryTimeWindow: 0.5
-  telegraphTime: 1
-  recoverTime: 1
+  telegraphTime: 2
+  recoverTime: 3
   chaseTime: 5
   aoeRadius: 1
   followPlayer: 0
@@ -1237,11 +1238,11 @@ MonoBehaviour:
   mortarPrefab: {fileID: 3504919690102820189, guid: 1d787f31288a4694c817cff0b618f818,
     type: 3}
   accuracy: 1
-  shootingAngle: 180
+  shootingAngle: 1
   bulletSpeed: 2
   shootRate: 1
-  bulletsPerRound: 6
-  roundsAmount: 4
+  bulletsPerRound: 1
+  roundsAmount: 1
   stunTime: 1
   getHitTime: 1
   deathTime: 1
@@ -1267,7 +1268,7 @@ Animator:
   m_GameObject: {fileID: 4881709983888362604}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 9462e4007615758489178b6c9ba3600d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2fb865ab237ede64ba66147e8c4cb4e1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1306,6 +1307,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3722862436240483238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881709983888362604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b883120e57ec457d8cc1c3298795bfc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4881709984471526722
 PrefabInstance:
   m_ObjectHideFlags: 0
