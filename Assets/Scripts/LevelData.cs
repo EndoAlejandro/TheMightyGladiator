@@ -16,8 +16,6 @@ public struct LevelData
     [SerializeField] private Enemy boss;
 
     [Header("Floors")]
-    [SerializeField] private Biome biome;
-
     [SerializeField] private int floors;
 
     [FormerlySerializedAs("initialBaseRoom")] [SerializeField]

@@ -22,7 +22,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private Upgrade[] upgrades;
     [SerializeField] private LevelData[] levels;
 
-    private int _currentBiome;
+    private int _currentLevel;
     private int _currentFloor;
 
     private LevelData _currentLevelData;
@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager>
 
     private void SpawnNewLevel()
     {
-        _currentLevelData = levels[_currentBiome];
+        _currentLevelData = levels[_currentLevel];
 
         BaseRoom instancedBaseRoom = null;
         if (_currentFloor == 0)
@@ -60,9 +60,9 @@ public class GameManager : Singleton<GameManager>
         if (_currentFloor > _currentLevelData.Floors)
         {
             _currentFloor = 0;
-            _currentBiome++;
+            _currentLevel++;
 
-            if (_currentBiome >= levels.Length)
+            if (_currentLevel >= levels.Length)
             {
                 LoadMainMenu();
                 return;
@@ -94,7 +94,7 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadLobby()
     {
-        _currentBiome = 0;
+        _currentLevel = 0;
         _currentFloor = 0;
         StartCoroutine(LoadSceneAsync("Lobby"));
     }

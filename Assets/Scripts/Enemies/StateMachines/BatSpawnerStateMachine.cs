@@ -6,7 +6,7 @@ namespace Enemies.SpawnerComponents
 {
     public class BatSpawnerStateMachine : FiniteStateBehaviour
     {
-        private BatSpawner _batSpawner;
+        private EnemySpawner _enemySpawner;
         private Rigidbody _rigidbody;
         private Collider _collider;
 
@@ -15,7 +15,7 @@ namespace Enemies.SpawnerComponents
 
         protected override void References()
         {
-            _batSpawner = GetComponent<BatSpawner>();
+            _enemySpawner = GetComponent<EnemySpawner>();
             _collider = GetComponent<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
         }
@@ -24,12 +24,12 @@ namespace Enemies.SpawnerComponents
         {
             _spawn = new EnemySpawn();
             var idle = new BlankState();
-            var telegraph = new EnemyTelegraph(_batSpawner);
-            var spawnWave = new BatSpawnerSpawn(_batSpawner);
-            _death = new EnemyDeath(_batSpawner, _rigidbody, _collider);
+            var telegraph = new EnemyTelegraph(_enemySpawner);
+            var spawnWave = new EnemySpawnerSpawn(_enemySpawner);
+            _death = new EnemyDeath(_enemySpawner, _rigidbody, _collider);
 
             stateMachine.AddTransition(_spawn, idle, () => _spawn.Ended);
-            stateMachine.AddTransition(idle, telegraph, () => _batSpawner.SpawnedBats.Count == 0);
+            stateMachine.AddTransition(idle, telegraph, () => _enemySpawner.SpawnedEnemies.Count == 0);
             stateMachine.AddTransition(telegraph, spawnWave, () => telegraph.Ended);
             stateMachine.AddTransition(spawnWave, idle, () => spawnWave.Ended);
 
@@ -38,11 +38,11 @@ namespace Enemies.SpawnerComponents
 
         private void OnEnable()
         {
-            _batSpawner.OnDead += BatSpawnerOnDead;
+            _enemySpawner.OnDead += EnemySpawnerOnDead;
             stateMachine.SetState(_spawn);
         }
 
-        private void OnDisable() => _batSpawner.OnDead -= BatSpawnerOnDead;
-        private void BatSpawnerOnDead(Enemy enemy) => stateMachine.SetState(_death);
+        private void OnDisable() => _enemySpawner.OnDead -= EnemySpawnerOnDead;
+        private void EnemySpawnerOnDead(Enemy enemy) => stateMachine.SetState(_death);
     }
 }

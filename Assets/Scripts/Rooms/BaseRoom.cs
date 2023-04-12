@@ -15,7 +15,7 @@ namespace Rooms
         [SerializeField] private float spawnTime = 1f;
         [SerializeField] private AudioClip music;
         protected Player Player { get; private set; }
-        protected LevelData LevelData { get; private set; }
+        public LevelData LevelData { get; private set; }
         public NavMeshSurface NavMeshSurface { get; private set; }
 
         protected virtual void Awake()

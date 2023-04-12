@@ -1,5 +1,5 @@
-﻿using System;
-using FxComponents;
+﻿using FxComponents;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +12,7 @@ namespace UIComponents
         [Header("Main Menu")]
         [SerializeField] private GameObject mainMenuContainer;
 
+        [SerializeField] private TMP_Text startGameText;
         [SerializeField] private Button startGameButton;
         [SerializeField] private Button optionsButton;
         [SerializeField] private Button creditsButton;
