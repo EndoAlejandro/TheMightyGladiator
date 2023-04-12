@@ -9,6 +9,8 @@ namespace Enemies.EnemiesSharedStates
 {
     public class EnemyInitialJump : IState
     {
+        public override string ToString() => "Attack";
+
         private readonly Enemy _enemy;
         private readonly Rigidbody _rigidbody;
         private readonly Collider _collider;
@@ -46,6 +48,8 @@ namespace Enemies.EnemiesSharedStates
 
     public class EnemyOnAirJump : StateTimer, IState
     {
+        public override string ToString() => "Idle";
+
         private readonly Enemy _enemy;
 
         private Vector3 _direction;
@@ -72,6 +76,8 @@ namespace Enemies.EnemiesSharedStates
 
     public class EnemyEndJump : IState
     {
+        public override string ToString() => "Idle";
+
         private readonly Enemy _enemy;
         private readonly Rigidbody _rigidbody;
         private readonly Collider _collider;

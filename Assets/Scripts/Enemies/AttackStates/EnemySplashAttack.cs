@@ -2,12 +2,13 @@
 using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
-using VfxComponents;
 
-namespace Enemies
+namespace Enemies.AttackStates
 {
     public class EnemySplashAttack : IState
     {
+        public override string ToString() => "Attack";
+
         private readonly Enemy _enemy;
         private readonly Collider[] _results;
 

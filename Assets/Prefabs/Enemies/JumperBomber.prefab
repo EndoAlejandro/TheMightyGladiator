@@ -1415,6 +1415,8 @@ GameObject:
   - component: {fileID: 4938938494537808128}
   - component: {fileID: 4938938494537808134}
   - component: {fileID: 4938938494537808135}
+  - component: {fileID: 2224471046804462712}
+  - component: {fileID: 6840865983548983702}
   m_Layer: 7
   m_Name: JumperBomber
   m_TagString: Untagged
@@ -1455,11 +1457,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 5
-  maxHealth: 20
+  maxHealth: 100
   speed: 2
-  acceleration: 10
+  acceleration: 5
   stoppingDistance: 6
-  rotationSpeed: 100
+  rotationSpeed: 5
   attackRotationSpeed: 5
   detectionDistance: 6
   segmentsAmount: 10
@@ -1528,6 +1530,38 @@ CapsuleCollider:
   m_Height: 1.75
   m_Direction: 1
   m_Center: {x: 0, y: 0.875, z: 0}
+--- !u!95 &2224471046804462712
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4938938494537808140}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2fb865ab237ede64ba66147e8c4cb4e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6840865983548983702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4938938494537808140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b883120e57ec457d8cc1c3298795bfc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &971188183
 PrefabInstance:
   m_ObjectHideFlags: 0
