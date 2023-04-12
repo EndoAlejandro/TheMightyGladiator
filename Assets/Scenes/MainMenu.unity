@@ -11494,6 +11494,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
+        type: 3}
+      propertyPath: levels.Array.data[0].waves
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
+        type: 3}
+      propertyPath: levels.Array.data[0].floors
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
+        type: 3}
+      propertyPath: levels.Array.data[0].enemiesPerWave
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5399660367187709375, guid: 98ea6444e7e053e4f8829c5228e1bd83,
         type: 3}
       propertyPath: m_Name

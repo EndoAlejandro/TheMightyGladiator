@@ -1,6 +1,7 @@
+#if UNITY_EDITOR
 using UnityEditor;
-using UnityEditor.Tilemaps;
 using UnityEngine;
+using UnityEditor.Tilemaps;
 
 namespace TilePaletteComponents
 {
@@ -34,3 +35,4 @@ namespace TilePaletteComponents
         }
     }
 }
+#endif

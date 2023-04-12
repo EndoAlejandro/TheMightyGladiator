@@ -58,12 +58,11 @@ namespace UIComponents
 
             // Credits
             creditsReturnButton.onClick.AddListener(() => TriggerMenuChange(mainMenuContainer));
-
-            TriggerMenuChange(mainMenuContainer);
         }
 
         private void Start()
         {
+            TriggerMenuChange(mainMenuContainer);
             masterSlider.value = SaveSystem.GetVolume(SaveSystem.PrefsField.Master);
             musicSlider.value = SaveSystem.GetVolume(SaveSystem.PrefsField.Music);
             fxSlider.value = SaveSystem.GetVolume(SaveSystem.PrefsField.Fx);
