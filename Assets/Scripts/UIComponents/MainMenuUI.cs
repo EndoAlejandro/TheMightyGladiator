@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UIComponents
 {
-    public class UIMainMenu : MonoBehaviour
+    public class MainMenuUI : MonoBehaviour
     {
         private static readonly int ChangeMenu = Animator.StringToHash("ChangeMenu");
 
@@ -63,6 +63,9 @@ namespace UIComponents
 
         private void Start()
         {
+            startGameText.text = GameManager.Instance.CurrentLevel > 0 || GameManager.Instance.CurrentSubLevel > 0
+                ? "Continue"
+                : "New Game";
             TriggerMenuChange(mainMenuContainer);
             masterSlider.value = SaveSystem.GetVolume(SaveSystem.PrefsField.Master);
             musicSlider.value = SaveSystem.GetVolume(SaveSystem.PrefsField.Music);

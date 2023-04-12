@@ -69,7 +69,7 @@ namespace Rooms
             //SpawnUpgrades();
         }
 
-        private void SpawnUpgrades()
+        /*private void SpawnUpgrades()
         {
             _upgrades = new List<Upgrade>();
             var upgrades = GameManager.Instance.GetUpgrades(upgradePositions.Length);
@@ -79,9 +79,9 @@ namespace Rooms
                 upgrade.OnUpgradeSelected += UpgradeOnUpgradeSelected;
                 _upgrades.Add(upgrade);
             }
-        }
+        }*/
 
-        private void UpgradeOnUpgradeSelected(UpgradeType upgradeType)
+        /*private void UpgradeOnUpgradeSelected(UpgradeType upgradeType)
         {
             foreach (var upgrade in _upgrades)
             {
@@ -90,6 +90,6 @@ namespace Rooms
             }
 
             portal.gameObject.SetActive(true);
-        }
+        }*/
     }
 }

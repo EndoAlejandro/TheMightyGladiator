@@ -14,7 +14,7 @@ namespace UIComponents
         {
             panel.SetActive(false);
             resumeButton.onClick.AddListener(GameManager.Instance.PauseToggle);
-            mainMenuButton.onClick.AddListener(GameManager.Instance.LoadMainMenu);
+            mainMenuButton.onClick.AddListener(GameManager.Instance.FromGameToMenu);
             GameManager.Instance.OnGamePaused += GameManagerOnGamePaused;
         }
 

@@ -22,8 +22,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private Upgrade[] upgrades;
     [SerializeField] private LevelData[] levels;
 
-    private int _currentLevel;
-    private int _currentFloor;
+    public int CurrentLevel { get; private set; }
+    public int CurrentSubLevel { get; private set; }
 
     private LevelData _currentLevelData;
     public PlayerData DefaultPlayerData => defaultPlayerData;
@@ -37,12 +37,12 @@ public class GameManager : Singleton<GameManager>
 
     private void SpawnNewLevel()
     {
-        _currentLevelData = levels[_currentLevel];
+        _currentLevelData = levels[CurrentLevel];
 
         BaseRoom instancedBaseRoom = null;
-        if (_currentFloor == 0)
+        if (CurrentSubLevel == 0)
             instancedBaseRoom = Instantiate(_currentLevelData.InitialRoom);
-        else if (_currentFloor < _currentLevelData.Floors)
+        else if (CurrentSubLevel < _currentLevelData.Floors)
         {
             var index = Random.Range(0, _currentLevelData.Rooms.Length);
             instancedBaseRoom = Instantiate(_currentLevelData.Rooms[index]);
@@ -55,14 +55,14 @@ public class GameManager : Singleton<GameManager>
 
     public void NextLevel()
     {
-        _currentFloor++;
+        CurrentSubLevel++;
 
-        if (_currentFloor > _currentLevelData.Floors)
+        if (CurrentSubLevel > _currentLevelData.Floors)
         {
-            _currentFloor = 0;
-            _currentLevel++;
+            CurrentSubLevel = 0;
+            CurrentLevel++;
 
-            if (_currentLevel >= levels.Length)
+            if (CurrentLevel >= levels.Length)
             {
                 LoadMainMenu();
                 return;
@@ -75,7 +75,16 @@ public class GameManager : Singleton<GameManager>
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
+        var progress = SaveSystem.GetProgress();
+        CurrentLevel = progress.x;
+        CurrentSubLevel = progress.y;
         StartCoroutine(LoadSceneAsync("MainMenu"));
+    }
+
+    public void FromGameToMenu()
+    {
+        SaveSystem.SetProgress(new Vector2Int(CurrentLevel, CurrentSubLevel));
+        LoadMainMenu();
     }
 
     public void StartDungeonPortalActivated()
@@ -94,8 +103,8 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadLobby()
     {
-        _currentLevel = 0;
-        _currentFloor = 0;
+        CurrentLevel = 0;
+        CurrentSubLevel = 0;
         StartCoroutine(LoadSceneAsync("Lobby"));
     }
 
@@ -123,6 +132,7 @@ public class GameManager : Singleton<GameManager>
     public void GameOver()
     {
         OnGameOver?.Invoke();
+        SaveSystem.SetProgress(new Vector2Int());
         Time.timeScale = 0f;
     }
 
