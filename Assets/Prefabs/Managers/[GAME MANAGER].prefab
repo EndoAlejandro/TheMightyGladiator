@@ -54,18 +54,58 @@ MonoBehaviour:
   - {fileID: 569462598716781592, guid: 42c09ccfee2f5144eb016034090b811c, type: 3}
   - {fileID: 2953447951795480837, guid: 86c1105e175ac3144aef8b3161c7485a, type: 3}
   levels:
-  - enemiesPerWave: 8
+  - enemiesPerWave: 3
+    waves: 2
+    enemies:
+    - {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48, type: 3}
+    - {fileID: 4173461376708588872, guid: 28ec9696c52ba10439ca228e562fdc52, type: 3}
+    - {fileID: 1883427298162476687, guid: bc80e952e5165e644af68846888f8e1c, type: 3}
+    boss: {fileID: 1979164445701443650, guid: 933a16dffdac7f04c88d9febaa61c2f1, type: 3}
+    floors: 1
+    initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
+      type: 3}
+    bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,
+      type: 3}
+    rooms:
+    - {fileID: 5206439076357889521, guid: 6e594560649ed034f82362e85190b691, type: 3}
+  - enemiesPerWave: 3
+    waves: 2
+    enemies:
+    - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
+    - {fileID: 8603510111875457475, guid: 597ca0b6e07bba943878bcb8d6a130b2, type: 3}
+    - {fileID: 4701484883095460715, guid: ba58c67a18c935048aa677a2b56ee9e0, type: 3}
+    boss: {fileID: 1979164445701443650, guid: 933a16dffdac7f04c88d9febaa61c2f1, type: 3}
+    floors: 2
+    initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
+      type: 3}
+    bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,
+      type: 3}
+    rooms:
+    - {fileID: 5206439076357889521, guid: 6e594560649ed034f82362e85190b691, type: 3}
+  - enemiesPerWave: 4
     waves: 3
     enemies:
     - {fileID: 4173461376708588872, guid: 28ec9696c52ba10439ca228e562fdc52, type: 3}
-    - {fileID: 7530001112276235161, guid: e5d2d02d9c14bcc448b309f4b1ac42db, type: 3}
+    - {fileID: 4701484883095460715, guid: ba58c67a18c935048aa677a2b56ee9e0, type: 3}
+    - {fileID: 1883427298162476687, guid: bc80e952e5165e644af68846888f8e1c, type: 3}
+    - {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48, type: 3}
+    boss: {fileID: 1979164445701443650, guid: 933a16dffdac7f04c88d9febaa61c2f1, type: 3}
+    floors: 3
+    initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
+      type: 3}
+    bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,
+      type: 3}
+    rooms:
+    - {fileID: 5206439076357889521, guid: 6e594560649ed034f82362e85190b691, type: 3}
+  - enemiesPerWave: 5
+    waves: 3
+    enemies:
+    - {fileID: 4173461376708588872, guid: 28ec9696c52ba10439ca228e562fdc52, type: 3}
     - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
     - {fileID: 8603510111875457475, guid: 597ca0b6e07bba943878bcb8d6a130b2, type: 3}
     - {fileID: 4701484883095460715, guid: ba58c67a18c935048aa677a2b56ee9e0, type: 3}
     - {fileID: 1883427298162476687, guid: bc80e952e5165e644af68846888f8e1c, type: 3}
-    - {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48, type: 3}
-    boss: {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
-    biome: 0
+    boss: {fileID: 1979164445701443650, guid: 933a16dffdac7f04c88d9febaa61c2f1, type: 3}
     floors: 4
     initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
       type: 3}
@@ -74,18 +114,50 @@ MonoBehaviour:
     rooms:
     - {fileID: 5206439076357889521, guid: 6e594560649ed034f82362e85190b691, type: 3}
   - enemiesPerWave: 8
-    waves: 3
+    waves: 4
     enemies:
     - {fileID: 4173461376708588872, guid: 28ec9696c52ba10439ca228e562fdc52, type: 3}
-    - {fileID: 7530001112276235161, guid: e5d2d02d9c14bcc448b309f4b1ac42db, type: 3}
     - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
     - {fileID: 8603510111875457475, guid: 597ca0b6e07bba943878bcb8d6a130b2, type: 3}
     - {fileID: 4701484883095460715, guid: ba58c67a18c935048aa677a2b56ee9e0, type: 3}
     - {fileID: 1883427298162476687, guid: bc80e952e5165e644af68846888f8e1c, type: 3}
     - {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48, type: 3}
-    boss: {fileID: 6648944864468212154, guid: b60cb297dfe69844aa76fd3140805297, type: 3}
-    biome: 0
-    floors: 4
+    boss: {fileID: 1979164445701443650, guid: 933a16dffdac7f04c88d9febaa61c2f1, type: 3}
+    floors: 5
+    initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
+      type: 3}
+    bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,
+      type: 3}
+    rooms:
+    - {fileID: 5206439076357889521, guid: 6e594560649ed034f82362e85190b691, type: 3}
+  - enemiesPerWave: 10
+    waves: 4
+    enemies:
+    - {fileID: 4173461376708588872, guid: 28ec9696c52ba10439ca228e562fdc52, type: 3}
+    - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
+    - {fileID: 8603510111875457475, guid: 597ca0b6e07bba943878bcb8d6a130b2, type: 3}
+    - {fileID: 4701484883095460715, guid: ba58c67a18c935048aa677a2b56ee9e0, type: 3}
+    - {fileID: 1883427298162476687, guid: bc80e952e5165e644af68846888f8e1c, type: 3}
+    - {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48, type: 3}
+    boss: {fileID: 1979164445701443650, guid: 933a16dffdac7f04c88d9febaa61c2f1, type: 3}
+    floors: 6
+    initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
+      type: 3}
+    bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,
+      type: 3}
+    rooms:
+    - {fileID: 5206439076357889521, guid: 6e594560649ed034f82362e85190b691, type: 3}
+  - enemiesPerWave: 12
+    waves: 5
+    enemies:
+    - {fileID: 4173461376708588872, guid: 28ec9696c52ba10439ca228e562fdc52, type: 3}
+    - {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c, type: 3}
+    - {fileID: 8603510111875457475, guid: 597ca0b6e07bba943878bcb8d6a130b2, type: 3}
+    - {fileID: 4701484883095460715, guid: ba58c67a18c935048aa677a2b56ee9e0, type: 3}
+    - {fileID: 1883427298162476687, guid: bc80e952e5165e644af68846888f8e1c, type: 3}
+    - {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48, type: 3}
+    boss: {fileID: 1979164445701443650, guid: 933a16dffdac7f04c88d9febaa61c2f1, type: 3}
+    floors: 7
     initialRoom: {fileID: 5873530853554901762, guid: 836f16930f68e574fbe7729bf6af5520,
       type: 3}
     bossRoom: {fileID: 8281813062302641777, guid: 4739acd9f257a2b489ba24523d66d909,

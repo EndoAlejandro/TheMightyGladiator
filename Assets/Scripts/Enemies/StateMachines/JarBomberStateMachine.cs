@@ -30,7 +30,7 @@ namespace Enemies.JarBomberComponents
             var patrol = new EnemyPatrol(_enemy, _rigidbody);
             _chaseWalking = new EnemyChaseWalking(_enemy, _rigidbody);
             var telegraph = new EnemyTelegraph(_enemy);
-            var attack = new JarBomberAttack(_enemy);
+            var attack = new EnemyMortarShot(_enemy, false);
             var recover = new EnemyRecover(_enemy);
             _death = new EnemyDeath(_enemy, _rigidbody, _collider);
 

@@ -2267,6 +2267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52949f4bb1304ff4bbe3fbc4503df094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuClip: {fileID: 8300000, guid: b442123a67071894ca2beeb4a6185aae, type: 3}
   mainMenuContainer: {fileID: 535622487}
   startGameText: {fileID: 330009417}
   startGameButton: {fileID: 1305205688}
@@ -11507,80 +11508,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].boss
-      value: 
-      objectReference: {fileID: 1979164445701443650, guid: 933a16dffdac7f04c88d9febaa61c2f1,
-        type: 3}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[1].boss
-      value: 
-      objectReference: {fileID: 1979164445701443650, guid: 933a16dffdac7f04c88d9febaa61c2f1,
-        type: 3}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].waves
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].floors
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].enemiesPerWave
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].enemies.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].enemies.Array.data[0]
-      value: 
-      objectReference: {fileID: 1883427298162476687, guid: bc80e952e5165e644af68846888f8e1c,
-        type: 3}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].enemies.Array.data[1]
-      value: 
-      objectReference: {fileID: 4173461376708588872, guid: 28ec9696c52ba10439ca228e562fdc52,
-        type: 3}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].enemies.Array.data[2]
-      value: 
-      objectReference: {fileID: 4172247088674783530, guid: d996aa6d85043b743b84d633fbae260c,
-        type: 3}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].enemies.Array.data[3]
-      value: 
-      objectReference: {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48,
-        type: 3}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].enemies.Array.data[4]
-      value: 
-      objectReference: {fileID: 8603510111875457475, guid: 597ca0b6e07bba943878bcb8d6a130b2,
-        type: 3}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].enemies.Array.data[5]
-      value: 
-      objectReference: {fileID: 8716061114215562843, guid: 9d4357e40665a2344bd2082225f37b48,
-        type: 3}
-    - target: {fileID: 5399660367187709373, guid: 98ea6444e7e053e4f8829c5228e1bd83,
-        type: 3}
-      propertyPath: levels.Array.data[0].enemies.Array.data[6]
-      value: 
-      objectReference: {fileID: 7530001112276235161, guid: e5d2d02d9c14bcc448b309f4b1ac42db,
-        type: 3}
     - target: {fileID: 5399660367187709375, guid: 98ea6444e7e053e4f8829c5228e1bd83,
         type: 3}
       propertyPath: m_Name

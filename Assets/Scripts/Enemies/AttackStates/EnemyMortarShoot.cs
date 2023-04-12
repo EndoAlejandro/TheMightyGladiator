@@ -6,13 +6,18 @@ using UnityEngine.AI;
 
 namespace Enemies.AttackStates
 {
-    public class JarBomberAttack : EnemyAttack
+    public class EnemyMortarShot : EnemyAttack
     {
         private readonly Enemy _enemy;
+        private readonly bool _branch;
         private NavMeshHit _navMeshHit;
         public bool Ended { get; private set; }
 
-        public JarBomberAttack(Enemy enemy) : base(enemy) => _enemy = enemy;
+        public EnemyMortarShot(Enemy enemy, bool branch) : base(enemy)
+        {
+            _enemy = enemy;
+            _branch = branch;
+        }
 
         public override void FixedTick() => Ended = true;
 
@@ -33,7 +38,7 @@ namespace Enemies.AttackStates
                 if (NavMesh.SamplePosition(target, out _navMeshHit, 2f, NavMesh.AllAreas))
                     target = _navMeshHit.position;
 
-                mortarBullet.Setup(target, 70f);
+                mortarBullet.Setup(target, 70f, _branch);
             }
             SfxManager.Instance.PlayFx(Sfx.MortarShot, _enemy.transform.position);
         }

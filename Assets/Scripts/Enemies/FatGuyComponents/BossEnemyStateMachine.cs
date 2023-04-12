@@ -1,4 +1,5 @@
-﻿using Enemies.EnemiesSharedStates;
+﻿using Enemies.AttackStates;
+using Enemies.EnemiesSharedStates;
 using Enemies.SharedStates;
 using FxComponents;
 using StateMachineComponents;
@@ -41,6 +42,7 @@ namespace Enemies.FatGuyComponents
 
             var shotTelegraph = new BossTelegraph(_bossEnemy, customTime: 0.1f);
             var shotAttack = new BossShot(_bossEnemy);
+            var mortar = new EnemyMortarShot(_bossEnemy, true);
 
             stateMachine.AddTransition(_spawn, idle, () => _spawn.Ended);
 
@@ -53,8 +55,8 @@ namespace Enemies.FatGuyComponents
             stateMachine.AddTransition(aoeAttack, _recover, () => true);
 
             stateMachine.AddTransition(idle, shotTelegraph, () => idle.Ended && _patternIndex == 2);
-            stateMachine.AddTransition(shotTelegraph, shotAttack, () => shotTelegraph.Ended);
-            stateMachine.AddTransition(shotAttack, _recover, () => true);
+            stateMachine.AddTransition(shotTelegraph, mortar, () => shotTelegraph.Ended);
+            stateMachine.AddTransition(mortar, _recover, () => mortar.Ended);
 
             stateMachine.AddTransition(_recover, idle, () => _recover.Ended);
             stateMachine.AddTransition(_death, _spawn, () => _death.Ended);

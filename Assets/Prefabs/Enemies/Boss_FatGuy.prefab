@@ -1584,6 +1584,8 @@ GameObject:
   - component: {fileID: 1979164445701443660}
   - component: {fileID: 1015232157}
   - component: {fileID: 1015232156}
+  - component: {fileID: 5369033789151291312}
+  - component: {fileID: 3827353888715054760}
   m_Layer: 0
   m_Name: Boss_FatGuy
   m_TagString: Untagged
@@ -1623,7 +1625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 1
-  maxHealth: 200
+  maxHealth: 1000
   speed: 10
   acceleration: 10
   stoppingDistance: 5
@@ -1645,7 +1647,7 @@ MonoBehaviour:
     type: 3}
   mortarPrefab: {fileID: 3504919690102820189, guid: 1d787f31288a4694c817cff0b618f818,
     type: 3}
-  accuracy: 1
+  accuracy: 2
   shootingAngle: 180
   bulletSpeed: 2
   shootRate: 1
@@ -1716,6 +1718,38 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.01, y: 1, z: 1.93}
   m_Center: {x: 0, y: 0.5, z: -0.33}
+--- !u!95 &5369033789151291312
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979164445701443657}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2fb865ab237ede64ba66147e8c4cb4e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3827353888715054760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979164445701443657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b883120e57ec457d8cc1c3298795bfc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1979164445823784846
 PrefabInstance:
   m_ObjectHideFlags: 0

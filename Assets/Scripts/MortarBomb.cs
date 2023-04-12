@@ -5,7 +5,6 @@ using FxComponents;
 using PlayerComponents;
 using Pooling;
 using UnityEngine;
-using VfxComponents;
 
 public class MortarBomb : PooledMonoBehaviour, IDealDamage
 {
@@ -71,8 +70,9 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
         }
     }
 
-    public void Setup(Vector3 target, float angle)
+    public void Setup(Vector3 target, float angle, bool branch)
     {
+        branchAtExplosion = branch;
         var velocity = Utils.BallisticVelocity(transform.position, target, angle);
         if (float.IsNaN(velocity.x))
         {

@@ -3,10 +3,12 @@ using PlayerComponents;
 using StateMachineComponents;
 using UnityEngine;
 
-namespace Enemies.EnemiesSharedStates
+namespace Enemies.MovementStates
 {
     public class EnemyWormPush : StateTimer, IState
     {
+        public override string ToString() => "Attack";
+
         private readonly Enemy _enemy;
         private readonly Rigidbody _rigidbody;
 
@@ -31,6 +33,8 @@ namespace Enemies.EnemiesSharedStates
 
     public class EnemyWormRecover : StateTimer, IState
     {
+        public override string ToString() => "Recover";
+
         private readonly Enemy _enemy;
         private Vector3 _direction;
         private Vector3 _playerDirection;

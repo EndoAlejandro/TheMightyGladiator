@@ -6,6 +6,8 @@ namespace Enemies.AttackStates
 {
     public class EnemySniperShot : IState
     {
+        public override string ToString() => "Attack";
+
         private readonly Enemy _enemy;
         private readonly Rigidbody _rigidbody;
 

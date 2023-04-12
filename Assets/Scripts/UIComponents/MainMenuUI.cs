@@ -9,6 +9,8 @@ namespace UIComponents
     {
         private static readonly int ChangeMenu = Animator.StringToHash("ChangeMenu");
 
+        [SerializeField] private AudioClip mainMenuClip;
+
         [Header("Main Menu")]
         [SerializeField] private GameObject mainMenuContainer;
 
@@ -70,6 +72,8 @@ namespace UIComponents
             masterSlider.value = SaveSystem.GetVolume(SaveSystem.PrefsField.Master);
             musicSlider.value = SaveSystem.GetVolume(SaveSystem.PrefsField.Music);
             fxSlider.value = SaveSystem.GetVolume(SaveSystem.PrefsField.Fx);
+
+            SfxManager.Instance.PlayMusic(mainMenuClip);
         }
 
         private void OnStartGameButtonPressed()
