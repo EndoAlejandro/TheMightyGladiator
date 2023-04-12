@@ -1,5 +1,6 @@
 ﻿using Enemies.EnemiesSharedStates;
 using Enemies.MovementStates;
+using Enemies.SharedStates;
 using StateMachineComponents;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace Enemies.BallShooter
 
             stateMachine.AddTransition(patrol, _chaseWalking, () => _enemy.PlayerDetected);
             stateMachine.AddTransition(_chaseWalking, telegraph,
-                () => _chaseWalking.CanSeePlayer && _chaseWalking.PlayerOnRange && _chaseWalking.CanSeePlayer);
+                () => _chaseWalking.PlayerInFront && _chaseWalking.PlayerOnRange);
             stateMachine.AddTransition(telegraph, attack, () => telegraph.Ended);
             stateMachine.AddTransition(attack, recover, () => attack.Ended);
             stateMachine.AddTransition(recover, _chaseWalking, () => recover.Ended);

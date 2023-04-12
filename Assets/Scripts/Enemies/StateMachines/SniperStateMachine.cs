@@ -2,6 +2,7 @@
 using Enemies.AttackStates;
 using Enemies.EnemiesSharedStates;
 using Enemies.LaserDudeComponents;
+using Enemies.SharedStates;
 using StateMachineComponents;
 using UnityEngine;
 

@@ -65,11 +65,12 @@ namespace Enemies
 
         [SerializeField] private float getHitTime = 1f;
         [SerializeField] private float deathTime = 1f;
+        private Rigidbody _rigidbody;
 
         public BaseRoom Room { get; private set; }
         public Bullet BulletPrefab => bulletPrefab;
         public MortarBomb MortarPrefab => mortarPrefab;
-
+        public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.velocity;
         public float ParryTimeWindow => parryTimeWindow;
         public float MaxHealth => maxHealth;
         public float TelegraphTime => telegraphTime;
@@ -104,17 +105,20 @@ namespace Enemies
         public int Damage => damage;
         public float ChaseTime => chaseTime;
 
+        private void Awake() => _rigidbody = GetComponent<Rigidbody>();
+
         public void TakeDamage(Vector3 hitPoint, float incomingDamage, float knockBack = 0f)
         {
             Health -= incomingDamage;
             OnHit?.Invoke(hitPoint, knockBack);
-            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f, damage.ToString(".#"), IsStun);
+            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up * 2f,
+                Mathf.RoundToInt(incomingDamage).ToString(), IsStun);
             SfxManager.Instance.PlayFx(Sfx.EnemyHit, transform.position);
             if (!IsAlive) OnDead?.Invoke(this);
         }
 
-        public virtual void Parry(Player player) => OnParry?.Invoke(player);
-        public virtual void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
+        public void Parry(Player player) => OnParry?.Invoke(player);
+        public void SetIsAttacking(bool isAttacking) => IsAttacking = isAttacking;
         public void SetCanBeParried(bool canBeParried) => CanBeParried = canBeParried;
         public void SetIsStun(bool isStun) => IsStun = isStun;
         public void Setup(BaseRoom room) => Room = room;

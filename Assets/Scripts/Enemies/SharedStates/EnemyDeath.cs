@@ -36,6 +36,7 @@ namespace Enemies.EnemiesSharedStates
             _rigidbody.isKinematic = false;
             _collider.enabled = true;
             VfxManager.Instance.PlayFx(Vfx.EnemySpawn, _enemy.transform.position);
+            SfxManager.Instance.PlayFx(Sfx.EnemyDeath, _enemy.transform.position);
             _enemy.DeSpawn();
         }
     }

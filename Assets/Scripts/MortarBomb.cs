@@ -8,13 +8,14 @@ using VfxComponents;
 
 public class MortarBomb : PooledMonoBehaviour, IDealDamage
 {
+    public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.velocity;
+    
     [SerializeField] private int damage = 1;
 
     [Header("Branching")]
     [SerializeField] private bool branchAtExplosion;
 
     [SerializeField] private Bullet bulletPrefab;
-
     [SerializeField] private int bulletsAmount = 6;
     private Rigidbody _rigidbody;
 

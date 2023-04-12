@@ -1,5 +1,6 @@
 ﻿using Enemies.EnemiesSharedStates;
 using Enemies.MovementStates;
+using Enemies.SharedStates;
 using StateMachineComponents;
 using UnityEngine;
 

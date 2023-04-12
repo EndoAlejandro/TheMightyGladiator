@@ -1,7 +1,7 @@
 ﻿using CustomUtils;
 using StateMachineComponents;
 
-namespace Enemies.EnemiesSharedStates
+namespace Enemies.SharedStates
 {
     public class EnemySpawn : StateTimer, IState
     {

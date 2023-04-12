@@ -28,6 +28,7 @@ namespace PlayerComponents
             stateMachine.AddTransition(idle, dodge, () => InputReader.Instance.Dodge && _player.CanDodge);
             stateMachine.AddTransition(shield, dodge, () => InputReader.Instance.Dodge && _player.CanDodge);
             stateMachine.AddTransition(dodge, idle, () => dodge.Ended);
+            stateMachine.AddTransition(dodge, attack, () => InputReader.Instance.Attack && _player.CanAttack);
 
             stateMachine.AddAnyTransition(death, () => !_player.IsAlive);
         }

@@ -1773,7 +1773,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1188825328}
   - {fileID: 1987535948}
@@ -2253,8 +2253,10 @@ GameObject:
   - component: {fileID: 2059322825249844430}
   - component: {fileID: 4173461376708588872}
   - component: {fileID: 2059322825249844428}
+  - component: {fileID: 2629430287653066577}
   - component: {fileID: 2059322825249844419}
   - component: {fileID: 2059322825249844418}
+  - component: {fileID: 7990394383759980175}
   m_Layer: 7
   m_Name: BallShooter
   m_TagString: Untagged
@@ -2295,11 +2297,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 5
-  maxHealth: 20
+  maxHealth: 200
   speed: 2
   acceleration: 10
   stoppingDistance: 5
-  rotationSpeed: 100
+  rotationSpeed: 10
   attackRotationSpeed: 5
   detectionDistance: 5
   segmentsAmount: 10
@@ -2308,21 +2310,21 @@ MonoBehaviour:
   navigationDetectionRange: 2
   damage: 1
   parryTimeWindow: 0.5
-  telegraphTime: 1
-  recoverTime: 1
+  telegraphTime: 0.33
+  recoverTime: 2
   chaseTime: 5
   aoeRadius: 1
-  followPlayer: 0
+  followPlayer: 1
   bulletPrefab: {fileID: 6316239716474771813, guid: e700f036a0a03114088a17838d8262e3,
     type: 3}
   mortarPrefab: {fileID: 3504919690102820189, guid: 1d787f31288a4694c817cff0b618f818,
     type: 3}
   accuracy: 1
   shootingAngle: 90
-  bulletSpeed: 2
-  shootRate: 1
+  bulletSpeed: 10
+  shootRate: 0.5
   bulletsPerRound: 6
-  roundsAmount: 4
+  roundsAmount: 2
   stunTime: 1
   getHitTime: 1
   deathTime: 1
@@ -2336,6 +2338,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d01df671225a4b929d5499166a87a026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2629430287653066577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059322825249844425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b883120e57ec457d8cc1c3298795bfc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &2059322825249844419
@@ -2368,6 +2382,26 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!95 &7990394383759980175
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059322825249844425}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2fb865ab237ede64ba66147e8c4cb4e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &887415754
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,10 +4,11 @@ using FxComponents;
 using PlayerComponents;
 using Pooling;
 using UnityEngine;
-using VfxComponents;
 
 public class Bullet : PooledMonoBehaviour, IDealDamage
 {
+    public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.velocity;
+
     private Rigidbody _rigidbody;
 
     private float _speed;
@@ -28,7 +29,7 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
 
     public void Setup(Vector3 direction, float speed, int damage, bool followPlayer = false, float turnSpeed = 1f)
     {
-        _timer = 1f;
+        _timer = .25f;
         _direction = direction;
         _speed = speed;
         Damage = damage;
@@ -51,8 +52,9 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
         transform.forward = _rigidbody.velocity.normalized;
     }
 
-    public void Parry()
+    public void Parry(int newDamage)
     {
+        Damage = newDamage;
         _reflected = true;
         _direction *= -1;
     }

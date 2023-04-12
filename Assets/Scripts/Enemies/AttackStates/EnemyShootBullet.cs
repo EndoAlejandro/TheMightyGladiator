@@ -46,7 +46,7 @@ namespace Enemies.EnemiesSharedStates
             {
                 var bullet = _enemy.BulletPrefab.Get<Bullet>(_enemy.transform.position + Vector3.up * 0.5f,
                     Quaternion.identity);
-                bullet.Setup(direction, _enemy.BulletSpeed, _enemy.Damage);
+                bullet.Setup(direction, _enemy.BulletSpeed, _enemy.Damage, _enemy.FollowPlayer, 1f);
             }
 
             SfxManager.Instance.PlayFx(Sfx.BulletShot, _enemy.transform.position);

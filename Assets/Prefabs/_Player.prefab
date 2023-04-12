@@ -58,7 +58,7 @@ MonoBehaviour:
     m_Bits: 2147483647
   attackAngle: 90
   hitBoxSize: 2
-  defendAngle: 90
+  defendAngle: 75
   defendBoxSize: 1
 --- !u!114 &907134496875557510
 MonoBehaviour:

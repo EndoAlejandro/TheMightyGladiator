@@ -14,6 +14,7 @@ namespace RoomTilingBehaviour
         [SerializeField] private GameObject[] spikes;
         private Collider _collider;
         private bool _isActive;
+        public Vector3 Velocity => Vector3.zero;
         public int Damage => damage;
 
         private void Awake() => _collider = GetComponent<Collider>();

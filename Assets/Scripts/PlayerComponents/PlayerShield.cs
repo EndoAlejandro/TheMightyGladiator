@@ -53,7 +53,7 @@ namespace PlayerComponents
                 }
                 else if (result.TryGetComponent(out Bullet bullet))
                 {
-                    bullet.Parry();
+                    bullet.Parry(Mathf.RoundToInt(_player.Damage));
                     PlayerParry();
                     SfxManager.Instance.PlayFx(Sfx.ShieldHit, _player.transform.position);
                     VfxManager.Instance.PlayFx(Vfx.SwordCritical,
@@ -66,7 +66,6 @@ namespace PlayerComponents
         {
             _player.Parry();
             _parryTime = -1;
-            Ended = true;
         }
 
         public void FixedTick()

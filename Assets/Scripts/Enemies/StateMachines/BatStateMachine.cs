@@ -2,6 +2,7 @@ using System;
 using CustomUtils;
 using Enemies.EnemiesSharedStates;
 using Enemies.MovementStates;
+using Enemies.SharedStates;
 using NavigationSteeringComponents;
 using PlayerComponents;
 using StateMachineComponents;

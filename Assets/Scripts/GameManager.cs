@@ -94,11 +94,7 @@ public class GameManager : Singleton<GameManager>
         LoadMainMenu();
     }
 
-    public void StartDungeonPortalActivated()
-    {
-        // Player.Instance.SetPlayerData(DefaultPlayerData);
-        LoadNextGameScene();
-    }
+    public void StartDungeonPortalActivated() => LoadNextGameScene();
 
     public void PortalActivated()
     {
@@ -143,4 +139,6 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = _isPaused ? 0f : 1f;
         OnGamePaused?.Invoke(_isPaused);
     }
+
+    private void OnApplicationQuit() => SaveSystem.SetProgress(new Vector2Int(CurrentLevel, CurrentSubLevel));
 }

@@ -21,7 +21,7 @@ namespace PlayerComponents
         [SerializeField] private LayerMask attackLayerMask;
         [Range(5f, 90f)] [SerializeField] private float attackAngle = 45f;
         [SerializeField] private float hitBoxSize = 1.5f;
-        [Range(5f, 90f)] [SerializeField] private float defendAngle = 90f;
+        [Range(5f, 270f)] [SerializeField] private float defendAngle = 90f;
         [SerializeField] private float defendBoxSize = 1f;
 
         private float _attackTimer;
@@ -89,14 +89,9 @@ namespace PlayerComponents
             if (!state) _dodgeTimer = DodgeRate;
         }
 
-        public void Parry()
-        {
-            _defendTimer = DefendRate;
-            _immunityTimer = ImmunityTime;
-            OnParry?.Invoke();
-        }
+        public void Parry() => OnParry?.Invoke();
 
-        public void ShieldHit()
+        private void ShieldHit()
         {
             SfxManager.Instance.PlayFx(Sfx.ShieldHit, transform.position);
             VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
@@ -118,8 +113,7 @@ namespace PlayerComponents
             if (!(Health <= 0f)) return;
 
             OnDead?.Invoke();
-            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(),
-                false);
+            VfxManager.Instance.PlayFloatingText(transform.position + Vector3.up, damageAmount.ToString(), false);
             VfxManager.Instance.PlayFx(Vfx.SwordCritical, transform.position + Vector3.up);
         }
 
@@ -130,7 +124,11 @@ namespace PlayerComponents
             if (IsDodging) return false;
             if (IsImmune) return false;
 
-            var direction = Utils.NormalizedFlatDirection(damageDealer.transform.position, transform.position);
+            Vector3 direction;
+            if (damageDealer.transform.TryGetComponent(out Bullet bullet))
+                direction = -damageDealer.Velocity.normalized;
+            else
+                direction = Utils.NormalizedFlatDirection(damageDealer.transform.position, transform.position);
 
             if (_shieldActive && !ignoreShield)
             {
