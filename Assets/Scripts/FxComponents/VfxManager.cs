@@ -19,6 +19,9 @@ namespace FxComponents
         [SerializeField] private PoolAfterSeconds splashJumpVfx;
         [SerializeField] private PoolAfterSeconds normalSpawnCircle;
         [SerializeField] private PoolAfterSeconds enemySpawn;
+        [SerializeField] private PoolAfterSeconds heal;
+        [SerializeField] private PoolAfterSeconds upgrade;
+        [SerializeField] private PoolAfterSeconds upgradeSpawn;
 
         [Header("Custom Vfx")]
         [SerializeField] private FloatingText floatingText;
@@ -45,7 +48,10 @@ namespace FxComponents
                 { Vfx.Explosion, explosion },
                 { Vfx.BombHit, bombHitVfx },
                 { Vfx.Splash, splashVfx },
-                { Vfx.SplashJump, splashJumpVfx }
+                { Vfx.SplashJump, splashJumpVfx },
+                { Vfx.Heal, heal },
+                { Vfx.Upgrade, upgrade },
+                { Vfx.UpgradeSpawn, upgradeSpawn },
             };
         }
 

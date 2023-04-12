@@ -15,7 +15,10 @@ public enum Vfx
     Explosion,
     BombHit,
     Splash,
-    SplashJump
+    SplashJump,
+    Upgrade,
+    UpgradeSpawn,
+    Heal
 }
 
 public enum Sfx
@@ -34,6 +37,9 @@ public enum Sfx
     JumpStart,
     JumpEnd,
     Laser,
+    Upgrade,
+    Heal,
+    UpgradeSpawn
 }
 
 public enum UpgradeType

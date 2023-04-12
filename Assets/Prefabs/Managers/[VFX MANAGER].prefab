@@ -61,6 +61,10 @@ MonoBehaviour:
     type: 3}
   enemySpawn: {fileID: 8345324034223925108, guid: a87cdaa3cea88bb478fa9a9f5d26b3a6,
     type: 3}
+  heal: {fileID: 2517603540504394448, guid: 35f92d3cbc85ccc4a8e4dcb982fa94cc, type: 3}
+  upgrade: {fileID: 4208329522927737851, guid: 09af6cd581818914b991b3b6ecb4c8cf, type: 3}
+  upgradeSpawn: {fileID: 5342487889578488672, guid: db51fe32097539f4898a39eda868181a,
+    type: 3}
   floatingText: {fileID: 579982764298065617, guid: 7113d7f266e206742af2473d94e9d9a3,
     type: 3}
   hitPointPrediction: {fileID: 4137804265680899392, guid: adc9f1eb3bf237047a3a1709d4cb4841,

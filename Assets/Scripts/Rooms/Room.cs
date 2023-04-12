@@ -62,11 +62,11 @@ namespace Rooms
             _spawnedEnemies.Remove(enemy);
             enemy.OnDead -= EnemyOnDead;
 
-            if (_spawnedEnemies.Count == 0)
-            {
-                if (_waves > 0) SpawnEnemy();
-                else SpawnUpgrades();
-            }
+            if (_spawnedEnemies.Count > 0) return;
+            
+            if (_waves > 0) SpawnEnemy();
+            else portal.gameObject.SetActive(true);
+            //SpawnUpgrades();
         }
 
         private void SpawnUpgrades()

@@ -1,45 +1,45 @@
-﻿using System;
-using Enemies.EnemiesSharedStates;
+﻿using Enemies.EnemiesSharedStates;
 using FxComponents;
 using StateMachineComponents;
 using UnityEngine;
-using VfxComponents;
 using Random = UnityEngine.Random;
 
 namespace Enemies.FatGuyComponents
 {
-    public class FatGuyStateMachine : FiniteStateBehaviour
+    public class BossEnemyStateMachine : FiniteStateBehaviour
     {
-        private FatGuy _fatGuy;
+        private BossEnemy _bossEnemy;
         private Collider _collider;
         private Rigidbody _rigidbody;
 
         private EnemySpawn _spawn;
-        private FatGuyRecover _recover;
+        private BossRecover _recover;
+        private BossDeath _death;
 
         private int _patternIndex;
 
         protected override void References()
         {
-            _fatGuy = GetComponent<FatGuy>();
+            _bossEnemy = GetComponent<BossEnemy>();
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
         }
 
         protected override void StateMachine()
         {
-            var idle = new FatGuyIdle(_fatGuy, _rigidbody);
+            var idle = new BossIdle(_bossEnemy, _rigidbody);
             _spawn = new EnemySpawn();
-            _recover = new FatGuyRecover(_fatGuy, NextAttackPattern);
+            _recover = new BossRecover(_bossEnemy, NextAttackPattern);
+            _death = new BossDeath(_bossEnemy, _rigidbody, _collider);
 
-            var dashTelegraph = new FatGuyTelegraph(_fatGuy);
-            var dashAttack = new FatGuyDashAttack(_fatGuy, _rigidbody);
+            var dashTelegraph = new BossTelegraph(_bossEnemy);
+            var dashAttack = new BossDashAttack(_bossEnemy, _rigidbody);
 
-            var aoeTelegraph = new FatGuyTelegraph(_fatGuy, AoEFx);
-            var aoeAttack = new FatGuyAoEAttack(_fatGuy);
+            var aoeTelegraph = new BossTelegraph(_bossEnemy, AoEFx);
+            var aoeAttack = new BossAoeAttack(_bossEnemy);
 
-            var shotTelegraph = new FatGuyTelegraph(_fatGuy, customTime: 0.1f);
-            var shotAttack = new FatGuyShot(_fatGuy);
+            var shotTelegraph = new BossTelegraph(_bossEnemy, customTime: 0.1f);
+            var shotAttack = new BossShot(_bossEnemy);
 
             stateMachine.AddTransition(_spawn, idle, () => _spawn.Ended);
 
@@ -56,17 +56,18 @@ namespace Enemies.FatGuyComponents
             stateMachine.AddTransition(shotAttack, _recover, () => true);
 
             stateMachine.AddTransition(_recover, idle, () => _recover.Ended);
+            stateMachine.AddTransition(_death, _spawn, () => _death.Ended);
         }
 
         private void AoEFx()
         {
-            VfxManager.Instance.PlayAoEFx(_fatGuy.transform.position, _fatGuy.TelegraphTime * 1.25f,
-                _fatGuy.StoppingDistance);
+            VfxManager.Instance.PlayAoEFx(_bossEnemy.transform.position, _bossEnemy.TelegraphTime * 1.25f,
+                _bossEnemy.StoppingDistance);
         }
 
         private void NextAttackPattern()
         {
-            int limit = _fatGuy.NormalizedHealth switch
+            int limit = _bossEnemy.NormalizedHealth switch
             {
                 < 0.3f => 3,
                 < 0.6f => 2,
@@ -78,12 +79,15 @@ namespace Enemies.FatGuyComponents
 
         private void OnEnable()
         {
-            _fatGuy.OnAttackCollision += FatGuyOnAttackCollision;
+            _bossEnemy.OnAttackCollision += BossEnemyOnAttackCollision;
+            _bossEnemy.OnDead += BossEnemyOnDead;
 
             stateMachine.SetState(_spawn);
         }
 
-        private void FatGuyOnAttackCollision()
+        private void BossEnemyOnDead(Enemy enemy) => stateMachine.SetState(_death);
+
+        private void BossEnemyOnAttackCollision()
         {
             _rigidbody.AddForce(-transform.forward * 3f, ForceMode.VelocityChange);
             stateMachine.SetState(_recover);
@@ -91,7 +95,8 @@ namespace Enemies.FatGuyComponents
 
         private void OnDisable()
         {
-            _fatGuy.OnAttackCollision -= FatGuyOnAttackCollision;
+            _bossEnemy.OnAttackCollision -= BossEnemyOnAttackCollision;
+            _bossEnemy.OnDead -= BossEnemyOnDead;
         }
     }
 }

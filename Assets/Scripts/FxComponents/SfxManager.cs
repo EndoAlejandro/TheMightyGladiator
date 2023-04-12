@@ -36,6 +36,9 @@ namespace FxComponents
         [SerializeField] private AudioClip jumpStartClip;
         [SerializeField] private AudioClip jumpEndClip;
         [SerializeField] private AudioClip laserClip;
+        [SerializeField] private AudioClip healClip;
+        [SerializeField] private AudioClip upgradeClip;
+        [SerializeField] private AudioClip upgradeSpawnClip;
         [SerializeField] private AudioClip uiClick;
 
         private Dictionary<Sfx, AudioClip> _listedSfx;
@@ -61,6 +64,9 @@ namespace FxComponents
                 { Sfx.JumpStart, jumpStartClip },
                 { Sfx.JumpEnd, jumpEndClip },
                 { Sfx.Laser, laserClip },
+                { Sfx.Heal, healClip },
+                { Sfx.Upgrade, upgradeClip },
+                { Sfx.UpgradeSpawn, upgradeSpawnClip },
             };
         }
 
@@ -100,7 +106,7 @@ namespace FxComponents
         }
 
         public void PlayUI() => fxSource.PlayOneShot(uiClick);
-        
+
         public void PlayMusic(AudioClip clip)
         {
             musicSource.Stop();

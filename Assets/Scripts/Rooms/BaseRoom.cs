@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Enemies;
 using FxComponents;
 using Inputs;
 using PlayerComponents;
 using Unity.AI.Navigation;
 using UnityEngine;
-using VfxComponents;
 
 namespace Rooms
 {
