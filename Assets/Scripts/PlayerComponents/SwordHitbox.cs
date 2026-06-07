@@ -1,5 +1,4 @@
 using System;
-using Enemies;
 using FxComponents;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -27,7 +26,7 @@ namespace PlayerComponents
         }
 
         private void Flip() => _renderer.flipY = !_renderer.flipY;
-        
+
         private void OnEnable() => PlayerAttack.OnAttackUpdated += PlayerAttackOnAttackUpdated;
         private void OnDisable() => PlayerAttack.OnAttackUpdated -= PlayerAttackOnAttackUpdated;
 
@@ -36,8 +35,15 @@ namespace PlayerComponents
             if (_collider == null) return;
 
             _collider.enabled = isAttacking;
-            
-            if(isAttacking) Flip();
+
+            if (isAttacking)
+            {
+                Flip();
+                TileWorldController.Instance.TryToAttackWalls(_collider.bounds.center, 1f);
+            }
+            else
+            {
+            }
         }
 
         private void OnTriggerEnter(Collider other)
