@@ -67,14 +67,14 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
         {
             if (other.TryGetComponent(out Player player)) return;
 
-            if (other.TryGetComponent(out Enemy enemy))
+            if (other.TryGetComponent(out IDamageable enemy))
                 enemy.TakeDamage(other.ClosestPoint(transform.position), Damage);
 
             OnHit();
         }
         else
         {
-            if (other.TryGetComponent(out Enemy enemy)) return;
+            if (other.TryGetComponent(out IDamageable enemy)) return;
 
             if (other.TryGetComponent(out Player player))
                 player.TryToGetDamageFromEnemy(this);

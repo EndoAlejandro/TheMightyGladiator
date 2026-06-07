@@ -128,7 +128,7 @@ Transform:
   - {fileID: 1142086837474957284}
   - {fileID: 1639224648401103050}
   - {fileID: 543450652550026804}
-  - {fileID: 2773576985606241835}
+  - {fileID: 409367479938206456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &907134496875557511
@@ -233,6 +233,38 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907134496875557517}
   m_Enabled: 1
+--- !u!1 &1158809683009851534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 409367479938206456}
+  m_Layer: 3
+  m_Name: HitBoxTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &409367479938206456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158809683009851534}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2773576985606241835}
+  m_Father: {fileID: 907134496875557506}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2299001756240113627
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,8 +276,6 @@ GameObject:
   - component: {fileID: 7227277333779550270}
   - component: {fileID: 6873362265949660304}
   - component: {fileID: 8455736222571104702}
-  - component: {fileID: 239042763398611134}
-  - component: {fileID: 4976824701223523927}
   m_Layer: 3
   m_Name: Sword
   m_TagString: Untagged
@@ -325,39 +355,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &239042763398611134
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2299001756240113627}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.466024, y: 4.9364524, z: 1.2004216}
-  m_Center: {x: -0.000000040990923, y: 0.000007974469, z: 0.10021214}
---- !u!114 &4976824701223523927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2299001756240113627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e441b132da1d9b4b962db54056cf344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SwordHitbox
 --- !u!1 &2481916076468675426
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,10 +454,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2773576985606241835}
+  - component: {fileID: 5095246662022658242}
   - component: {fileID: 7873846797390574021}
   - component: {fileID: 1564282577175426380}
-  m_Layer: 0
-  m_Name: SwordSlash
+  - component: {fileID: 6385216663735569219}
+  m_Layer: 3
+  m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -475,12 +474,24 @@ Transform:
   m_GameObject: {fileID: 2711184923451928780}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4999999, y: -0.5, z: 0.5, w: 0.5000001}
-  m_LocalPosition: {x: 0.018949509, y: 0.87727, z: 0.3494873}
-  m_LocalScale: {x: 0.5, y: 1.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0.88, z: 0.75}
+  m_LocalScale: {x: 0.3, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 907134496875557506}
+  m_Father: {fileID: 409367479938206456}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+--- !u!114 &5095246662022658242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2711184923451928780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e441b132da1d9b4b962db54056cf344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerComponents.SwordHitbox
 --- !u!212 &7873846797390574021
 SpriteRenderer:
   serializedVersion: 2
@@ -562,6 +573,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &6385216663735569219
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2711184923451928780}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2808583779126311273
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ using VfxComponents;
 
 namespace Enemies
 {
-    public class Enemy : PooledMonoBehaviour, IDealDamage
+    public class Enemy : PooledMonoBehaviour, IDealDamage, IDamageable
     {
         public event Action<Enemy> OnDead;
         public event Action<Enemy> OnDeSpawn;

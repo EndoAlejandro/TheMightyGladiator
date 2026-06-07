@@ -11,13 +11,23 @@ namespace PlayerComponents
     {
         private Player _player;
         private Collider _collider;
+        private SpriteRenderer _renderer;
 
         private void Awake()
         {
             _player = GetComponentInParent<Player>();
             _collider = GetComponent<Collider>();
+            _renderer = GetComponent<SpriteRenderer>();
         }
 
+        private void Start()
+        {
+            PlayerAttackOnAttackUpdated(false);
+            _renderer.flipY = true;
+        }
+
+        private void Flip() => _renderer.flipY = !_renderer.flipY;
+        
         private void OnEnable() => PlayerAttack.OnAttackUpdated += PlayerAttackOnAttackUpdated;
         private void OnDisable() => PlayerAttack.OnAttackUpdated -= PlayerAttackOnAttackUpdated;
 
@@ -26,15 +36,17 @@ namespace PlayerComponents
             if (_collider == null) return;
 
             _collider.enabled = isAttacking;
+            
+            if(isAttacking) Flip();
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.TryGetComponent(out Enemy enemy)) return;
+            if (!other.TryGetComponent(out IDamageable enemy)) return;
             AttackEnemy(enemy);
         }
 
-        private void AttackEnemy(Enemy enemy)
+        private void AttackEnemy(IDamageable enemy)
         {
             if (!enemy.IsAlive) return;
 
