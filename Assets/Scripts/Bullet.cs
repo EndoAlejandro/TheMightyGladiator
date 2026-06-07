@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Bullet : PooledMonoBehaviour, IDealDamage
 {
-    public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.velocity;
+    public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.linearVelocity;
 
     private Rigidbody _rigidbody;
 
@@ -43,13 +43,13 @@ public class Bullet : PooledMonoBehaviour, IDealDamage
         if (_followPlayer && Player.Instance != null && !_reflected && _timer <= 0f)
         {
             _playerDirection = Utils.NormalizedFlatDirection(Player.Instance.transform.position, transform.position);
-            _rigidbody.velocity =
-                Vector3.Lerp(_rigidbody.velocity.normalized, _playerDirection, Time.deltaTime * _turnSpeed) * _speed;
+            _rigidbody.linearVelocity =
+                Vector3.Lerp(_rigidbody.linearVelocity.normalized, _playerDirection, Time.deltaTime * _turnSpeed) * _speed;
         }
         else
-            _rigidbody.velocity = _direction * _speed;
+            _rigidbody.linearVelocity = _direction * _speed;
 
-        transform.forward = _rigidbody.velocity.normalized;
+        transform.forward = _rigidbody.linearVelocity.normalized;
     }
 
     public void Parry(int newDamage)

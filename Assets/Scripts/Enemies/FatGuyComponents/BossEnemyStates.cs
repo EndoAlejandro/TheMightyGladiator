@@ -114,7 +114,7 @@ namespace Enemies.FatGuyComponents
             for (int i = 0; i < size; i++)
             {
                 if (_results[i].TryGetComponent(out Player player))
-                    _rigidbody.velocity = Vector3.zero;
+                    _rigidbody.linearVelocity = Vector3.zero;
             }
         }
 

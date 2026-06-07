@@ -38,7 +38,7 @@ namespace Enemies.BatComponents
             {
                 var result = _results[i];
                 if (!result.TryGetComponent(out Player player)) continue;
-                _rigidbody.velocity = Vector3.zero;
+                _rigidbody.linearVelocity = Vector3.zero;
             }
         }
 
@@ -64,7 +64,7 @@ namespace Enemies.BatComponents
         public override void OnExit()
         {
             _bat.SetIsAttacking(false);
-            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.linearVelocity = Vector3.zero;
             SfxManager.Instance.PlayFx(Sfx.JumpEnd, _bat.transform.position);
         }
     }

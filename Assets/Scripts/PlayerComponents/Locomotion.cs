@@ -52,11 +52,11 @@ namespace PlayerComponents
 
         private void SpeedControl()
         {
-            var flatVelocity = _rigidbody.velocity.With(y: 0f);
+            var flatVelocity = _rigidbody.linearVelocity.With(y: 0f);
             if (flatVelocity.magnitude > _player.WalkSpeed)
-                _rigidbody.velocity =
+                _rigidbody.linearVelocity =
                     flatVelocity.normalized * _player.WalkSpeed +
-                    Vector3.up * (_rigidbody.velocity.y - 9.8f * Time.deltaTime);
+                    Vector3.up * (_rigidbody.linearVelocity.y - 9.8f * Time.deltaTime);
         }
     }
 }

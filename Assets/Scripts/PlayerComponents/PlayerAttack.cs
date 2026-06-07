@@ -1,14 +1,16 @@
-﻿using CustomUtils;
+﻿using System;
+using CustomUtils;
 using Enemies;
 using FxComponents;
 using StateMachineComponents;
 using UnityEngine;
-using VfxComponents;
+using Random = UnityEngine.Random;
 
 namespace PlayerComponents
 {
     public class PlayerAttack : IState
     {
+        public static event Action<bool> OnAttackUpdated;
         private const float AttackAnimDuration = 0.5f;
 
         private readonly Player _player;
@@ -38,7 +40,7 @@ namespace PlayerComponents
 
             if (_triggered || _timer > 0f) return;
             _triggered = true;
-            AttackDamage();
+            // AttackDamage();
         }
 
         private void AttackDamage()
@@ -110,13 +112,15 @@ namespace PlayerComponents
 
         public void OnEnter()
         {
+            OnAttackUpdated?.Invoke(true);
             _player.Attack();
             _triggered = false;
-            _timer = 0.1f; //AttackAnimDuration;
+            _timer = 0.25f; //AttackAnimDuration;
         }
 
         public void OnExit()
         {
+            OnAttackUpdated?.Invoke(false);
             _timer = 0f;
         }
     }

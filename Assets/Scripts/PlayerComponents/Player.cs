@@ -106,7 +106,7 @@ namespace PlayerComponents
             VfxManager.Instance.PlayFx(Vfx.PlayerHit, transform.position + Vector3.up);
             _immunityTimer = ImmunityTime;
 
-            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.linearVelocity = Vector3.zero;
             _rigidbody.AddForce(direction * 15f, ForceMode.VelocityChange);
             OnHit?.Invoke();
 

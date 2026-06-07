@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class MortarBomb : PooledMonoBehaviour, IDealDamage
 {
-    public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.velocity;
+    public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.linearVelocity;
 
     [SerializeField] private int damage = 1;
 
@@ -32,7 +32,7 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
 
     private void Update()
     {
-        transform.forward = _rigidbody.velocity;
+        transform.forward = _rigidbody.linearVelocity;
     }
 
     private void DestroyMortar()
@@ -82,13 +82,13 @@ public class MortarBomb : PooledMonoBehaviour, IDealDamage
         else
         {
             _hitPredictionFx = VfxManager.Instance.PlayHitPointPredictionFx(target);
-            _rigidbody.velocity = velocity;
+            _rigidbody.linearVelocity = velocity;
         }
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.linearVelocity = Vector3.zero;
     }
 }

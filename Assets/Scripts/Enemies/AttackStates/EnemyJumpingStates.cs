@@ -110,7 +110,7 @@ namespace Enemies.EnemiesSharedStates
         public void OnExit()
         {
             _enemy.transform.position = _enemy.transform.position.With(y: 0f);
-            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.linearVelocity = Vector3.zero;
             _rigidbody.isKinematic = false;
             _collider.enabled = true;
         }

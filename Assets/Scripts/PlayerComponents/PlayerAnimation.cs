@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using FxComponents;
 using Pooling;
@@ -25,6 +24,7 @@ namespace PlayerComponents
 
         [SerializeField] private GameObject slash;
         [SerializeField] private ParticleSystem slashParticle;
+        [SerializeField] private Animator _swordSlashAnimator;
 
         [Header("Shield")]
         [Range(0.01f, 1f)]
@@ -47,6 +47,7 @@ namespace PlayerComponents
 
         private IState _state;
         private static readonly int Teleport = Animator.StringToHash("Teleport");
+        private static readonly int Play = Animator.StringToHash("Play");
 
         private void Awake()
         {
@@ -119,7 +120,8 @@ namespace PlayerComponents
 
                 case PlayerAttack playerAttack:
                     _animator.SetLayerWeight(1, 1f);
-                    slashParticle.Play();
+                    _swordSlashAnimator.SetTrigger(Play);
+                    // slashParticle.Play();
                     _animator.SetTrigger(Attack);
                     _animator.SetInteger(AttackIndex, (_animator.GetInteger(AttackIndex) + 1) % 2);
                     break;
@@ -165,8 +167,8 @@ namespace PlayerComponents
 
         private void Walking()
         {
-            var forward = Vector3.Dot(transform.forward, _rigidbody.velocity);
-            var right = Vector3.Dot(transform.right, _rigidbody.velocity);
+            var forward = Vector3.Dot(transform.forward, _rigidbody.linearVelocity);
+            var right = Vector3.Dot(transform.right, _rigidbody.linearVelocity);
 
             _animator.SetFloat(Forward, forward);
             _animator.SetFloat(Right, right);

@@ -70,7 +70,7 @@ namespace Enemies
         public BaseRoom Room { get; private set; }
         public Bullet BulletPrefab => bulletPrefab;
         public MortarBomb MortarPrefab => mortarPrefab;
-        public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.velocity;
+        public Vector3 Velocity => _rigidbody == null ? Vector3.zero : _rigidbody.linearVelocity;
         public float ParryTimeWindow => parryTimeWindow;
         public float MaxHealth => maxHealth;
         public float TelegraphTime => telegraphTime;

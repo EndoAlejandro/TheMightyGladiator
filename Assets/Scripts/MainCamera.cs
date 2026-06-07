@@ -1,4 +1,4 @@
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class MainCamera : MonoBehaviour
@@ -6,7 +6,7 @@ public class MainCamera : MonoBehaviour
     public static MainCamera Instance { get; private set; }
 
     private CinemachineImpulseSource _impulseSource;
-    private CinemachineVirtualCamera _virtualCamera;
+    private CinemachineVirtualCameraBase _virtualCamera;
 
     private void Awake()
     {
@@ -19,9 +19,9 @@ public class MainCamera : MonoBehaviour
         Instance = this;
 
         _impulseSource = GetComponent<CinemachineImpulseSource>();
-        _virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
+        _virtualCamera = GetComponentInChildren<CinemachineVirtualCameraBase>();
     }
 
     public void Shake(float force = 0.5f) => _impulseSource.GenerateImpulse(force);
-    public void SetTarget(Transform target) => _virtualCamera.m_Follow = target;
+    public void SetTarget(Transform target) => _virtualCamera.Follow = target;
 }
