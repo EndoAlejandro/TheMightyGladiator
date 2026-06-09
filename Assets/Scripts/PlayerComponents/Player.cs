@@ -10,6 +10,8 @@ namespace PlayerComponents
 {
     public class Player : Singleton<Player>
     {
+        public static event Action<Player> OnSpawn;
+        
         public event Action OnHit;
         public event Action OnParry;
         public event Action OnShieldHit;
@@ -71,6 +73,8 @@ namespace PlayerComponents
             _collider = GetComponent<Collider>();
             Height = _collider.bounds.center.y;
             SetPlayerData(currentPlayerData);
+            
+            OnSpawn?.Invoke(this);
         }
 
         private void Update()

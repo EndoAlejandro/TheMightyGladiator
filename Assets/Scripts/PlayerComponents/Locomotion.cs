@@ -27,7 +27,7 @@ namespace PlayerComponents
 
             PlayerRotation();
             _moveDirection = (Camera.main.transform.right * InputReader.Instance.Movement.x +
-                              Camera.main.transform.forward * InputReader.Instance.Movement.y).With(y: 0f).normalized;
+                Camera.main.transform.forward * InputReader.Instance.Movement.y).With(y: 0f).normalized;
         }
 
         private void FixedUpdate()
@@ -42,10 +42,14 @@ namespace PlayerComponents
 
         private void PlayerRotation()
         {
+            var aimDirection = Vector3.zero;
+#if UNITY_EDITOR
             Vector2 playerViewPort = Camera.main.WorldToViewportPoint(transform.position);
             var viewportDirection = (InputReader.Instance.Aim - playerViewPort).normalized;
-            var aimDirection = new Vector3(viewportDirection.x, 0f, viewportDirection.y);
-
+            aimDirection = new Vector3(viewportDirection.x, 0f, viewportDirection.y);
+#elif UNITY_ANDROID
+            aimDirection = new Vector3(InputReader.Instance.Aim.x, 0f, InputReader.Instance.Aim.y);
+#endif
             transform.forward =
                 Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * _player.RotationSpeed);
         }

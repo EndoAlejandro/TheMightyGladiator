@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previewThumbnail: {fileID: 2800000, guid: 8060ffe499d759145b7c1c621f5ae291, type: 3}
   gridtype: 1
-  DUALGRD_cornerTile: {fileID: 1327582878135713183, guid: bec1244a799f87245b20e65c6284ae39,
+  DUALGRD_cornerTile: {fileID: 1327582878135713183, guid: 7154e4080826afc4e878ae70357cf0dd,
     type: 3}
-  DUALGRD_invertedCornerTile: {fileID: 8353162540286234213, guid: bcd2f34fb709aa3499e8570b810ddc8c,
+  DUALGRD_invertedCornerTile: {fileID: 8353162540286234213, guid: 3af4a8f0405f31246baf79378dfea768,
     type: 3}
-  DUALGRD_edgeTile: {fileID: 8392027412113010434, guid: fdc31f61643883f4ba221d11fbe49925,
+  DUALGRD_edgeTile: {fileID: 8392027412113010434, guid: 90ac4c499dc3ee545813f65d5de4d8b9,
     type: 3}
-  DUALGRD_fillTile: {fileID: 6864620678140451330, guid: 9d579ac99d1488f479c7d40ee76eef29,
+  DUALGRD_fillTile: {fileID: 6864620678140451330, guid: b9d54bf926d0c8e4b8298166164a4f04,
     type: 3}
-  DUALGRD_doubleInteriorCornerTile: {fileID: 2406270351499449160, guid: 1e5e8052b4de0624992e241c4565ae48,
+  DUALGRD_doubleInteriorCornerTile: {fileID: 2406270351499449160, guid: 0545e8c1eeaad0848995d2d94344a9a0,
     type: 3}
   NRMGRD_deadEndTile: {fileID: 0}
   NRMGRD_singleTile: {fileID: 0}

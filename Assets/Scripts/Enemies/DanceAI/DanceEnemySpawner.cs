@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using Enemies.Combat;
 using PlayerComponents;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Enemies.DanceAI
 {
@@ -13,21 +16,45 @@ namespace Enemies.DanceAI
     /// </summary>
     public class DanceEnemySpawner : MonoBehaviour
     {
+        [SerializeField] private Player _playerPrefab;
+
         [Tooltip("Prefab with MeleeEnemy/RangedEnemy + DanceEnemyController + (kinematic) Rigidbody + Collider.")]
         [SerializeField] private CombatEnemy _enemyPrefab;
+
         [SerializeField] private int _maxAlive = 8;
         [SerializeField] private float _spawnInterval = 1.5f;
         [SerializeField] private float _minSpawnRadius = 5f;
         [SerializeField] private float _maxSpawnRadius = 10f;
+
         [Tooltip("How far from a random point we will search for the nearest walkable navmesh spot.")]
         [SerializeField] private float _navSampleRadius = 2f;
+
         [SerializeField] private bool _spawnOnStart = true;
+        [SerializeField] private NavMeshSurface _meshSurface;
 
         private int _alive;
 
         private void Start()
         {
-            if (_spawnOnStart) StartSpawning();
+            TileWorldController.Instance.OnReady += TileWorldControllerOnReady;
+        }
+
+        private void OnDestroy()
+        {
+            TileWorldController.Instance.OnReady -= TileWorldControllerOnReady;
+        }
+
+        private void TileWorldControllerOnReady()
+        {
+            if (_spawnOnStart)
+                StartSpawning();
+
+            if (TryGetSpawnPoint(out var point))
+            {
+                var player = Instantiate(_playerPrefab, point, Quaternion.identity);
+                player.Teleport(1f);
+                player.transform.position = point;
+            }
         }
 
         private void StartSpawning() => StartCoroutine(SpawnLoop());
@@ -61,7 +88,7 @@ namespace Enemies.DanceAI
 
         private bool TryGetSpawnPoint(out Vector3 result)
         {
-            var center = Player.Instance.transform.position;
+            var center = Player.Instance?.transform.position ?? Vector3.zero;
             for (int i = 0; i < 30; i++)
             {
                 var angle = Random.value * Mathf.PI * 2f;
@@ -75,6 +102,7 @@ namespace Enemies.DanceAI
                 }
             }
 
+            _meshSurface.BuildNavMesh();
             result = center;
             return false;
         }

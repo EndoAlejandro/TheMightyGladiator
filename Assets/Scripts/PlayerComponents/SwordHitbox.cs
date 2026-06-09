@@ -39,10 +39,7 @@ namespace PlayerComponents
             if (isAttacking)
             {
                 Flip();
-                TileWorldController.Instance.TryToAttackWalls(_collider.bounds.center, 1f);
-            }
-            else
-            {
+                // TileWorldController.Instance.TryToAttackWalls(_collider.bounds.center, 1f);
             }
         }
 
