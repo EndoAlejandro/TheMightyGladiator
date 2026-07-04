@@ -120,8 +120,8 @@ namespace PlayerComponents
 
                 case PlayerAttack playerAttack:
                     _animator.SetLayerWeight(1, 1f);
-                    _swordSlashAnimator.SetTrigger(Play);
-                    // slashParticle.Play();
+                    // TODO: Play animation.
+                    // _swordSlashAnimator.SetTrigger(Play);
                     _animator.SetTrigger(Attack);
                     _animator.SetInteger(AttackIndex, (_animator.GetInteger(AttackIndex) + 1) % 2);
                     break;

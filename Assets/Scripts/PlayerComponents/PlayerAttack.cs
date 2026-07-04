@@ -8,7 +8,7 @@ namespace PlayerComponents
     {
         public static event Action<bool> OnAttackUpdated;
 
-        private const float AttackAnimDuration = 0.25f;
+        private const float AttackAnimDuration = 0.5f;
 
         private readonly Player _player;
         private float _timer;

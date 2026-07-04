@@ -24,7 +24,7 @@ MonoBehaviour:
   damage: 1
   criticalProbability: 0.35
   criticalDamage: 2
-  attackRate: 0.25
+  attackRate: 0.5
   defendRate: 1
   parryTime: 0.15
   knockBackForce: 2
